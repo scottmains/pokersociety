@@ -4,6 +4,10 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const authRoute = require('./routes/auth');
 const newsfeedRoute = require('./routes/newsfeed');
+const cors = require('cors')
+const bodyParser = require('body-parser');
+
+
 
 dotenv.config();
 
@@ -15,6 +19,10 @@ mongoose.connect(process.env.DB_CONNECT,  () =>
 
 //Middleware
 app.use(express.json());
+app.use(cors({credentials: true, origin: true}))
+app.use(express.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true}))
+
 
 app.use('/api/user', authRoute);
 app.use('/api/newsfeed', newsfeedRoute);

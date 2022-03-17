@@ -1,0 +1,13 @@
+.section__padding {
+    padding: 4rem 6rem;
+}
+
+.section__margin {
+    padding: 4rem 6rem;
+}
+
+body {
+    background-color: #36454F;
+    font-family: Arvo;
+}
+

@@ -1,6 +1,9 @@
 import React from 'react';
-import Login from './components/Login/Login'
 import Auth from './components/Auth/Auth'
+import Login from './components/Login/Login'
+import SignUp from './components/SignUp/SignUp'
+import './app.css'
+
 
 import {
     BrowserRouter as Router,
@@ -16,8 +19,8 @@ const App = () => {
 
         <Router>
          <Routes>
-           <Route path='/' index element={<Auth />}/>
-           <Route path='/auth' index element={<Auth />}/>
+           <Route path='/' index element={<Login />}/>
+           <Route path='sign-up' index element={<SignUp/>}/>
          </Routes>
         </Router>
     )
