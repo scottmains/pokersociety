@@ -26,7 +26,7 @@ router.post('/register', async (req,res) => {
         name: req.body.name,
         email: req.body.email,
         studentid: req.body.studentid,
-        password:hashedPassword,
+        password:hashedPassword
     });
 
     try {
@@ -49,29 +49,13 @@ router.post('/login', async (req,res) => {
     //CHECK IF PASSWORD IS CORRECT
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass) return res.status(419).send('Invalid Password');
-    const roles = Object.values(user.roles);
 
-        const accessToken = jwt.sign(
-            { 
-            "UserInfo": {
-            "studentid": user,
-            "roles": roles
-            }
-         }, 
-        process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn: '5000s'}
-            );
-            const refreshToken = jwt.sign(
-                {"studentid": user}, process.env.REFRESH_TOKEN_SECRET,
-                {expiresIn: '1d'}
-                );
-
-        user.refreshToken = refreshToken;
-        const result = await user.save();
-        console.log(result);
- 
-    res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
-    res.json({accessToken});
+    if (user){
+    const accessToken = jwt.sign({ studentid }, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1800s"});
+    res.json({
+        accessToken: `Bearer ${accessToken}`,
+      });
+    } else res.sendStatus(401);
 });
 
 router.get('/refresh', async (req,res) => {

@@ -1,11 +1,8 @@
 import React from "react";
 import './Login.css';
 import Auth from '../../components/Auth/Auth'
-import Newsfeed from '../Newsfeed/Newsfeed'
 import { NavLink} from "react-router-dom";
 import pokerlogo  from '../../assets/pokerlogo.svg'
-
-
 
 const Login = () => {
   return (

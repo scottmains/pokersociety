@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from "../../context/AuthContext";
-import axios from "../../api/axios";
+import axios from "axios";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 
@@ -32,10 +32,8 @@ const Auth = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let url = "http://localhost:5000/api/user/login";
-
         try {
-            const response = await axios.post(url,
+            const response = await axios.post('http://localhost:5000/api/user/login',
                 JSON.stringify({ studentid, password }),
                 {
                     headers: { 'Content-Type': 'application/json' },
@@ -65,7 +63,6 @@ const Auth = () => {
     }
 
     return (
-     
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <form onSubmit={handleSubmit}>

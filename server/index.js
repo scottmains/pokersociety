@@ -8,7 +8,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
 const credentials = require('./middleware/credentials');
-const path = require('path');
+const corsOptions = require('./config/corsOptions');
 
 dotenv.config();
 
@@ -21,10 +21,10 @@ mongoose.connect(process.env.DB_CONNECT,  () =>
 //Middleware
 app.use(express.json());
 app.use(cors({credentials: true, origin: true}))
+app.use(cors(corsOptions));
 app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cookieParser());
-
 
 app.use('/api/user', authRoute);
 app.use('/api/newsfeed', newsfeedRoute);
