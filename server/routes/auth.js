@@ -3,8 +3,6 @@ const User = require('../model/User');
 const jwt = require('jsonwebtoken');
 const {registerValidation, loginValidation} = require('../validation');
 const bcrypt = require('bcryptjs');
-var FormData = require('form-data');
-var fs = require('fs');
 
 // ALL CODE RELATING TO REGISTER API END POINT
 router.post('/register', async (req,res) => {
@@ -14,23 +12,21 @@ router.post('/register', async (req,res) => {
 
     //CHECK IF STUDENT ID AND EMAIL EXISTS
     const studentIdExist = await User.findOne({studentid: req.body.studentid});
-    if(studentIdExist) return res.status(400).send('This Student ID has arleady been registered.')
+    if(studentIdExist) return res.status(418).send('This Student ID has arleady been registered.')
 
     const emailExist = await User.findOne({email: req.body.email});
-    if(emailExist) return res.status(400).send('Email already exists.')
+    if(emailExist) return res.status(419).send('Email already exists.')
 
     //HASH THE PASSWORD
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
     //CREATES A NEW USER
-
- 
     const user = new User({
         name: req.body.name,
         email: req.body.email,
         studentid: req.body.studentid,
-        password:hashedPassword
+        password:hashedPassword,
     });
 
     try {
@@ -53,12 +49,87 @@ router.post('/login', async (req,res) => {
     //CHECK IF PASSWORD IS CORRECT
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass) return res.status(419).send('Invalid Password');
+    const roles = Object.values(user.roles);
 
-    //ASSIGN A JSON WEB TOKEN IF USER AUTHENTICATED
-    const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send(token);
+        const accessToken = jwt.sign(
+            { 
+            "UserInfo": {
+            "studentid": user,
+            "roles": roles
+            }
+         }, 
+        process.env.ACCESS_TOKEN_SECRET,
+            {expiresIn: '5000s'}
+            );
+            const refreshToken = jwt.sign(
+                {"studentid": user}, process.env.REFRESH_TOKEN_SECRET,
+                {expiresIn: '1d'}
+                );
 
+        user.refreshToken = refreshToken;
+        const result = await user.save();
+        console.log(result);
+ 
+    res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
+    res.json({accessToken});
+});
 
+router.get('/refresh', async (req,res) => {
+
+    const User = require('../model/User');
+    const jwt = require('jsonwebtoken');
+    
+    const handleRefreshToken = async (req, res) => {
+        const cookies = req.cookies;
+        if (!cookies?.jwt) return res.sendStatus(401);
+        const refreshToken = cookies.jwt;
+    
+        const foundUser = await User.findOne({ refreshToken }).exec();
+        if (!foundUser) return res.sendStatus(403); //Forbidden 
+        // evaluate jwt 
+        jwt.verify(
+            refreshToken,
+            process.env.REFRESH_TOKEN_SECRET,
+            (err, decoded) => {
+                if (err || foundUser.studentid !== decoded.studentid) return res.sendStatus(403);
+                const roles = Object.values(foundUser.roles);
+                const accessToken = jwt.sign(
+                    {
+                        "UserInfo": {
+                            "studentid": decoded.studentid,
+                            "roles": roles
+                        }
+                    },
+                    process.env.ACCESS_TOKEN_SECRET,
+                    { expiresIn: '30s' }
+                );
+                res.json({ accessToken })
+            }
+        );
+    }
+    module.exports = { handleRefreshToken }
+});
+
+router.get('/logout', async (req,res) => {
+
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(204); //No content
+    const refreshToken = cookies.jwt;
+
+    // Is refreshToken in db?
+    const user = await User.findOne({ refreshToken }).exec();
+    if (!user) {
+        res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+        return res.sendStatus(204);
+    }
+
+    // Delete refreshToken in db
+    user.refreshToken = '';
+    const result = await user.save();
+    console.log(result);
+
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+    res.sendStatus(204);
 });
 
 

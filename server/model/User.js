@@ -20,10 +20,18 @@ const userSchema =  new mongoose.Schema({
     },
     password: {
         type: String,
-        requred: true,
+        required: true,
         max: 1024,
         min: 6
-    }
+    }, 
+    roles: {
+        User: {
+            type: Number,
+            default: 1
+        },
+        Admin: Number
+    },
+    refreshToken: String
 });
 
 module.exports = mongoose.model('User', userSchema);

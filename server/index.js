@@ -6,8 +6,9 @@ const authRoute = require('./routes/auth');
 const newsfeedRoute = require('./routes/newsfeed');
 const cors = require('cors')
 const bodyParser = require('body-parser');
-
-
+const cookieParser = require('cookie-parser')
+const credentials = require('./middleware/credentials');
+const path = require('path');
 
 dotenv.config();
 
@@ -22,9 +23,13 @@ app.use(express.json());
 app.use(cors({credentials: true, origin: true}))
 app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(cookieParser());
 
 
 app.use('/api/user', authRoute);
 app.use('/api/newsfeed', newsfeedRoute);
 
-app.listen(5000, () => console.log('Server up and running!'))
+app.listen(
+    process.env.PORT,
+    console.log('Listening on port ', process.env.PORT)
+  );

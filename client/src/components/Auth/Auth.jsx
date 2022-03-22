@@ -1,134 +1,97 @@
-import React from "react";
-import './Auth.css';
-import axios from "axios";
+import { useRef, useState, useEffect, useContext } from 'react';
+import AuthContext from "../../context/AuthContext";
+import axios from "../../api/axios";
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-class Auth extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = { 
-            authenticated: false, 
-            studentid: "", 
-            password: "",
-            token:null,
-            studentIdValid: "",
-            passwordValid: "",
-            fields: {},
-            errors: {}
-        }
-    }
 
-    componentDidMount() {
-        if(localStorage.getItem('auth-token')) {
-            this.setState(
-                {authenticated:true,
-                 token: localStorage.getItem('auth-token')
-                });
-        }
-    }
-    
-    handlePassword = (e) => {
-        const value = e.target.value
-        this.setState({password:value})   
-    }
-    handleStudentId = (e) => {
-        const value = e.target.value
-        this.setState({studentid:value})
-    }
+const Auth = () => {
+    const { setAuth } = useContext(AuthContext);
 
-    handleChange(field, e) {
-        let fields = this.state.fields;
-        fields[field] = e.target.value;
-        this.setState({ fields });
-      }
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
-      signupSubmit(e) {
+
+
+    const userRef = useRef();
+    const errRef = useRef();
+
+    const [studentid, setStudentId] = useState('');
+    const [password, setPassword] = useState('');
+    const [errMsg, setErrMsg] = useState('');
+    const [success, setSuccess] = useState(false);
+
+    useEffect(() => {
+        userRef.current.focus();
+    }, [])
+
+    useEffect(() => {
+        setErrMsg('');
+    }, [studentid, password])
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (this.handleValidation()) {
-          console.log("SUCCESS");
-        } else {
-          console.log("Form has errors.");
-        }
-      }
+        let url = "http://localhost:5000/api/user/login";
 
-      handleValidation = () => {
-        let fields = this.state.fields;
-        let errors = {};
-        let formIsValid = true;
-
-        if (!fields["studentid"]) {
-            formIsValid = false;
-            errors["studentid"] = "Cannot be empty";
-        }
-
-        if (!fields["password"]) {
-            formIsValid = false;
-            errors["password"] = "Cannot be empty";
-        }
-
-      
-
-        this.setState({errors: errors});
-        return formIsValid;
-      }
-
-    
-    handleLoginClick = async (e) => {
-        let url = "http://localhost:5000/api/user/login" 
-       
-        const studentid = this.state.fields["studentid"];
-        const password = this.state.fields["password"];
-       
-  
-        axios.post(url, {
-            studentid: studentid,
-            password: password
-        }) .then((response) => {
-            if ((response.status === 200) || (response.status === 204)) {
-            console.log("Success");
-            this.setState({ 
-                authenticated: true,
-                token: response.data
-                 })
-                 localStorage.setItem('auth-token', response.data); 
-                 window.location.reload();
-                } else if (response.status === 418) {
-                    this.setState({ 
-                       studentIdValid: "Student ID doesn't exist"
-                    }) 
-                } else if (response.status === 419) {
-                    this.setState({ 
-                        passwordValid: "Password is incorrect"
-                     }) 
+        try {
+            const response = await axios.post(url,
+                JSON.stringify({ studentid, password }),
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
                 }
-                
-        }) .catch ((err) => {
-            console.log("something went wrong ", err)
-            });   
+            );
+            console.log(JSON.stringify(response?.data));
+            //console.log(JSON.stringify(response));
+            const accessToken = response?.data?.accessToken;
+            const roles = response?.data?.roles;
+            setAuth({ studentid, password, roles, accessToken });
+            setStudentId('');
+            setPassword('');
+            setSuccess(true);
+        } catch (err) {
+            if (!err?.response) {
+                setErrMsg('No Server Response');
+            } else if (err.response?.status === 400) {
+                setErrMsg('Missing Student ID or Password');
+            } else if (err.response?.status === 401) {
+                setErrMsg('Unauthorized');
+            } else {
+                setErrMsg('Login Failed');
+            }
+            errRef.current.focus();
+        }
     }
 
-   render() {
+    return (
+     
+                <section>
+                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor="studentid">Student ID:</label>
+                        <input
+                            type="text"
+                            id="studentid"
+                            ref={userRef}
+                            autoComplete="off"
+                            onChange={(e) => setStudentId(e.target.value)}
+                            value={studentid}
+                            required
+                        />
+                        <label htmlFor="password">Password:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            onChange={(e) => setPassword(e.target.value)}
+                            value={password}
+                            required
+                        />
+                        <button>Sign In</button>
+                    </form>
+                </section>
+            )}
+    
 
-    console.log(this.state.studentIdValid)
-    console.log(this.state.authenticated)
 
-
-  return (
-            <form onSubmit={this.signupSubmit.bind(this)}>
-                <div className="mb-3">
-                    <input type="text" placeholder="Student ID" onChange={this.handleChange.bind(this, "studentid")}
-                value={this.state.fields["studentid"]}/>
-                </div>
-                <span className="form-errors" style={{ color: "red" }}>{this.state.errors["studentid"]} {this.state.studentIdValid} </span>
-                <div className="mb-3">
-                    <input className ="form-label" type="password" placeholder="Password" onChange={this.handleChange.bind(this, "password")}
-                value={this.state.fields["password"]}/>
-                </div>
-                <span className="form-errors" style={{ color: "red" }}>{this.state.errors["password"]} {this.state.passwordValid} </span>
-                <button type="Submit" onClick={this.handleLoginClick}>Log in</button>
-            </form> 
-  );
-   }
-}
-
-export default Auth;
+export default Auth
