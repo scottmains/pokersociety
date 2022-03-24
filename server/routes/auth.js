@@ -51,12 +51,14 @@ router.post('/login', async (req,res) => {
     if (!validPass) return res.status(419).send('Invalid Password');
 
     if (user){
-    const accessToken = jwt.sign({ studentid }, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1800s"});
+    const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1800s"});
     res.json({
         accessToken: `Bearer ${accessToken}`,
       });
     } else res.sendStatus(401);
 });
+
+/*
 
 router.get('/refresh', async (req,res) => {
 
@@ -115,6 +117,6 @@ router.get('/logout', async (req,res) => {
     res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
     res.sendStatus(204);
 });
-
+*/
 
 module.exports = router;

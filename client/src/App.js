@@ -15,12 +15,10 @@ const ROLES = {
   'Admin': 2
 }
 
-
 const App = () => {
 
     return (
 
-       
          <Routes>
            <Route path='login' index element={<Login />}/>
            <Route path='sign-up' index element={<SignUp/>}/>
@@ -28,7 +26,6 @@ const App = () => {
           <Route path="/" element={<Newsfeed />} />
           </Route>
          </Routes>
-      
     )
     };
  

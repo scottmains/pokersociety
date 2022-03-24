@@ -30,8 +30,8 @@ const userSchema =  new mongoose.Schema({
             default: 1
         },
         Admin: Number
-    },
-    refreshToken: String
+    }
+   
 });
 
 module.exports = mongoose.model('User', userSchema);

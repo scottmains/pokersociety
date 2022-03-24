@@ -7,9 +7,9 @@ const SignUp = () => {
 
 
   return (
-    <div className="signup-box">
+   
       <Register />
-    </div>
+  
   )
 }
 
