@@ -9,8 +9,8 @@ const Profile = () => {
     <Navbar />
 
     <div class="h-screen bg-gray-300">
-    <div class="container flex justify-center py-20 mx-auto">
-        <div class="p-5 bg-white rounded-xl max-w-lg hover:shadow">
+    <div class="container flex justify-center py-20 mx-auto  ">
+        <div class="p-10 bg-white rounded-xl max-w-lg hover:shadow">
             <div class="flex justify-between w-full"> 
                 <div class="ml-2">
                     <div class="p-3">
