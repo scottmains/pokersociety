@@ -2,13 +2,16 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink} from "react-router-dom";
-import axios from 'axios';
 import  './register.css'
+import axios from '../../api/axios';
+const REGISTER_URL = '/api/user/register';
 
 const USER_REGEX = /^[a-zA-Z ,.'-]+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const EMAIL_REGEX =   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-const STUDENTID_REGEX = /w[0-9]+/
+const EMAIL_REGEX =   /^[\w\d].+@[\w\d]+\.ac\.uk$/
+const STUDENTID_REGEX = /[wW][0-9]+/
+
+
 
 const Register = () => {
     const userRef = useRef();
@@ -67,13 +70,13 @@ const Register = () => {
         // if button enabled with JS hack
         const v1 = USER_REGEX.test(name);
         const v2 = PWD_REGEX.test(password);
-        let url = "https://northumbria-poker-society.herokuapp.com//api/user/register";
+       
         if (!v1 || !v2) {
             setErrMsg("Invalid Entry");
             return;
         }
         try {
-            const response = await axios.post(url,
+            const response = await axios.post(REGISTER_URL,
                 JSON.stringify({ name, email, studentid, password}),
                 {
                     headers: { 'Content-Type': 'application/json' },

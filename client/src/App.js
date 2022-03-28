@@ -1,30 +1,29 @@
 import React from 'react';
-import Login from './pages/Login/Login'
-import SignUp from './pages/SignUp/SignUp'
+import Auth from './components/Auth/Auth';
+import Register from './components/Register/Register';
+import Newsfeed from './pages/Newsfeed/Newsfeed';
+import Profile from './pages/Profile/Profile';
 import './app.css'
 import {
     BrowserRouter as Router,
     Routes,
     Route,
   } from "react-router-dom";
-import Newsfeed from './pages/Newsfeed/Newsfeed';
-import RequireAuth from './components/Auth/RequireAuth';
+import {LoginContext} from "./context/LoginContext"
+import {useState, useContext } from 'react';
 
-const ROLES = {
-  'User': 1,
-  'Admin': 2
-}
 
 const App = () => {
+
+  const [name, setName] = useState("");
 
     return (
 
          <Routes>
-           <Route path='login' index element={<Login />}/>
-           <Route path='sign-up' index element={<SignUp/>}/>
-           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-          <Route path="/" element={<Newsfeed />} />
-          </Route>
+          <Route path='/' index element={<Auth/>}/> 
+           <Route path='sign-up' index element={<Register/>}/>
+           <Route path="newsfeed" element={<Newsfeed />} />
+           <Route path="profile" element={<LoginContext.Provider value={{name, setName}}><Profile /></LoginContext.Provider>} /> 
          </Routes>
     )
     };

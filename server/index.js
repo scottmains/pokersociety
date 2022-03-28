@@ -36,6 +36,8 @@ module.exports = function(app) {
 app.use('/api/user', authRoute);
 app.use('/api/newsfeed', newsfeedRoute);
 
+
+
 app.listen(
     process.env.PORT,
     console.log('Listening on port ', process.env.PORT)

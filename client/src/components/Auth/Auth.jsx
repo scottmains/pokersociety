@@ -1,18 +1,18 @@
 import { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from "../../context/AuthContext";
-import axios from "axios";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { LockClosedIcon } from '@heroicons/react/solid'
 import { NavLink} from "react-router-dom";
 import pokerlogo  from '../../assets/pokerlogo.svg'
+import axios from '../../api/axios';
+import jwt_decode from "jwt-decode";
+import { LoginContext } from '../../context/LoginContext';
+const LOGIN_URL = '/api/user/login';
 
 
 const Auth = () => {
-    const { setAuth } = useContext(AuthContext);
 
-    const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
+    let navigate = useNavigate();
+
 
     const userRef = useRef();
     const errRef = useRef();
@@ -22,7 +22,9 @@ const Auth = () => {
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
-    const [loginStatus, setLoginStatus] = useState(false);
+    const [user, setUser] = useState(null);
+
+    const {setName} = useContext(LoginContext);
 
     useEffect(() => {
         userRef.current.focus();
@@ -32,10 +34,43 @@ const Auth = () => {
         setErrMsg('');
     }, [studentid, password])
 
+    const refreshToken = async (e) => {
+
+        try {
+            const res = await axios.post("/refresh", { token: user.refreshToken });
+            setUser({
+              ...user,
+              accessToken: res.data.accessToken,
+              refreshToken: res.data.refreshToken,
+            });
+            return res.data;
+          } catch (err) {
+            console.log(err);
+          }
+        };
+
+        const axiosJWT = axios.create()
+
+        axiosJWT.interceptors.request.use(
+          async (config) => {
+            let currentDate = new Date();
+            const decodedToken = jwt_decode(user.accessToken);
+            if (decodedToken.exp * 1000 < currentDate.getTime()) {
+              const data = await refreshToken();
+              config.headers["authorization"] = "Bearer " + data.accessToken;
+            }
+            return config;
+          },
+          (error) => {
+            return Promise.reject(error);
+          }
+        );
+    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://northumbria-poker-society.herokuapp.com/api/user/login',
+            const response = await axios.post(LOGIN_URL,
                 JSON.stringify({ studentid, password }),
                 {
                     headers: { 'Content-Type': 'application/json' },
@@ -44,7 +79,8 @@ const Auth = () => {
             );
             console.log(JSON.stringify(response?.data));
             //console.log(JSON.stringify(response));
-            setLoginStatus(true);
+            setUser(response.data);
+            navigate("../newsfeed", { replace: true });
             
         } catch (err) {
             if (!err?.response) {
@@ -59,8 +95,9 @@ const Auth = () => {
             errRef.current.focus();
         }
     }
-    console.log(loginStatus)
+    console.log(user)
     return (
+      
 
 <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
 	<div className="max-w-md w-full space-y-8">
@@ -98,6 +135,7 @@ const Auth = () => {
 		</form>
 	</div>
 </div>
+
             )}
     
 

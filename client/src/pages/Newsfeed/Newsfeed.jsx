@@ -1,34 +1,49 @@
 import React from "react";
-import "./Newsfeed.css"
-import AuthContext from "../../context/AuthContext";
-import { useNavigate, Link } from "react-router-dom";
-import { useContext } from "react";
+import "./Newsfeed.css";
+import Navbar from "../../components/Navbar/Navbar"
+import { useState, useEffect } from "react";
+
 /**
 
  * 
  * @author Scott Mains
  */
 
-const Newsfeed = () => {
 
-  const { setAuth } = useContext(AuthContext);
-    const navigate = useNavigate();
+ const Feed = () => {
 
-    const logout = async () => {
-      // if used in more components, this should be in context 
-      // axios to /logout endpoint 
-      setAuth({});
-      navigate('/login');
-  }
+  const [post, setPost] = useState()
+  return (
 
+     <div className="feed">
+        <div className="post text-center">
+        <Post content="This is my first post!" />
+        <Post content="This is my second post!" />
+        </div>
+      </div>
+  )
+}
+
+const Post = ({content}) => {
 
   return (
    
-    <div className= "newsfeed section__padding">
-    <h1> NEWS FEED </h1>
-    <p> News feed will go here</p>
-    <button onClick={logout}>Sign Out</button>
+  
+    <div className="post">
    
+  </div>
+  
+  )
+}
+
+
+const Newsfeed = () => {
+
+  return (
+
+    <div>
+    <Navbar />
+    <Feed />
   </div>
   )
 }

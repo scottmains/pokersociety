@@ -23,14 +23,21 @@ const userSchema =  new mongoose.Schema({
         required: true,
         max: 1024,
         min: 6
-    }, 
-    roles: {
-        User: {
-            type: Number,
-            default: 1
-        },
-        Admin: Number
+    },
+    wins: {
+        type: Number,
+        default: 0
+    },
+    losses: {
+        type: Number,
+        default: 0
+    },
+    isAdmin: {
+        type: Boolean,
+        required: true,
+        default: false
     }
+    
    
 });
 
