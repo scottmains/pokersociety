@@ -39,18 +39,7 @@ router.post('/register', async (req,res) => {
     }
 });
 
-const generateAccessToken = (user) => {
- return   jwt.sign(  { id: user.studentid, isAdmin: user.isAdmin }, 
-        process.env.ACCESS_TOKEN_SECRET, 
-        {expiresIn: "15m"})
-    }
 
-const generateRefreshToken = (user) => {
- return  jwt.sign(  { id: user.studentid, isAdmin: user.isAdmin }, 
-    process.env.REFRESH_TOKEN_SECRET)
-        }
-        
-let refreshTokens = [];
 
 router.post('/login', async (req,res) => {
 
@@ -66,50 +55,80 @@ router.post('/login', async (req,res) => {
     if (!validPass) return res.status(419).send('Invalid Password');
 
     if (user){
-     const accessToken = generateAccessToken(user);
-    const refreshToken = generateRefreshToken(user);
-    refreshTokens.push(refreshToken);
+    const accessToken = jwt.sign(
+        {
+            "UserInfo": {
+                "studentid": user.studentid,
+            }
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: '3000s' }
+    );
+    const refreshToken = jwt.sign(
+        { "studentid": user.studentid},
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: '1d' }
+    );
 
-    res.json({
-        studentid: user.studentid,
-        isAdmin: user.isAdmin,
-        accessToken,
-        refreshToken
-    })
+    user.refreshToken = refreshToken;
+        const result = await user.save();
+        console.log(result);
+
+    res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 }); //secure: true, 
+    res.json({accessToken})
     } else res.sendStatus(401);
 });
 
 
 
-router.post('/refresh', async (req,res) => {
+router.get('/refresh', async (req,res) => {
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(401);
+    const refreshToken = cookies.jwt;
 
-const refreshToken = req.body.accessToken
-
-if (!refreshToken) return res.status(401).json("You are not authenticated")
-if(!refreshTokens.includes(refreshToken)){
-    return res.status(403).json("Refresh token isn't valid.")
-}
-jwt.verify(refreshToken,  process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-    err && console.log(err);
-    refreshTokens = refreshToken.filter(token=>token !==refreshToken);
-
-    const newAccessToken = generateAccessToken(user)
-    const newRefreshToken = generateRefreshToken(user)
-
-    refreshTokens.push(newRefreshToken);
-
-    res.status(200).json({
-        accessToken: newAccessToken,
-        refreshToken: newRefreshToken
-    })
+    const user = await User.findOne({ refreshToken }).exec();
+    if (!user) return res.sendStatus(403); //Forbidden 
+    // evaluate jwt 
+    jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET,
+        (err, decoded) => {
+            if (err || user.studentid !== decoded.studentid) return res.sendStatus(403);
+            const accessToken = jwt.sign(
+                {
+                    "UserInfo": {
+                        "studentid": decoded.studentid
+                    }
+                },
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: '30s' }
+            );
+            res.json({ accessToken, studentid: user.studentid})
+        }
+    );
 })
-});
 
-router.post('/logout', verify, async (req,res) => {
 
-    const refreshToken = req.body.accessToken;
-  refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
-  res.status(200).json("You logged out successfully.");
+router.get('/logout', async (req,res) => {
+
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(204); //No content
+    const refreshToken = cookies.jwt;
+
+    // Is refreshToken in db?
+    const user = await User.findOne({ refreshToken }).exec();
+    if (!user) {
+        res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+        return res.sendStatus(204);
+    }
+
+    // Delete refreshToken in db
+    user.refreshToken = '';
+    const result = await user.save();
+    console.log(result);
+
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+    res.sendStatus(204);
 });
 
 module.exports = router;

@@ -3,27 +3,38 @@ import Auth from './components/Auth/Auth';
 import Register from './components/Register/Register';
 import Newsfeed from './pages/Newsfeed/Newsfeed';
 import Profile from './pages/Profile/Profile';
+
 import './app.css'
 import {
     BrowserRouter as Router,
     Routes,
     Route,
+    Navigate
   } from "react-router-dom";
-import {LoginContext} from "./context/LoginContext"
-import {useState, useContext } from 'react';
 
+import useAuth from "./context/Auth/useAuth";
+import PersistLogin from './components/Auth/persistLogin';
 
 const App = () => {
 
-  const [name, setName] = useState("");
 
+  const  {auth } = useAuth();
+
+
+console.log(auth)
     return (
-
+      
          <Routes>
-          <Route path='/' index element={<Auth/>}/> 
-           <Route path='sign-up' index element={<Register/>}/>
-           <Route path="newsfeed" element={<Newsfeed />} />
-           <Route path="profile" element={<LoginContext.Provider value={{name, setName}}><Profile /></LoginContext.Provider>} /> 
+        <Route path="/" element={<Auth />}/>
+        <Route path="sign-up" element={<Register />}/>
+        <Route element={<PersistLogin/>}> 
+       
+        <Route path="newsfeed"  element={
+          auth?.accessToken? <Newsfeed /> : <Navigate to="/" />
+        }/>
+        <Route path="profile"  element={
+          auth?.accessToken? <Profile /> : <Navigate to="/" />
+        }/></Route>
          </Routes>
     )
     };

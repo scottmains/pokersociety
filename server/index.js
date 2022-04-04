@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const authRoute = require('./routes/auth');
 const newsfeedRoute = require('./routes/newsfeed');
+const profileRoute = require('./routes/profile');
 const cors = require('cors')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
@@ -28,13 +29,10 @@ app.use(cookieParser());
 
 const proxy = require('http-proxy-middleware')
 
-module.exports = function(app) {
-    // add other server routes to path array
-    app.use(proxy(['/api' ], { target: 'http://localhost:5000' }));
-} 
 
 app.use('/api/user', authRoute);
 app.use('/api/newsfeed', newsfeedRoute);
+app.use('/api/profile', profileRoute);
 
 
 

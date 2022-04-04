@@ -36,9 +36,8 @@ const userSchema =  new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
-    }
-    
-   
+    },
+    refreshToken: String
 });
 
 module.exports = mongoose.model('User', userSchema);

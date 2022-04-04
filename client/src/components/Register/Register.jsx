@@ -9,7 +9,7 @@ const REGISTER_URL = '/api/user/register';
 const USER_REGEX = /^[a-zA-Z ,.'-]+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX =   /^[\w\d].+@[\w\d]+\.ac\.uk$/
-const STUDENTID_REGEX = /[wW][0-9]+/
+const STUDENTID_REGEX = /[wW][0-9]+.{6,15}$/
 
 
 
