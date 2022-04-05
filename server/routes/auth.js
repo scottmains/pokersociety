@@ -97,13 +97,15 @@ router.get('/refresh', async (req,res) => {
             const accessToken = jwt.sign(
                 {
                     "UserInfo": {
-                        "studentid": decoded.studentid
+                        "studentid": decoded.studentid,
+                        "name": decoded.name,
+                        "email": decoded.email
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: '30s' }
             );
-            res.json({ accessToken, studentid: user.studentid})
+            res.json({ accessToken, studentid: user.studentid, name: user.name, email: user.email})
         }
     );
 })
