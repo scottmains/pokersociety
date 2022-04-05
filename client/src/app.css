@@ -1,0 +1,32 @@
+.App {
+    text-align: center;
+  }
+  
+  .rcw-conversation-container{
+    padding-top: 20%;
+    box-shadow: none;
+    min-width: 300px;
+    left: 5%;
+  }
+  
+  .rcw-conversation-container .rcw-header{
+  border-radius: 15px 15px 0 0;
+  }
+  .rcw-message-client{
+    padding-right: 10px;
+  }
+  .rcw-picker-icon{
+    display: none;
+  }
+  .rcw-sender{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .rcw-new-message{
+    width: calc(100% - 45px);
+  }
+  
+  
+  
+  

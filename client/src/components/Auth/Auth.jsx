@@ -50,6 +50,7 @@ const Auth = () => {
         setUserDetails(studentid);
         setUser('')
         setPwd('');
+        console.log(studentid)
         navigate("/newsfeed", { replace: true });
         } catch (err) {
             if (!err?.response) {

@@ -99,13 +99,15 @@ router.get('/refresh', async (req,res) => {
                     "UserInfo": {
                         "studentid": decoded.studentid,
                         "name": decoded.name,
-                        "email": decoded.email
+                        "email": decoded.email,
+                        "wins": decoded.wins,
+                        "losses": decoded.losses
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: '30s' }
             );
-            res.json({ accessToken, studentid: user.studentid, name: user.name, email: user.email})
+            res.json({ accessToken, studentid: user.studentid, name: user.name, email: user.email, wins: user.wins, losses: user.losses})
         }
     );
 })

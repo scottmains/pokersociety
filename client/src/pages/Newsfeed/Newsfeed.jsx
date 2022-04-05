@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from '../../components/Navbar/Navbar';
-
+import Chatbot from '../../components/Chatbot/Chatbot';
+import useAuth from "../../context/Auth/useAuth";
 
 const categories = ['Announcement: ', 'General: ', 'Game: ', 'Other: '];
 
@@ -102,19 +103,23 @@ class PostForm extends React.Component {
   }
 }
 
+const Newsfeed = () => {
 
 
+  const {userDetails} = useAuth();
+     let userID = JSON.stringify(userDetails)
+    console.log(userID)
+    
 
-class Newsfeed extends React.Component {
-  render() {
     return (
       <div className="text-center mx-auto bg-gray-300 h-screen">
         <Navbar/>
         <Feed />
+        <Chatbot />
       </div>
     );
   }
-}
+
 
 export default Newsfeed
  
