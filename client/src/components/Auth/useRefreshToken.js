@@ -16,7 +16,7 @@ const useRefreshToken = () => {
             return { ...prev, accessToken: response.data.accessToken}
         });
         setUserDetails(prev => {
-            return { ...prev, studentid: response.data.studentid}
+            return { ...prev, studentid: response.data.studentid, name: response.data.name, email: response.data.email}
         })
         return response.data.accessToken;
     }
