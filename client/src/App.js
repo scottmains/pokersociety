@@ -14,11 +14,19 @@ import {
 
 import useAuth from "./context/Auth/useAuth";
 import PersistLogin from './components/Auth/persistLogin';
+import RequireAuth from  "./context/Auth/RequireAuth";
+import NewsfeedAdmin from './pages/Newsfeed/NewsfeedAdmin';
+
+const ROLES = {
+  'User': 2001,
+  'Editor': 1984,
+  'Admin': 5150
+}
 
 const App = () => {
 
 
-  const  {auth } = useAuth();
+  const  {auth} = useAuth();
 
 
 console.log(auth)
@@ -28,13 +36,16 @@ console.log(auth)
         <Route path="/" element={<Auth />}/>
         <Route path="sign-up" element={<Register />}/>
         <Route element={<PersistLogin/>}> 
-       
+        <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
         <Route path="newsfeed"  element={
-          auth?.accessToken? <Newsfeed /> : <Navigate to="/" />
-        }/>
+          <Newsfeed />}/>
         <Route path="profile"  element={
-          auth?.accessToken? <Profile /> : <Navigate to="/" />
-        }/></Route>
+         <Profile /> }/>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+          <Route path="newsfeedadmin"  element={
+          <NewsfeedAdmin />}/>
+          </Route>
+      </Route></Route>
          </Routes>
     )
     };

@@ -105,7 +105,7 @@ function compare(utterancesArray, answersArray, string) {
 
     return (
       <div className="App">
-        <h1>hello</h1>
+      
         <Widget
           handleNewUserMessage={handleNewUserMessage}
           profileAvatar={botIcon}

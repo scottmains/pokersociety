@@ -8,8 +8,8 @@ const Profile = () => {
 
 
    
-    const {userDetails} = useAuth();
-     let userID = JSON.stringify(userDetails)
+    const {admin} = useAuth();
+     let userID = JSON.stringify(admin)
     console.log(userID)
   return (
     <div>

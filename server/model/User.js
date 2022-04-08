@@ -18,6 +18,14 @@ const userSchema =  new mongoose.Schema({
         max: 15,
         min: 5
     },
+    roles: {
+        User: {
+            type: Number,
+            default: 2001
+        },
+        Editor: Number,
+        Admin: Number
+    },
     password: {
         type: String,
         required: true,
@@ -31,11 +39,6 @@ const userSchema =  new mongoose.Schema({
     losses: {
         type: Number,
         default: 0
-    },
-    isAdmin: {
-        type: Boolean,
-        required: true,
-        default: false
     },
     refreshToken: String
 });

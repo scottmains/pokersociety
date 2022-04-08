@@ -80,8 +80,25 @@ class PostForm extends React.Component {
 
   render() {
     return (
-      <></>
-     
+      <div className="post-form md:w-1/3 w-2/3 mx-auto pt-20">
+        <form onSubmit={this.handleSubmit}>
+          <label className="block mb-2 text-sm font-medium text-black">
+            Category:
+            <select className="w-full h-10 pl-3 pr-6 text-base placeholder-black border rounded-lg appearance-none focus:shadow-outline" ref={(input) => this.category = input}>
+              {categories.map((category, index) =>
+                <option key={category} value={category}>{category}</option>
+              )}
+            </select>
+          </label>
+          <label className="block mb-2 text-sm font-medium text-gray-900">
+            Content:
+            <input className="w-full h-12 px-4 mb-2 text-lg text-gray-700 placeholder-gray-600 border rounded-lg 
+            focus:shadow-outline" type="text" ref={(input) => this.content = input} />
+          </label>
+          <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg
+           text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Submit</button>
+        </form>
+      </div>
     )
   }
 }

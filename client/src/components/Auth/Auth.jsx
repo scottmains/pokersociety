@@ -25,7 +25,7 @@ const Auth = () => {
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
    
-    const {setUserDetails, setAuth, persist, setPersist } = useAuth();
+    const {setUserDetails, setAdmin, setAuth, persist, setPersist } = useAuth();
 
     useEffect(() => {
         userRef.current.focus();
@@ -46,11 +46,11 @@ const Auth = () => {
                 }
             );
         const accessToken = response?.data?.accessToken;
-        setAuth({ user, pwd, accessToken });
+        const roles = response?.data?.roles;
+        setAuth({ user, pwd, accessToken, roles});
         setUserDetails(studentid);
         setUser('')
         setPwd('');
-        console.log(studentid)
         navigate("/newsfeed", { replace: true });
         } catch (err) {
             if (!err?.response) {
@@ -65,7 +65,7 @@ const Auth = () => {
             errRef.current.focus();
         }
     }
-    console.log(user)
+   
 
     const togglePersist = () => {
       setPersist(prev => !prev);

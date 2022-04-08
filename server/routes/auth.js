@@ -53,12 +53,14 @@ router.post('/login', async (req,res) => {
     //CHECK IF PASSWORD IS CORRECT
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass) return res.status(419).send('Invalid Password');
-
+    
     if (user){
+        const roles = Object.values(user.roles);
     const accessToken = jwt.sign(
         {
             "UserInfo": {
                 "studentid": user.studentid,
+                "roles": roles
             }
         },
         process.env.ACCESS_TOKEN_SECRET,
@@ -73,9 +75,10 @@ router.post('/login', async (req,res) => {
     user.refreshToken = refreshToken;
         const result = await user.save();
         console.log(result);
+        
 
-    res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 }); //secure: true, 
-    res.json({accessToken})
+    res.cookie('jwt', refreshToken, { httpOnly: true, secure:true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 }); //secure: true, 
+    res.json({accessToken, roles});
     } else res.sendStatus(401);
 });
 
@@ -94,6 +97,7 @@ router.get('/refresh', async (req,res) => {
         process.env.REFRESH_TOKEN_SECRET,
         (err, decoded) => {
             if (err || user.studentid !== decoded.studentid) return res.sendStatus(403);
+            const roles = Object.values(user.roles);
             const accessToken = jwt.sign(
                 {
                     "UserInfo": {
@@ -101,13 +105,14 @@ router.get('/refresh', async (req,res) => {
                         "name": decoded.name,
                         "email": decoded.email,
                         "wins": decoded.wins,
-                        "losses": decoded.losses
+                        "losses": decoded.losses,
+                        "roles": roles
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: '30s' }
             );
-            res.json({ accessToken, studentid: user.studentid, name: user.name, email: user.email, wins: user.wins, losses: user.losses})
+            res.json({ accessToken, studentid: user.studentid, name: user.name, email: user.email, wins: user.wins, losses: user.losses, roles: roles})
         }
     );
 })
