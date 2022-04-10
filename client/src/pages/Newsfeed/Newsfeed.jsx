@@ -1,104 +1,17 @@
+import PostsList from "./posts/PostsList";
+import AddPostForm from "./posts/AddPostForm";
+import Navbar from "../../components/Navbar/Navbar"
 import React from 'react'
-import Navbar from '../../components/Navbar/Navbar';
 import Chatbot from '../../components/Chatbot/Chatbot';
-import useAuth from "../../context/Auth/useAuth";
-
-const categories = ['Announcement: ', 'General: ', 'Game: ', 'Other: '];
-
-class Feed extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      posts: JSON.parse(localStorage.getItem('posts')) || [],
-      filteredPosts: []
-    }
-
-    this.handleNewPost = this.handleNewPost.bind(this);
-    this.handleFilter = this.handleFilter.bind(this);
-  }
-
-  handleNewPost(post) {
-    var posts = this.state.posts.concat([post]);
-    this.setState({
-      posts: posts
-    });
-    localStorage.setItem('posts', JSON.stringify(posts));
-  }
-
-  handleFilter(filter) {
-    this.setState({
-      filteredPosts: this.state.posts.filter((post) =>
-        post.category.toUpperCase() === filter.toUpperCase() ||
-          post.content.includes(filter)
-      )
-    });
-  }
-
-  render() {
-    const posts = this.state.posts.map((post, index) =>
-      <Post key={index} value={post} />
-    );
-    const filteredPosts = this.state.filteredPosts.map((post, index) =>
-      <Post key={index} value={post} />
-    );
-    return (
-      <div className="feed">
-       
-        {filteredPosts.length > 0 ? filteredPosts : posts}
-        <PostForm onSubmit={this.handleNewPost} />
-      </div>
-    )
-  }
-}
-
-class Post extends React.Component {
-  render() {
-    return (
-      <div className="mx-auto p-6 max-w-sm text-white bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 mt-10">
-        <span className="label">{this.props.value.category}</span>
-        <span className="content">{this.props.value.content}</span>
-      </div>
-    )
-  }
-}
-
-class PostForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit(event) {
-    this.props.onSubmit({
-      category: this.category.value,
-      content: this.content.value
-    });
-    this.category.value = categories[0];
-    this.content.value = '';
-    event.preventDefault();
-  }
-
-  render() {
-    return (
-      <></>
-     
-    )
-  }
-}
 
 const Newsfeed = () => {
-
-
-
-    return (
-      <div className="text-center mx-auto bg-gray-300 h-screen">
-        <Navbar/>
-        <Feed />
-        <Chatbot />
-      </div>
-    );
-  }
-
+  return (
+   <>
+   <Navbar/>
+    <PostsList />
+    <Chatbot />
+ </>
+  )
+}
 
 export default Newsfeed
- 

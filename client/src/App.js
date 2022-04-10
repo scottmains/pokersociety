@@ -16,6 +16,9 @@ import useAuth from "./context/Auth/useAuth";
 import PersistLogin from './components/Auth/persistLogin';
 import RequireAuth from  "./context/Auth/RequireAuth";
 import NewsfeedAdmin from './pages/Newsfeed/NewsfeedAdmin';
+import Unauthorized from './pages/Unauthorized';
+
+
 
 const ROLES = {
   'User': 2001,
@@ -35,6 +38,8 @@ console.log(auth)
          <Routes>
         <Route path="/" element={<Auth />}/>
         <Route path="sign-up" element={<Register />}/>
+        <Route path="unauthorized" element={<Unauthorized />}/>
+        
         <Route element={<PersistLogin/>}> 
         <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
         <Route path="newsfeed"  element={
@@ -45,7 +50,9 @@ console.log(auth)
           <Route path="newsfeedadmin"  element={
           <NewsfeedAdmin />}/>
           </Route>
-      </Route></Route>
+          
+      </Route>
+      </Route>
          </Routes>
     )
     };

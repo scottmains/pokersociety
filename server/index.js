@@ -15,9 +15,10 @@ dotenv.config();
 
 // Database connection
 
-mongoose.connect(process.env.DB_CONNECT,  () => 
+  mongoose.connect(process.env.DB_CONNECT,  () => 
     console.log('connected to db')
     );
+
 
 //Middleware
 app.use(express.json());
@@ -33,8 +34,6 @@ const proxy = require('http-proxy-middleware')
 app.use('/api/user', authRoute);
 app.use('/api/newsfeed', newsfeedRoute);
 app.use('/api/profile', profileRoute);
-
-
 
 app.listen(
     process.env.PORT,
