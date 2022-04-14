@@ -1,0 +1,35 @@
+.poker-menu-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+
+.startgame--button {
+	background-color: #FDBA0A;
+	border-radius: 2em;
+	border: none;
+	color: whitesmoke;
+	padding: 1em 2em;
+	line-height: 1;
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-top: 1.5em;
+	margin-bottom: .8em;
+	transition: background-color 0.3s ease-out, color 0.3s ease-out;
+}
+
+.startgame--button:hover {
+	color: rgb(156, 74, 19);
+ 	cursor: pointer;
+}
+
+.startgame--button:hover {
+	cursor: pointer;
+}
+
+.number-bots--radiobuttons {
+	display: none;
+}

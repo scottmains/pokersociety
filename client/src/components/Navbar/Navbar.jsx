@@ -10,7 +10,7 @@ import useLogout from "../../components/Auth/useLogout";
 const navigation = [
   { name: 'Home', href: '/newsfeed', current: true },
   { name: 'Calendar', href: '#', current: false },
-  { name: 'Play', href: '#', current: false },
+  { name: 'Play', href: '/pokerpractice', current: false },
   { name: 'Chat', href: '#', current: false },
 ]
 

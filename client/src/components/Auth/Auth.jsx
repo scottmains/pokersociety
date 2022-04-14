@@ -25,7 +25,7 @@ const Auth = () => {
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
    
-    const {setUserDetails, setAdmin, setAuth, persist, setPersist } = useAuth();
+    const {setUserDetails, setAuth, persist, setPersist } = useAuth();
 
     useEffect(() => {
         userRef.current.focus();
