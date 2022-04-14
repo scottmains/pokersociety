@@ -19,10 +19,9 @@ function Chatbot() {
     addResponseMessage("Hi I'm pokerBot. Can I help you?");
   }, []);
 
-  const {userDetails} = useAuth();
-        let userID = JSON.stringify(userDetails)
-  
 
+    const {userDetails } = useAuth();
+   
    const handleNewUserMessage = async (newMessage) => {
 
     let product;
@@ -47,12 +46,11 @@ function Chatbot() {
       }
       
       if(text === "wins"){
-        
-       console.log(userID)
-       product = userID
-       product = product.slice(1, -1);
-       addResponseMessage(product);
-        return;
+        let obj = JSON.stringify(userDetails)
+        let user = JSON.parse(obj)
+        product = JSON.stringify(user.wins)
+        addResponseMessage(product);
+         return;
         /* const response = await fetch(jokeURL);
         const joke = await response.json();
         product = JSON.stringify(joke.value);
