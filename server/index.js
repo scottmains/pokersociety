@@ -19,12 +19,9 @@ dotenv.config();
     console.log('connected to db')
     );
 
-   
-
+ 
 
 //Middleware
-
-
 
 app.use(express.json());
 app.use(cors({

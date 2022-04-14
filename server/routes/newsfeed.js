@@ -30,9 +30,7 @@ router.post('/postnewsfeed', async (req,res) => {
 
    
 router.get('/getnewsfeed', async (req,res) => {
-
   const posts = await Newsfeed.find().sort({_id:-1})
- 
   res.json(posts);
 });
 

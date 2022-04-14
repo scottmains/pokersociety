@@ -12,7 +12,7 @@ const initialState = {
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
     try {
-        const response = await axios.get("http://localhost:5000/api/newsfeed/getnewsfeed")
+        const response = await axios.get("https://nupokersociety.herokuapp.com/api/newsfeed/getnewsfeed")
         return [...response.data];
     } catch (err) {
         return err.message;
@@ -21,7 +21,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
 
 export const addNewPost = createAsyncThunk('posts/addNewPost', async (initialPost) => {
     try {
-        const response = await axios.post("http://localhost:5000/api/newsfeed/postnewsfeed", initialPost)
+        const response = await axios.post("https://nupokersociety.herokuapp.com/api/newsfeed/postnewsfeed", initialPost)
         return response.data
     } catch (err) {
         return err.message;
