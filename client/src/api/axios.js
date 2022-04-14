@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = 'https://nupokersociety.herokuapp.com/';
+const BASE_URL = 'https://pokersocietynorthumbria.herokuapp.com/';
 
 export default axios.create({
     baseURL: BASE_URL
