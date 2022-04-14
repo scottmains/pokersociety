@@ -22,7 +22,7 @@ dotenv.config();
 
 //Middleware
 app.use(express.json());
-app.options('*', cors())
+
 app.use(cors({credentials: true, origin: true}))
 app.use(cors(corsOptions));
 app.use(express.urlencoded({extended: true}));
