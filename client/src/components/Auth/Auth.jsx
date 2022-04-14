@@ -83,13 +83,13 @@ const Auth = () => {
         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen" } aria-live="assertive">{errMsg}</p>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
-            <label htmlFor="studentid">Student ID:</label>
+            <label className="float-left" htmlFor="studentid">Student ID:</label>
             <input className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 
             placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-rose-500 focus:border-rose-500 focus:z-10 sm:text-sm" 
             type="text" id="studentid" ref={userRef} autoComplete="off" onChange={(e)=> setStudentId(e.target.value)} value={studentid} required />
           </div>
           <div className="rounded-md shadow-sm -space-y-px">
-            <label htmlFor="password">Password:</label>
+            <label className="float-left" htmlFor="password">Password:</label>
             <input className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 
             text-gray-900 rounded-t-md focus:outline-none focus:ring-rose-500 focus:border-rose-500 focus:z-10 sm:text-sm" type="password" 
             id="password" onChange={(e)=> setPassword(e.target.value)} value={password} required />

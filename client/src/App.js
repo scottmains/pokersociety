@@ -41,7 +41,6 @@ const App = () => {
         
         <Route element={<PersistLogin/>}> 
         <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-      
         <Route path="newsfeed"  element={
           <Newsfeed />}/>
         <Route path="profile"  element={
@@ -51,7 +50,6 @@ const App = () => {
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
           <Route path="newsfeedadmin"  element={
           <NewsfeedAdmin />}/>
-
           </Route>
           
       </Route>
