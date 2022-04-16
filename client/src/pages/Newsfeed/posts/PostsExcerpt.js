@@ -1,7 +1,5 @@
 import ReactionButtons from "./ReactionButtons";
 
-
-
 const PostsExcerpt = ({ post }) => {
 
     let date = Date.parse(post.date)
