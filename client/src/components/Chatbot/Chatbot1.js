@@ -20,8 +20,7 @@ function Chatbot() {
   }, []);
 
   const {userDetails} = useAuth();
-        /* let userID = JSON.stringify(userDetails)
-        console.log(userID) */
+        let userID = JSON.stringify(userDetails)
   
 
    const handleNewUserMessage = async (newMessage) => {
@@ -38,7 +37,7 @@ function Chatbot() {
         .replace(/the /g, "")
         .replace(/r u/g, "are you");
     
-        if(text.includes("joke")){
+        if(text === "joke" || text === "tell a joke"){
           const response = await fetch(jokeURL);
           const joke = await response.json();
           product = JSON.stringify(joke.value);
@@ -47,47 +46,46 @@ function Chatbot() {
           return;
       }
       
-      if(text.includes("wins i")||text.includes("my wins")||text.includes("many wins")){
+      if(text.includes("wins i")||text.includes("my wins")){
         
         let obj = JSON.stringify(userDetails)
-         let user = JSON.parse(obj)
-          product = user.wins
+     let user = JSON.parse(obj)
+      product = JSON.stringify(user.wins)
        addResponseMessage(`You have ${product} wins`);
         return;
         }
         if(text.includes("losses i")||text.includes("my losses")){
         
           let obj = JSON.stringify(userDetails)
-         let user = JSON.parse(obj)
-          product = user.losses
+       let user = JSON.parse(obj)
+        product = JSON.stringify(user.losses)
          addResponseMessage(`You have ${product} losses`);
           return;
           }
           if(text.includes("my email")){
         
-            /* let obj = JSON.stringify(userDetails)
-         let user = JSON.parse(obj) */
-         /*  console.log(user.email) */
-         let obj = JSON.stringify(userDetails)
+            let obj = JSON.stringify(userDetails)
          let user = JSON.parse(obj)
-          product = user.email
+          product = JSON.stringify(user.email)
            addResponseMessage(`Your email is ${product}`);
             return;
             }   
             if(text.includes("hello pokerbot")){
         
               let obj = JSON.stringify(userDetails)
-         let user = JSON.parse(obj)
-          product = user.name
+           let user = JSON.parse(obj)
+            product = JSON.stringify(user.name)
+            product = product.slice(1, -1);
              addResponseMessage(`Hello ${product}, how can I help?`);
               return;
               }
               if(text.includes("my name")){
         
                 let obj = JSON.stringify(userDetails)
-         let user = JSON.parse(obj)
-          product = user.name
-               addResponseMessage(`Your name is ${product}`);
+             let user = JSON.parse(obj)
+              product = JSON.stringify(user.name)
+              product = product.slice(1, -1);
+               addResponseMessage(`${product}`);
                 return;
                 } 
       if(text === "weather" || text === "whats the weather"){
