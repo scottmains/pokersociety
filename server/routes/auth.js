@@ -60,6 +60,10 @@ router.post('/login', async (req,res) => {
         {
             "UserInfo": {
                 "studentid": user.studentid,
+                "name": user.name,
+                "email": user.email,
+                "wins": user.wins,
+                "losses": user.losses,
                 "roles": roles
             }
         },

@@ -48,8 +48,10 @@ const Auth = () => {
         const accessToken = response?.data?.accessToken;
         const roles = response?.data?.roles;
         setAuth({ user, pwd, accessToken, roles});
-        setUserDetails({studentid: response.data.studentid, name: response.data.name, email: response.data.email,
-                      wins: response.data.wins, losses: response.data.losses});
+        setUserDetails(prev => {
+          return { ...prev, studentid: response.data.studentid, name: response.data.name, email: response.data.email,
+                      wins: response.data.wins, losses: response.data.losses};
+      })
         setUser('')
         setPwd('');
         navigate("/newsfeed", { replace: true });
@@ -67,7 +69,6 @@ const Auth = () => {
         }
     }
    
-
     return (
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
