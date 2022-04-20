@@ -48,7 +48,8 @@ const Auth = () => {
         const accessToken = response?.data?.accessToken;
         const roles = response?.data?.roles;
         setAuth({ user, pwd, accessToken, roles});
-        setUserDetails(studentid);
+        setUserDetails({studentid: response.data.studentid, name: response.data.name, email: response.data.email,
+                      wins: response.data.wins, losses: response.data.losses});
         setUser('')
         setPwd('');
         navigate("/newsfeed", { replace: true });

@@ -5,4 +5,5 @@ const allowedOrigins = [
     'https://nupokersociety.herokuapp.com/',
     'https://pokersociety.netlify.app/',
     'http://pokersociety.surge.sh/'
+]
 

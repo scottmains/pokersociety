@@ -78,7 +78,7 @@ router.post('/login', async (req,res) => {
         
 
     res.cookie('jwt', refreshToken, { httpOnly: true, secure:true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 }); //secure: true, 
-    res.json({accessToken, roles});
+    res.json({accessToken, roles, studentid: user.studentid, name: user.name, email: user.email, wins: user.wins, losses: user.losses});
     } else res.sendStatus(401);
 });
 
