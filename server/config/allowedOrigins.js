@@ -6,6 +6,3 @@ const allowedOrigins = [
     'https://pokersociety.netlify.app/',
     'http://pokersociety.surge.sh/'
 
-];
-
-module.exports = allowedOrigins;
