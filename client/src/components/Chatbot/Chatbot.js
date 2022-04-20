@@ -56,7 +56,7 @@ function Chatbot() {
           return;
           }
 
-          if(((text.includes("when is"))||(text.includes("When is"))&&text.includes("next"))||text.includes("next game")){
+          if((((text.includes("when is"))||(text.includes("When is")))&&((text.includes("game"))||((text.includes("next game")))))){
         
             /* let obj = JSON.stringify(userDetails)
            let user = JSON.parse(obj)
@@ -65,7 +65,7 @@ function Chatbot() {
             return;
             }  
 
-            if((text.includes("where is"))||(text.includes("Where is"))&&text.includes("TR")){
+            if((((text.includes("where is"))||(text.includes("Where is")))&&((text.includes("TR"))||((text.includes("tr")))))){
         
               /* let obj = JSON.stringify(userDetails)
              let user = JSON.parse(obj)
@@ -74,7 +74,7 @@ function Chatbot() {
               return;
               } 
               
-              if(((text.includes("who is"))||(text.includes("Who is"))&&(text.includes("best player")&&(text.includes("top player"))))){
+              if((((text.includes("who is"))||(text.includes("Who is")))&&((text.includes("best player"))||((text.includes("top player")))))){
         
                 /* let obj = JSON.stringify(userDetails)
                let user = JSON.parse(obj)
@@ -83,7 +83,7 @@ function Chatbot() {
                 return;
                 } 
 
-                if(((text.includes("how much"))||(text.includes("How much"))&&(text.includes("buy in")||(text.includes("buy-in"))))){
+                if((((text.includes("how much"))||(text.includes("How much")))&&((text.includes("buy in"))||((text.includes("buy-in")))))){
         
                   /* let obj = JSON.stringify(userDetails)
                  let user = JSON.parse(obj)
@@ -93,7 +93,7 @@ function Chatbot() {
                   return;
                   } 
 
-                if(((text.includes("value"))||(text.includes("Value"))||(text.includes("chips")))){
+                if((((text.includes("value"))||(text.includes("Value")))&&(text.includes("chips")))){
         
                   /* let obj = JSON.stringify(userDetails)
                  let user = JSON.parse(obj)
@@ -108,7 +108,7 @@ function Chatbot() {
                   return;
                   } 
 
-                if((((text.includes("list"))||(text.includes("List"))&&(text.includes("poker hands"))))||text.includes("poker hands")){
+                if((((text.includes("list"))||(text.includes("List")))&&(text.includes("hands")))){
         
                   /* let obj = JSON.stringify(userDetails)
                  let user = JSON.parse(obj)
