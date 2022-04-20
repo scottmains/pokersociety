@@ -15,8 +15,11 @@ const jokeURL = "https://api.chucknorris.io/jokes/random";
 
 function Chatbot() {
 
+ 
+
   useEffect(() => {
-    addResponseMessage("Hi I'm pokerBot. Can I help you?");
+    addResponseMessage(`Hi I'm pokerBot. Can I help you? 
+     (for command list type 'help')`);
   }, []);
 
   const {userDetails} = useAuth();
@@ -37,6 +40,93 @@ function Chatbot() {
         .replace(/ the /g, "")
         .replace(/the /g, "")
         .replace(/r u/g, "are you");
+
+
+        if((text === "help")||(text === "Help")){
+        
+         
+         addResponseMessage(`You can try:
+          When is the next game,
+          How many wins I have,
+          How much is buy-in,
+          List of poker hands,
+          Who is the top player,
+          Value of chips,
+         `);
+          return;
+          }
+
+          if(((text.includes("when is"))||(text.includes("When is"))&&text.includes("next"))||text.includes("next game")){
+        
+            /* let obj = JSON.stringify(userDetails)
+           let user = JSON.parse(obj)
+            product = user.losses */
+           addResponseMessage(`Next game is on Tuesday 23th at 19:00pm in TR3`);
+            return;
+            }  
+
+            if((text.includes("where is"))||(text.includes("Where is"))&&text.includes("TR")){
+        
+              /* let obj = JSON.stringify(userDetails)
+             let user = JSON.parse(obj)
+              product = user.losses */
+             addResponseMessage(`TR stands for training room and is located in Student union building on the ground floor`);
+              return;
+              } 
+              
+              if(((text.includes("who is"))||(text.includes("Who is"))&&(text.includes("best player")&&(text.includes("top player"))))){
+        
+                /* let obj = JSON.stringify(userDetails)
+               let user = JSON.parse(obj)
+                product = user.losses */
+               addResponseMessage(`Currently the top player is Simon Dupkala`);
+                return;
+                } 
+
+                if(((text.includes("how much"))||(text.includes("How much"))&&(text.includes("buy in")||(text.includes("buy-in"))))){
+        
+                  /* let obj = JSON.stringify(userDetails)
+                 let user = JSON.parse(obj)
+                  product = user.losses */
+                 addResponseMessage(`Buy in: £2.50
+                 re-buy: £1.50 (available for first hour)`);
+                  return;
+                  } 
+
+                if(((text.includes("value"))||(text.includes("Value"))||(text.includes("chips")))){
+        
+                  /* let obj = JSON.stringify(userDetails)
+                 let user = JSON.parse(obj)
+                  product = user.losses */
+                 addResponseMessage(`Chip value
+                 white: 10
+                 red: 20
+                 green: 50
+                 blue: 100
+                 black: 500
+                 `);
+                  return;
+                  } 
+
+                if((((text.includes("list"))||(text.includes("List"))&&(text.includes("poker hands"))))||text.includes("poker hands")){
+        
+                  /* let obj = JSON.stringify(userDetails)
+                 let user = JSON.parse(obj)
+                  product = user.losses */
+                 addResponseMessage(`From highest to lowest
+                 1. Royal Flush 
+                 2. Straight Flush 
+                 3. Four of a kind 
+                 4. Full house 
+                 5. Flush 
+                 6. Straight 
+                 7. Three of a kind 
+                 8. Two pair 
+                 9. One pair 	
+                 10. High card`);
+                  return;
+                  } 
+	
     
         if(text.includes("joke")){
           const response = await fetch(jokeURL);
@@ -46,8 +136,10 @@ function Chatbot() {
           addResponseMessage(product);
           return;
       }
+
+
       
-      if(text.includes("wins i")||text.includes("my wins")||text.includes("many wins")){
+      if(text.includes("wins i")||text.includes("my wins")||text.includes("many wins")||text.includes("wins do")){
         
         let obj = JSON.stringify(userDetails)
          let user = JSON.parse(obj)
@@ -64,10 +156,6 @@ function Chatbot() {
           return;
           }
           if(text.includes("my email")){
-        
-            /* let obj = JSON.stringify(userDetails)
-         let user = JSON.parse(obj) */
-         /*  console.log(user.email) */
          let obj = JSON.stringify(userDetails)
          let user = JSON.parse(obj)
           product = user.email
