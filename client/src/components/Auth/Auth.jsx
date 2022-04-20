@@ -25,7 +25,7 @@ const Auth = () => {
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
    
-    const {setUserDetails, setAuth, persist, setPersist } = useAuth();
+    const {setUserDetails, setAuth} = useAuth();
 
     useEffect(() => {
         userRef.current.focus();
@@ -67,14 +67,6 @@ const Auth = () => {
     }
    
 
-    const togglePersist = () => {
-      setPersist(prev => !prev);
-    }
-
-    useEffect(() => {
-      localStorage.setItem("persist", persist);
-    }, [persist])
-
     return (
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -95,11 +87,6 @@ const Auth = () => {
             id="password" onChange={(e)=> setPassword(e.target.value)} value={password} required />
           </div>
           <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input id="remember-me" name="remember-me" type="checkbox" onChange={togglePersist} checked={persist} 
-              className="h-4 w-4 text-rose-300 focus:ring-rose-500 border-gray-300 rounded" />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900"> Trust this device </label>
-            </div>
             <div className="text-sm">
               <a href="#" className="font-medium text-rose-600 hover:text-rose-500"> Forgot your password? </a>
             </div>
