@@ -1,6 +1,8 @@
 .App {
     text-align: center;
   }
+
+
   
   .rcw-conversation-container{
     padding-top: 20%;
@@ -25,8 +27,35 @@
   }
   .rcw-new-message{
     width: calc(100% - 45px);
+    min-width: 70%;
   }
   
   
-  
+ 
+  .rcw-open-launcher{
+    padding: 1rem;
+  }
+  .rcw-close-launcher{
+    margin: auto;
+  }
+.rcw-conversation-container .rcw-header{
+  background-color: rgb(31,41,55) !important;
+}
+.rcw-launcher{
+  background-color: rgb(31,41,55);
+}  
+.rcw-conversation-container .rcw-close-button{
+  background-color: rgb(31,41,55);
+
+}
+
+@media screen and (max-width: 600px){
+.rcw-conversation-container .rcw-header{
+  padding: 1rem;
+}
+.rcw-conversation-container .rcw-header span{
+  display: none;
+}
+
+}
   

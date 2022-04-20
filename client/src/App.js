@@ -14,27 +14,46 @@ import {
 
 import useAuth from "./context/Auth/useAuth";
 import PersistLogin from './components/Auth/persistLogin';
+import RequireAuth from  "./context/Auth/RequireAuth";
+import NewsfeedAdmin from './pages/Newsfeed/NewsfeedAdmin';
+import Unauthorized from './pages/Unauthorized';
+import PokerPractice from './pages/PokerPractice/PokerPractice';
+import Navbar from './components/Navbar/Navbar';
+
+const ROLES = {
+  'User': 2001,
+  'Editor': 1984,
+  'Admin': 5150
+}
 
 const App = () => {
 
 
-  const  {auth } = useAuth();
+  const  {auth} = useAuth();
 
 
-console.log(auth)
     return (
       
          <Routes>
         <Route path="/" element={<Auth />}/>
         <Route path="sign-up" element={<Register />}/>
+        <Route path="unauthorized" element={<Unauthorized />}/>
+        
         <Route element={<PersistLogin/>}> 
-       
+        <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
         <Route path="newsfeed"  element={
-          auth?.accessToken? <Newsfeed /> : <Navigate to="/" />
-        }/>
+          <Newsfeed />}/>
         <Route path="profile"  element={
-          auth?.accessToken? <Profile /> : <Navigate to="/" />
-        }/></Route>
+         <Profile /> }/>
+          <Route path="pokerpractice"  element={
+         <PokerPractice /> }/>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+          <Route path="newsfeedadmin"  element={
+          <NewsfeedAdmin />}/>
+          </Route>
+          
+      </Route>
+      </Route>
          </Routes>
     )
     };

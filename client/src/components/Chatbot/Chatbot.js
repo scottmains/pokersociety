@@ -20,7 +20,8 @@ function Chatbot() {
   }, []);
 
   const {userDetails} = useAuth();
-        let userID = JSON.stringify(userDetails)
+        /* let userID = JSON.stringify(userDetails)
+        console.log(userID) */
   
 
    const handleNewUserMessage = async (newMessage) => {
@@ -37,7 +38,7 @@ function Chatbot() {
         .replace(/the /g, "")
         .replace(/r u/g, "are you");
     
-        if(text === "joke" || text === "tell a joke"){
+        if(text.includes("joke")){
           const response = await fetch(jokeURL);
           const joke = await response.json();
           product = JSON.stringify(joke.value);
@@ -46,20 +47,49 @@ function Chatbot() {
           return;
       }
       
-      if(text === "wins"){
+      if(text.includes("wins i")||text.includes("my wins")||text.includes("many wins")){
         
-       console.log(userID)
-       product = userID
-       product = product.slice(1, -1);
-       addResponseMessage(product);
+        let obj = JSON.stringify(userDetails)
+         let user = JSON.parse(obj)
+          product = user.wins
+       addResponseMessage(`You have ${product} wins`);
         return;
-        /* const response = await fetch(jokeURL);
-        const joke = await response.json();
-        product = JSON.stringify(joke.value);
-        product = product.slice(1, -1);
-        addResponseMessage(product);
-        return; */
-    }
+        }
+        if(text.includes("losses i")||text.includes("my losses")){
+        
+          let obj = JSON.stringify(userDetails)
+         let user = JSON.parse(obj)
+          product = user.losses
+         addResponseMessage(`You have ${product} losses`);
+          return;
+          }
+          if(text.includes("my email")){
+        
+            /* let obj = JSON.stringify(userDetails)
+         let user = JSON.parse(obj) */
+         /*  console.log(user.email) */
+         let obj = JSON.stringify(userDetails)
+         let user = JSON.parse(obj)
+          product = user.email
+           addResponseMessage(`Your email is ${product}`);
+            return;
+            }   
+            if(text.includes("hello pokerbot")){
+        
+              let obj = JSON.stringify(userDetails)
+         let user = JSON.parse(obj)
+          product = user.name
+             addResponseMessage(`Hello ${product}, how can I help?`);
+              return;
+              }
+              if(text.includes("my name")){
+        
+                let obj = JSON.stringify(userDetails)
+         let user = JSON.parse(obj)
+          product = user.name
+               addResponseMessage(`Your name is ${product}`);
+                return;
+                } 
       if(text === "weather" || text === "whats the weather"){
         let temp;
         const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=50.0755&lon=14.4378&units=metric&appid=${process.env.REACT_APP_WEATHER_API}`);
@@ -68,6 +98,7 @@ function Chatbot() {
         temp = JSON.stringify(weather.main.temp);
         product = `The temperature is ${temp}`;
         addResponseMessage(product);
+    
         return;
          }
 
@@ -105,7 +136,7 @@ function compare(utterancesArray, answersArray, string) {
 
     return (
       <div className="App">
-        <h1>hello</h1>
+      
         <Widget
           handleNewUserMessage={handleNewUserMessage}
           profileAvatar={botIcon}
