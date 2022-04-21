@@ -26,13 +26,21 @@ router.post('/postnewsfeed', async (req,res) => {
 });
 });
 
-
-
-   
 router.get('/getnewsfeed', async (req,res) => {
   const posts = await Newsfeed.find().sort({_id:-1})
   res.json(posts);
 });
+
+router.delete("/newsfeeddelete/:id"), (req,res)=>{
+  const postid = req.params.id;
+  const sqlDelete = "DELETE FROM newsfeeds WHERE _id = ?";
+
+  db.query(sqlDelete, postid, (err, result)=>{
+   if (err) console.log(err);
+
+  })
+
+}
 
 
 module.exports = router

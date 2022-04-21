@@ -8,8 +8,8 @@ const Newsfeed = () => {
   return (
    <>
    <Navbar/>
+   <AddPostForm />
     <PostsList />
-    <AddPostForm />
     <Chatbot />
  </>
   )

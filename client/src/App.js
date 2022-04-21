@@ -19,6 +19,7 @@ import NewsfeedAdmin from './pages/Newsfeed/NewsfeedAdmin';
 import Unauthorized from './pages/Unauthorized';
 import PokerPractice from './pages/PokerPractice/PokerPractice';
 import Navbar from './components/Navbar/Navbar';
+import Chat from './pages/Chat/Chat';
 
 const ROLES = {
   'User': 2001,
@@ -35,6 +36,7 @@ const App = () => {
     return (
       
          <Routes>
+           
         <Route path="/" element={<Auth />}/>
         <Route path="sign-up" element={<Register />}/>
         <Route path="unauthorized" element={<Unauthorized />}/>
@@ -43,10 +45,14 @@ const App = () => {
         <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
         <Route path="newsfeed"  element={
           <Newsfeed />}/>
+         
         <Route path="profile"  element={
          <Profile /> }/>
           <Route path="pokerpractice"  element={
          <PokerPractice /> }/>
+          <Route path="chat"  element={
+          <Chat/>}/>
+
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
           <Route path="newsfeedadmin"  element={
           <NewsfeedAdmin />}/>
@@ -54,6 +60,7 @@ const App = () => {
           
       </Route>
       </Route>
+      
          </Routes>
     )
     };
