@@ -6,7 +6,7 @@ const newsfeedSchema =  new mongoose.Schema({
     id: Number,
     title: String,
     body: String,
-    date: Date
+    date: String
     
   });
        

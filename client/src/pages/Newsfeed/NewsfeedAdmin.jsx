@@ -1,4 +1,4 @@
-import PostsList from "./posts/PostsList";
+import PostsListAdmin from "./posts/PostsListAdmin";
 import AddPostForm from "./posts/AddPostForm";
 import Navbar from "../../components/Navbar/Navbar"
 import React from 'react'
@@ -9,7 +9,7 @@ const Newsfeed = () => {
    <>
    <Navbar/>
    <AddPostForm />
-    <PostsList />
+    <PostsListAdmin />
     <Chatbot />
  </>
   )

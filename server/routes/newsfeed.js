@@ -5,15 +5,14 @@ const Newsfeed = require('../model/Newsfeed');
 
 router.post('/postnewsfeed', async (req,res) => {
 
-  const now = new Date();
-  console.log(now.toLocaleString('en-GB', { timeZone: 'Europe/London' })); 
+  const now = JSON.stringify(new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' }))
 
   const newPost = new Newsfeed({
     
          userId:  req.body.userId,
          title: req.body.title,
          body: req.body.body,
-         date: now.toLocaleString('en-GB', { timeZone: 'Europe/London' })
+         date: now
       }
   );
   console.log(req.body)
@@ -31,16 +30,17 @@ router.get('/getnewsfeed', async (req,res) => {
   res.json(posts);
 });
 
-router.delete("/newsfeeddelete/:id"), (req,res)=>{
-  const postid = req.params.id;
-  const sqlDelete = "DELETE FROM newsfeeds WHERE _id = ?";
+router.post('/newsfeeddelete', (req,res)=>{
+  const postid = req.body._id;
+  console.log(postid)
+  const posts = Newsfeed.find();
+  posts.deleteOne({"_id": postid}, function(err, obj) {
+  if (err) throw err;
+    console.log("1 document deleted");
+  
+   });
 
-  db.query(sqlDelete, postid, (err, result)=>{
-   if (err) console.log(err);
-
-  })
-
-}
+});
 
 
 module.exports = router

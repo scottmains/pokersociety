@@ -2,7 +2,8 @@ import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
 import { sub } from 'date-fns';
 import axios from "axios";
 
-const POSTS_URL = 'http://localhost:5000/api/newsfeed/';
+const POST_URL = 'http://localhost:5000/api/newsfeed/postnewsfeed';
+const GET_URL = 'http://localhost:5000/api/newsfeed/getnewsfeed';
 
 const initialState = {
     posts: [],
@@ -12,7 +13,7 @@ const initialState = {
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
     try {
-        const response = await axios.get("https://nupokersociety.herokuapp.com/api/newsfeed/getnewsfeed")
+        const response = await axios.get(GET_URL)
         return [...response.data];
     } catch (err) {
         return err.message;
@@ -21,7 +22,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
 
 export const addNewPost = createAsyncThunk('posts/addNewPost', async (initialPost) => {
     try {
-        const response = await axios.post("https://nupokersociety.herokuapp.com/api/newsfeed/postnewsfeed", initialPost)
+        const response = await axios.post(POST_URL, initialPost)
         return response.data
     } catch (err) {
         return err.message;
@@ -42,7 +43,6 @@ const postsSlice = createSlice({
                         id: nanoid(),
                         title,
                         content,
-                        date: new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' }),
                         userId,
                         reactions: {
                             thumbsUp: 0,
@@ -70,11 +70,9 @@ const postsSlice = createSlice({
                 // Adding date and reactions
                 let min = 1;
                 const loadedPosts = action.payload.map(post => {
-                    post.date = sub(new Date(), { minutes: min++ }).toISOString();
                     post.reactions = {
                         thumbsUp: 0,
                         thumbsDown: 0
-                        
                     }
                     return post;
                 });
@@ -86,19 +84,7 @@ const postsSlice = createSlice({
                 state.status = 'failed'
                 state.error = action.error.message
             })
-            .addCase(addNewPost.fulfilled, (state, action) => {
-                action.payload.userId = Number(action.payload.userId)
-                action.payload.date = new Date().toISOString();
-                action.payload.reactions = {
-                    thumbsUp: 0,
-                    hooray: 0,
-                    heart: 0,
-                    rocket: 0,
-                    eyes: 0
-                }
-                console.log(action.payload)
-                state.posts.push(action.payload)
-            })
+        
     }
 })
 
