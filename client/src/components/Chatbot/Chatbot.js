@@ -19,7 +19,7 @@ function Chatbot() {
 
   useEffect(() => {
     addResponseMessage(`Hi I'm pokerBot. Can I help you? 
-     (for command list type 'help')`);
+     - for command list type 'help'`);
   }, []);
 
   const {userDetails} = useAuth();
@@ -52,6 +52,7 @@ function Chatbot() {
           List of poker hands,
           Who is the top player,
           Value of chips,
+          joke
          `);
           return;
           }
@@ -79,7 +80,7 @@ function Chatbot() {
                 /* let obj = JSON.stringify(userDetails)
                let user = JSON.parse(obj)
                 product = user.losses */
-               addResponseMessage(`Currently the top player is Simon Dupkala`);
+               addResponseMessage(`You are!`);
                 return;
                 } 
 
