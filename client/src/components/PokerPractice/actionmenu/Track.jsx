@@ -12,7 +12,7 @@ function Track ({ source, target, getTrackProps }) {
         position: 'absolute',
         height: 10,
         zIndex: 1,
-        marginTop: 35,
+        marginTop: 32,
         backgroundColor: '#546C91',
         borderRadius: 5,
         cursor: 'pointer',

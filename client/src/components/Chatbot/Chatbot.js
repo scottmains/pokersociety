@@ -8,8 +8,6 @@ import botIcon from "../../botIcon.png"
 import "./../../app.css"
 import useAuth from "../../context/Auth/useAuth";
 
-//import BackgroundPage from './components/BackgroundPage';
-//import Filter from 'bad-words';
 
 const jokeURL = "https://api.chucknorris.io/jokes/random";
 
@@ -19,13 +17,11 @@ function Chatbot() {
 
   useEffect(() => {
     addResponseMessage(`Hi I'm pokerBot. Can I help you? 
-     (for command list type 'help')`);
+     - for command list type 'help'`);
   }, []);
 
   const {userDetails} = useAuth();
-        /* let userID = JSON.stringify(userDetails)
-        console.log(userID) */
-  
+        
 
    const handleNewUserMessage = async (newMessage) => {
 
@@ -52,42 +48,35 @@ function Chatbot() {
           List of poker hands,
           Who is the top player,
           Value of chips,
+          joke
          `);
           return;
           }
 
           if((((text.includes("when is"))||(text.includes("When is")))&&((text.includes("game"))||((text.includes("next game")))))){
         
-            /* let obj = JSON.stringify(userDetails)
-           let user = JSON.parse(obj)
-            product = user.losses */
+            
            addResponseMessage(`Next game is on Tuesday 23th at 19:00pm in TR3`);
             return;
             }  
 
             if((((text.includes("where is"))||(text.includes("Where is")))&&((text.includes("TR"))||((text.includes("tr")))))){
         
-              /* let obj = JSON.stringify(userDetails)
-             let user = JSON.parse(obj)
-              product = user.losses */
+             
              addResponseMessage(`TR stands for training room and is located in Student union building on the ground floor`);
               return;
               } 
               
               if((((text.includes("who is"))||(text.includes("Who is")))&&((text.includes("best player"))||((text.includes("top player")))))){
         
-                /* let obj = JSON.stringify(userDetails)
-               let user = JSON.parse(obj)
-                product = user.losses */
-               addResponseMessage(`Currently the top player is Simon Dupkala`);
+                
+               addResponseMessage(`You are!`);
                 return;
                 } 
 
                 if((((text.includes("how much"))||(text.includes("How much")))&&((text.includes("buy in"))||((text.includes("buy-in")))))){
         
-                  /* let obj = JSON.stringify(userDetails)
-                 let user = JSON.parse(obj)
-                  product = user.losses */
+                  
                  addResponseMessage(`Buy in: £2.50
                  re-buy: £1.50 (available for first hour)`);
                   return;
@@ -95,9 +84,7 @@ function Chatbot() {
 
                 if((((text.includes("value"))||(text.includes("Value")))&&(text.includes("chips")))){
         
-                  /* let obj = JSON.stringify(userDetails)
-                 let user = JSON.parse(obj)
-                  product = user.losses */
+                  
                  addResponseMessage(`Chip value
                  white: 10
                  red: 20
@@ -110,9 +97,7 @@ function Chatbot() {
 
                 if((((text.includes("list"))||(text.includes("List")))&&(text.includes("hands")))){
         
-                  /* let obj = JSON.stringify(userDetails)
-                 let user = JSON.parse(obj)
-                  product = user.losses */
+                  
                  addResponseMessage(`From highest to lowest
                  1. Royal Flush 
                  2. Straight Flush 
@@ -178,18 +163,7 @@ function Chatbot() {
                addResponseMessage(`Your name is ${product}`);
                 return;
                 } 
-      if(text === "weather" || text === "whats the weather"){
-        let temp;
-        const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=50.0755&lon=14.4378&units=metric&appid=${process.env.REACT_APP_WEATHER_API}`);
-        const weather = await response.json();
-        console.log(weather.main.temp)
-        temp = JSON.stringify(weather.main.temp);
-        product = `The temperature is ${temp}`;
-        addResponseMessage(product);
     
-        return;
-         }
-
          if (compare(Utterances, Answers, text)) {
 
           product = compare(Utterances, Answers, text);

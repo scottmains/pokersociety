@@ -121,7 +121,7 @@
 /* Dealer/button chip container */
 .dealer-chip-icon-container { 
    position: absolute;
-   top: -200%;
+   top: -180%;
    left: calc(50% - 25.5px);
    height: 50px;
    width: 50px;

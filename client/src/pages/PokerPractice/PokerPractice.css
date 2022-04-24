@@ -15,6 +15,7 @@ body,
 	height: 100%;
 	user-select: none;
 	text-align: center;
+	overflow: hidden;
 }
 
 img {
@@ -64,6 +65,7 @@ img {
 
 .poker-table--container {
 	position: absolute;
+	margin-top: 2em;
 }
 
 .community-card-container { /* Place where cards will be dealt on the board */
@@ -98,7 +100,6 @@ img {
 }
 
 /* TODO: COMPLETE MOBILE VIEW */
-
 @media (min-width: 1086px) {
 	.poker-table--container {
 		left: 50%;
@@ -109,51 +110,24 @@ img {
 	}
 	
 	.pot-container {
-		margin-top: 3em;
+		margin-top: 5em;
 	}
 
 	.community-card-container{
 		margin-top: 8em;
 	}
-}
 
-@media (max-width: 1085px) {
+	.game-action-bar {
+		margin-bottom: 4em;
+	}
+
+	.showdown-container--wrapper {
+		padding-bottom: 8em;
+	}
+
 	.poker-table--container {
 		position: absolute;
-		left: 43.5%;
-		top: 70%;
-	}
-	.pot-container {
-		margin-top: -25em;
-	}
-
-	.community-card-container {
-		margin-top: -25em;
-		height: 110px;
-	}
-
-	.p0 {
-		bottom: -3em;
-	}
-	
-	.p1 {
-		bottom: 0;
-		left: -13em;
-	}
-	
-	.p2 {
-	   bottom: 1em;
-	   left: -28em;
-	}
-	
-	.p4 {
-	   bottom: 0;
-	   right: -13em;
-	}
-	
-	.p3 {
-		bottom: 1em;
-		right: -28em;
+		margin-top: -3em;
 	}
 
 	.dealer-chip-icon-container {
@@ -162,33 +136,193 @@ img {
 		margin-left: .7em;
 	}
 
-	.playing-card{
-		height: 110px;
-		width: 80px;
-	}
 }
 
-@media (max-width: 885) {
-	.player-info--name {
-		width: 100px;
-	}
-}
-
-@media (max-width: 552px) {
+@media (max-width: 1025px) {
 	.poker-table--container {
+		left: 50%;
+		top: 40%;
+		transform: translate(-50%, -50%);
+		width: 1024px;
+		height: 590px;
+	}
+
+	.game-action-bar {
+		margin-bottom: 4em;
+	}
+
+	.showdown-container--wrapper {
+		padding-bottom: 8em;
+	}
+
+	.pot-container {
+		margin-top: 0;
+	}
+
+	.community-card-container{
+		margin-top: 3em;
+	}
+}
+
+@media (max-width: 769px) {
+	.poker-table--container {
+		left: 50%;
+		top: 30%;
+		transform: translate(-50%, -50%);
+		width: 750px;
+		height: 590px;
+	}
+
+	.game-action-bar {
+		margin-bottom: 4em;
+	}
+
+	.pot-container {
+		margin-top: 5em;
+	}
+
+	.community-card-container{
+		margin-top: 8em;
+		transform: scale(0.8);
+	}
+
+	.dealer-chip-icon-container {
+		margin-top: 1em;
+		width: 50%;
+		transform: scale(0.8);
+		margin-left: .7em;
+	}
+
+	.abscard, 
+	.player-entity--container {
+		transform: scale(0.8);
+	}
+
+	.p0,
+	.p1,
+	.p2,
+	.p3,
+	.p4 {
+		margin-bottom: -2em;
+	}
+
+	.p1 {
+		margin-left: -1em;
+	}
+
+	.p2 {
+		margin-left: -0.7em;
+	}
+
+	.p3 {
+		margin-right: -0.7em;
+	}
+
+	.p4 {
+		margin-right: -1em;
+	}
+
+	.showdown-container--wrapper {
+		width: auto;
+		height: auto;
+		padding-bottom: 8em;
+	}
+
+	.showdown-container--community-cards {
+		transform: scale(0.8);
+	}
+
+	.startgame--button,
+	.showdown--nextRound--button {
+		transform: scale(0.7);
+	}
+
+	.player-showdown--entity {
+		transform: scale(0.75);
+		margin: 0;
+	}
+
+}
+
+@media all and (max-width: 920px) and (orientation:landscape) 
+{
+    /* styles here */
+
+	.poker-table--container {
+
 		transform: rotate(90deg);
-	
+		left: 50%;
+		top: -10%;
+		transform: translate(-50%, -50%);
+		width: 650px;
+		height: 590px;
 
 	}
 
-	.game-action-bar {	/* Bottom bar with controls - container */
-		transform: rotate(90deg);
-		margin-bottom: 28em;
-		margin-left: -24em;
+	.showdown-container--wrapper {
+		width: auto;
 		height: auto;
-		width: 180%;
-		padding-left: 1em;
-		padding-right: 1em;
+		padding-bottom: 8em;
+	}
+
+
+	.abscard, 
+	.player-entity--container {
+		transform: scale(0.5);
+	}
+
+	.game-action-bar {
+		transform: scale(0.7);
+		margin-bottom: 1.5em;
+	}
+
+	.pot-container {
+		margin-top: 19em;
+	}
+
+	.community-card-container{
+		margin-top: 22em;
+		transform: scale(0.5);
+	}
+
+	.showdown-container--community-cards {
+		transform: scale(0.8);
+	}
+
+	.p0 {
+		margin-bottom: 4em;
+	}
+
+	.player-entity--container {
+		height: 2em;
+	}
+
+	.player-showdown--entity {
+		transform: scale(0.6);
+		margin: 0;
+	}
+
+	.p1,
+	.p2,
+	.p3,
+	.p4 {
+		margin-bottom: 1em;
+	}
+
+	.dealer-chip-icon-container {
+		margin-top: -10em;
+		width: 50%;
+		transform: scale(0.6);
+		margin-left: .7em;
+	}
+
+	.startgame--button,
+	.showdown--nextRound--button {
+		transform: scale(0.7);
+	}
+
+	.actionBox {
+		transform: scale(0.7);
 	}
 
 }

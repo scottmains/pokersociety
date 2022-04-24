@@ -4,6 +4,7 @@ import Navbar from "../../components/Navbar/Navbar"
 import { useState, useContext } from 'react';
 import useAuth from "../../context/Auth/useAuth";
 import Avatar from 'react-avatar';
+import Chatbot from '../../components/Chatbot/Chatbot';
 
 
 const Profile = () => {
@@ -62,7 +63,7 @@ const Profile = () => {
             
         </div>
     </div>
-
+    <Chatbot/>
  </>
   )
 }
