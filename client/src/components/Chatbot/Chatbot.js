@@ -163,18 +163,7 @@ function Chatbot() {
                addResponseMessage(`Your name is ${product}`);
                 return;
                 } 
-     /*  if(text === "weather" || text === "whats the weather"){
-        let temp;
-        const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=50.0755&lon=14.4378&units=metric&appid=${process.env.REACT_APP_WEATHER_API}`);
-        const weather = await response.json();
-        console.log(weather.main.temp)
-        temp = JSON.stringify(weather.main.temp);
-        product = `The temperature is ${temp}`;
-        addResponseMessage(product);
     
-        return;
-         } */
-
          if (compare(Utterances, Answers, text)) {
 
           product = compare(Utterances, Answers, text);
