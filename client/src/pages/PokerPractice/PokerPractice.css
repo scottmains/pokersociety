@@ -177,6 +177,8 @@ img {
 @media (max-width: 552px) {
 	.poker-table--container {
 		transform: rotate(90deg);
+	
+
 	}
 
 	.game-action-bar {	/* Bottom bar with controls - container */

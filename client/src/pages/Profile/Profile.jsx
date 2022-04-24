@@ -3,6 +3,8 @@ import './profile.css'
 import Navbar from "../../components/Navbar/Navbar"
 import { useState, useContext } from 'react';
 import useAuth from "../../context/Auth/useAuth";
+import Avatar from 'react-avatar';
+
 
 const Profile = () => {
 
@@ -23,9 +25,12 @@ const Profile = () => {
     ratio = wins / losses
     }
 
+   
+
   return (
     <>
     <Navbar />
+   
     <div className="relative md:pt-16 md:pb-32 flex content-center items-center justify-center ">
     <div className="bg-landing-background bg-cover bg-center absolute  top-0 w-full h-3/6 md:h-4/5   " />
     <div className="container relative mx-auto ">
@@ -40,7 +45,8 @@ const Profile = () => {
             <div className="justify-between w-full text-center"> 
                 <div className="ml-2">
                     <div className="p-3 ">
-                        <h3 className="text-2xl"> {user.name}</h3> 
+                    <Avatar name={user.name} round={true} />
+                        <h3 className="text-2xl pt-4"> {user.name}</h3> 
                         <span>  {user.email}</span>
                     </div>
                     <div className="flex w-2/3 mx-auto justify-between items-center p-3  rounded-lg">

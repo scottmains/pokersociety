@@ -9,7 +9,7 @@ import 'firebase/analytics';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import useAuth from "../../context/Auth/useAuth";
-
+import Avatar from 'react-avatar';
 
 
 
@@ -94,7 +94,7 @@ console.log(userDetails)
 /*     const { uid, photoURL } = {user.name};
  */
     const uid = user.name;
-    const photoURL = user.name;
+    const photoURL = <Avatar name={user.name} round={true} />
     await messagesRef.add({
       text: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -140,7 +140,7 @@ function ChatMessage(props) {
   return (<>
  
     <div className={`message ${messageClass}`}>
-      <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} />
+    <Avatar name={user.name} size="50" round={true} />
       
       <p>{text}</p>
     </div>
