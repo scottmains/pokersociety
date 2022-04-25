@@ -58,6 +58,7 @@ let adminPage = (
 
 if (isAdmin) { 
   adminPage = (
+    <>
   <Menu.Item>
   {({ active}) => (
     <a
@@ -68,6 +69,18 @@ if (isAdmin) {
     </a>
   )} 
 </Menu.Item>
+<Menu.Item>
+  {({ active}) => (
+    <a
+      href="admin"
+      className={classNames(active ? 'bg-green-100' : '', 'block px-4 py-2 text-sm text-gray-700 ')}
+    >
+      Admin 
+    </a>
+  )} 
+</Menu.Item>
+</>
+
 )
   }
 

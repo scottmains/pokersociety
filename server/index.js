@@ -4,7 +4,8 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const authRoute = require('./routes/auth');
 const newsfeedRoute = require('./routes/newsfeed');
-const profileRoute = require('./routes/profile');
+const chatbotRoute = require('./routes/chatbot');
+const adminRoute = require('./routes/admin');
 const cors = require('cors')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
@@ -41,7 +42,8 @@ const proxy = require('http-proxy-middleware')
 
 app.use('/api/user', authRoute);
 app.use('/api/newsfeed', newsfeedRoute);
-app.use('/api/profile', profileRoute);
+app.use('/api/admin', adminRoute);
+app.use('/api/chatbot', chatbotRoute);
 
 app.listen(
     process.env.PORT,

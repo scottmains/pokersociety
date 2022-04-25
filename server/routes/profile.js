@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const verify = require('../middleware/verifyToken');
 
+
 router.get('/getprofile', async (req,res) => {
 
     const cookies = req.cookies;
@@ -9,4 +10,3 @@ router.get('/getprofile', async (req,res) => {
     
 });
 
-module.exports = router;
