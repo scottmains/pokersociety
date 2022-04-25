@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
+import './chat.css';
 
-import './chat.css'
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
@@ -8,10 +8,6 @@ import 'firebase/analytics';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import useAuth from "../../context/Auth/useAuth";
-import Avatar from 'react-avatar';
-
-
 
 firebase.initializeApp({
   apiKey: "AIzaSyBNSnoIJTrU8AuIJ98muNmJaEjv3pP12kg",
@@ -29,26 +25,26 @@ const firestore = firebase.firestore();
 const analytics = firebase.analytics();
 
 
-function ChatComponent() {
+export default function ChatComponent() {
 
   const [user] = useAuthState(auth);
 
   return (
     <div className="Chat">
-      {/* <div className="chatHeader">
+      <header>
         <h1>⚛️🔥💬</h1>
-     </div> */}
+        <SignOut />
+      </header>
 
       <section>
-       {/*  {user ? <ChatRoom /> : <SignIn />} */}
-       <ChatRoom/>
+        {user ? <ChatRoom /> : <SignIn />}
       </section>
 
     </div>
   );
 }
 
-/* function SignIn() {
+function SignIn() {
 
   const signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -62,18 +58,16 @@ function ChatComponent() {
     </>
   )
 
-} */
+}
 
-
-// function SignOut() {
-//   return auth.currentUser && (
-//     <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
-//   )
-// }
+function SignOut() {
+  return auth.currentUser && (
+    <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
+  )
+}
 
 
 function ChatRoom() {
-    
   const dummy = useRef();
   const messagesRef = firestore.collection('messages');
   const query = messagesRef.orderBy('createdAt').limit(25);
@@ -82,19 +76,12 @@ function ChatRoom() {
 
   const [formValue, setFormValue] = useState('');
 
-  const {userDetails } = useAuth();
-const obj = JSON.stringify(userDetails)
-const user = JSON.parse(obj)
-console.log(userDetails)
-
 
   const sendMessage = async (e) => {
     e.preventDefault();
 
-/*     const { uid, photoURL } = {user.name};
- */
-    const uid = user.name;
-    const photoURL = <Avatar name={user.name} round={true} />
+    const { uid, photoURL } = auth.currentUser;
+
     await messagesRef.add({
       text: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -120,7 +107,7 @@ console.log(userDetails)
 
       <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
 
-      <button type="submit" disabled={!formValue}> Send </button>
+      <button className = "text-center" type="submit" disabled={!formValue}> Send </button>
 
     </form>
   </>)
@@ -128,30 +115,14 @@ console.log(userDetails)
 
 
 function ChatMessage(props) {
-    const {userDetails } = useAuth();
-    const obj = JSON.stringify(userDetails)
-    const user = JSON.parse(obj)
-    console.log(userDetails)
-
   const { text, uid, photoURL } = props.message;
 
-  const messageClass = uid === user.name ? 'sent' : 'received';
+  const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
 
   return (<>
- 
     <div className={`message ${messageClass}`}>
-    <Avatar name={user.name} size="50" round={true} />
-      
+      <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} />
       <p>{text}</p>
     </div>
   </>)
 }
-
-// function ChatMessage(props) {
-//   const { text, uid } = props.message;
-
-//   return <p>{text}</p>
-// }
-
-
-export default ChatComponent;

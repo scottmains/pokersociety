@@ -4,8 +4,10 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { FaUserAlt } from 'react-icons/fa';
 import { NavLink} from "react-router-dom";
 import { Navigate, useNavigate} from "react-router-dom";
-import useRefreshToken from "../../components/Auth/useRefreshToken";
+import { useState, useEffect } from 'react';
 import useLogout from "../../components/Auth/useLogout";
+import useAuth from "../../context/Auth/useAuth";
+
 
 const navigation = [
   { name: 'Home', href: '/newsfeed', current: true },
@@ -21,9 +23,25 @@ function classNames(...classes) {
 
 const Navbar = () => {
 
+  const {auth } = useAuth();
+ 
+
+  console.log(auth.roles)
+
 
   const navigate = useNavigate();
 const logout = useLogout();
+
+const [isAdmin, setAdmin] = useState(false)
+
+
+console.log(isAdmin)
+
+useEffect(() => {
+  if (auth.roles.includes(5150)) {
+    setAdmin(true);
+  }
+}, [])
 
 const signOut = async () => {
  await logout();
@@ -33,6 +51,25 @@ const signOut = async () => {
 <div className="text-center pt-20">
 <button onClick={signOut}>Sign Out</button>
 </div>
+
+let adminPage = (
+  <></>
+)
+
+if (isAdmin) { 
+  adminPage = (
+  <Menu.Item>
+  {({ active}) => (
+    <a
+      href="newsfeedadmin"
+      className={classNames(active ? 'bg-green-100' : '', 'block px-4 py-2 text-sm text-gray-700 ')}
+    >
+      Add/Remove Post
+    </a>
+  )} 
+</Menu.Item>
+)
+  }
 
   return (
     <Disclosure as="nav" className="bg-green-800">
@@ -102,16 +139,7 @@ const signOut = async () => {
                         </a>
                       )}
                     </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(active ? 'bg-green-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                        >
-                          Settings
-                        </a>
-                      )}
-                    </Menu.Item>
+                    {adminPage}
                     <Menu.Item>
                       {({ active }) => (
                         <a

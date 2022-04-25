@@ -5,7 +5,7 @@ const PostsExcerptAdmin = ({ post }) => {
 
     const deletePost = async (id) => {
     
-        axios.post('http://localhost:5000/api/newsfeed/newsfeeddelete', {"_id": post._id})
+        axios.post('https://nupokersociety.herokuapp.com/api/newsfeed/newsfeeddelete', {"_id": post._id})
        .then((res) => {
            console.log('response',res);
        })
