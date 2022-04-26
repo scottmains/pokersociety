@@ -3,6 +3,10 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}", "./public/index.html",
   ],
   theme: {
+    screens: {
+      'sm': '640'
+      // => @media (min-width: 500px) { ... }
+    },
     extend: {
 
       backgroundImage: () => ({

@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import pokerLogo from '../../assets/pokerlogo.svg'
 import GlobalContext from './GlobalContext';
 
+
 // function handles nav of main calendar
 export default function CalendarHeader() {
     const { monthIndex, setMonthIndex } = useContext(GlobalContext);

@@ -4,6 +4,7 @@ import Register from './components/Register/Register';
 import Newsfeed from './pages/Newsfeed/Newsfeed';
 import Profile from './pages/Profile/Profile';
 import Calendar from './components/Calendar/Calendar';
+import Navbar from './components/Navbar/Navbar';
 
 import './app.css'
 import {

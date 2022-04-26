@@ -22,12 +22,17 @@ function Calendar() {
       
       <div className="h-screen flex flex-col">
         <CalendarHeader />
-        <div className="flex flex-1">
+        <div className="md:flex md:flex-1">
           <Sidebar />
           <Month month={currentMonth} />
         </div>
       </div>
+      {/* sm:flex-direction-column */}
+      {/* sm:flex-wrap-col */}
+
     </React.Fragment>
+
+
   );
 }
 
