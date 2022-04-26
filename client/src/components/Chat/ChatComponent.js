@@ -54,13 +54,13 @@ export default function ChatComponent() {
   return (
     <div className="Chat">
       <header>
-        <h1>⚛️🔥💬</h1>
+        <h1>⚛️🔥💬 WELCOME TO CHAT ROOM</h1>
         {/* <SignOut /> */}
       </header>
 
-      <section>
+      
         {<ChatRoom />}
-      </section>
+      
 
     </div>
   );
@@ -90,7 +90,7 @@ export default function ChatComponent() {
 function ChatRoom() {
   const dummy = useRef();
   const messagesRef = firestore.collection('messages');
-  const query = messagesRef.orderBy('createdAt','desc').limit(25);
+  const query = messagesRef.orderBy('createdAt','desc');
 
   const [messages] = useCollectionData(query, { idField: 'id' });
   console.log(messages)
@@ -120,8 +120,8 @@ function ChatRoom() {
   }
 
   return (
-  <>
-    <div>
+  <div className='chatWindow'>
+    <div className='scrolldiv'>
 
       {messages && messages.reverse().map(msg => <ChatMessage key={msg.id} message={msg} />)}
 
@@ -129,14 +129,14 @@ function ChatRoom() {
 
     </div>
 
-    <form onSubmit={sendMessage}>
+    <form onSubmit={sendMessage} className='sendMessage'>
 
       <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
 
       <button className = "text-center" type="submit" disabled={!formValue}>Send</button>
 
     </form>
-  </>)
+  </div>)
 }
 
 
