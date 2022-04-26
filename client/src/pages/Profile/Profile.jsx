@@ -30,8 +30,8 @@ const Profile = () => {
 
   return (
     <>
+     <div className="min-h-screen">
     <Navbar />
-   
     <div className="relative md:pt-16 md:pb-32 flex content-center items-center justify-center ">
     <div className="bg-landing-background bg-cover bg-center absolute  top-0 w-full h-3/6 md:h-4/5   " />
     <div className="container relative mx-auto ">
@@ -59,11 +59,15 @@ const Profile = () => {
                         <span className="font-bold  text-xl">{ratio}</span> </div>
                     </div>
                 </div>
+                <div className="pt-4"> 
+                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full ">Delete Account</button>
+                </div>
             </div>
             
         </div>
     </div>
     <Chatbot/>
+    </div>
  </>
   )
 }

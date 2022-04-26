@@ -14,6 +14,7 @@ const navigation = [
   { name: 'Calendar', href: '#', current: false },
   { name: 'Play', href: '/pokerpractice', current: false },
   { name: 'Chat', href: '/chat', current: false },
+ 
 ]
 
 function classNames(...classes) {
