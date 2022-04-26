@@ -4,6 +4,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink} from "react-router-dom";
 import  './register.css'
 import axios from '../../api/axios';
+
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
+import 'firebase/analytics';
+
+firebase.initializeApp({
+  apiKey: "AIzaSyBNSnoIJTrU8AuIJ98muNmJaEjv3pP12kg",
+  authDomain: "groupchat-6dfaa.firebaseapp.com",
+  databaseURL: "https://groupchat-6dfaa-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "groupchat-6dfaa",
+  storageBucket: "groupchat-6dfaa.appspot.com",
+  messagingSenderId: "235621123712",
+  appId: "1:235621123712:web:f9747ecb1efdc64bf08865",
+  measurementId: "G-V233L1J3S0"
+})
+
+const auth = firebase.auth();
+
 const REGISTER_URL = '/api/user/register';
 
 const USER_REGEX = /^[a-zA-Z ,.'-]+$/;
@@ -83,6 +102,7 @@ const Register = () => {
                     withCredentials: true
                 }
             );
+            auth.createUserWithEmailAndPassword(email,email);
             console.log(response?.data);
             console.log(response?.accessToken);
             console.log(JSON.stringify(response))
