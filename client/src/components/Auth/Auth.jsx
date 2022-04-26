@@ -40,9 +40,9 @@ const Auth = () => {
         e.preventDefault();
      
         try {
-          const lowerStr = studentid.toLowerCase();
+       
             const response = await axios.post(LOGIN_URL,
-                JSON.stringify({ studentid: lowerStr, password }),
+                JSON.stringify({ studentid, password }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
