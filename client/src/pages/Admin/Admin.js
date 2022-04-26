@@ -11,7 +11,7 @@ const Admin = () => {
   const [allUsers, setAllUsers] = useState([])
 
   const getAllUsers =  () => {
-    axios.get('http://localhost:5000/api/admin/getAllUsers')
+    axios.get('https://nupokersociety.herokuapp.com/api/admin/getAllUsers')
     .then(resp => {
     setAllUsers(resp.data)
     });

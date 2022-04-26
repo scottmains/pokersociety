@@ -8,10 +8,12 @@ const PostsExcerptAdmin = ({ post }) => {
         axios.post('https://nupokersociety.herokuapp.com/api/newsfeed/newsfeeddelete', {"_id": post._id})
        .then((res) => {
            console.log('response',res);
+           res.success('success delete')
        })
        .catch((error) => {
            console.log('error block called',error);
        })
+  
        
        }
 
@@ -22,11 +24,11 @@ const PostsExcerptAdmin = ({ post }) => {
             <h3 className="font-mono text-4xl">{post.title}</h3>
             <p className="font-mono text-lg pt-5">{post.body.substring(0, 100)}</p>
             <p className="postCredit pt-10">
-                Written by Head of Society
+                Written by Head of Society </p>
                 <ReactionButtons post={post} />
                 <p className="font-mono italic text-md pt-5">This was posted {post.date}</p>
                
-            </p>
+     
             <div className="text-right">
             <button className="text-right text-red-500" onClick={deletePost}> Delete </button>
             </div>

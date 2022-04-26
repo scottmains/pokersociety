@@ -30,7 +30,7 @@ const Profile = () => {
 
     const userDelete = async (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5000/api/profile/userdelete',
+        axios.post('/api/profile/userdelete',
            { email: user.email}
         ) .then(response => {
         window.location.reload(false);

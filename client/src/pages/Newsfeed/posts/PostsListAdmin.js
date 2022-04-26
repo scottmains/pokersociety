@@ -20,7 +20,7 @@ const PostsListAdmin = () => {
     if (postStatus === 'loading') {
         content = <p>"Loading..."</p>;
     } else if (postStatus === 'succeeded') {
-        content = posts.map(post => <PostsExcerptAdmin key={post.id} post={post} />)
+        content = posts.map(post => <PostsExcerptAdmin key={post._id} post={post} />)
     } else if (postStatus === 'failed') {
         content = <p>{error}</p>;
     }
