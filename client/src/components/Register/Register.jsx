@@ -95,8 +95,9 @@ const Register = () => {
             return;
         }
         try {
+          const lowerStr = studentid.toLowerCase();
             const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ name, email, studentid, password}),
+                JSON.stringify({ name, email, studentid: lowerStr, password}),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true

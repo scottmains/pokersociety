@@ -35,11 +35,14 @@ const Auth = () => {
         setErrMsg('');
     }, [studentid, password])
 
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
+     
         try {
+          const lowerStr = studentid.toLowerCase();
             const response = await axios.post(LOGIN_URL,
-                JSON.stringify({ studentid, password }),
+                JSON.stringify({ studentid: lowerStr, password }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
