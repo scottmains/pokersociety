@@ -2,8 +2,8 @@
   
   .Chat {
     text-align: center;
-    max-width: 50%;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
     background-color: #282c34;
   }
 
@@ -28,8 +28,9 @@
   .Chat section {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    min-height: 100vh;
+    /* justify-content: center; */
+    min-height: 90vh;
+    margin: 0;
     background-color: rgb(40, 37, 53);
    
   }
@@ -54,32 +55,50 @@
   main::-webkit-scrollbar-thumb {
     background: #6649b8;
   }
-  
-  .Chat form {
-   
-    bottom: 0;
-    background-color: rgb(24, 23, 23);
-    width: 100%;
-    max-width: 728px;
+
+  .scrolldiv {
+    float: left;
+    width: 100vw;
+    overflow-y: auto;
+    height: 85vh;
+  }
+
+  .Chat h1{
+    color: aliceblue;
+  }
+  .chatWindow {
+    min-width: 100vw;
     display: flex;
-    font-size: 1.5rem;
+    flex-direction: column;
+    background-color: rgb(40, 37, 53);
+  }
+
+  .sendMessage{
+    position: absolute;
+    bottom: 0px;
+    min-width: 100vw;
+    background-color: rgb(24, 23, 23);
+    display: flex;
+    font-size: 1rem;
   }
   
+
   .Chat form button {
     width: 20%;
     background-color: rgb(51, 156, 60);
+    font-size: medium;
   }
 
-  .Chat form button img {
+  /* .Chat form button img {
     width: 20px;
     height: 20px;
-  }
+  } */
   
   
   .Chat input {
     line-height: 1.5;
     width: 100%;
-    font-size: 1.5rem;
+    font-size: 1rem;
     background: rgb(226, 226, 226);
     color: rgb(0, 0, 0);
     outline: none;
