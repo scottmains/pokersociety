@@ -11,7 +11,7 @@ import useAuth from "../../context/Auth/useAuth";
 
 const navigation = [
   { name: 'Home', href: '/newsfeed', current: true },
-  { name: 'Calendar', href: '#', current: false },
+  { name: 'Calendar', href: '/calendar', current: false },
   { name: 'Play', href: '/pokerpractice', current: false },
   { name: 'Chat', href: '/chat', current: false },
 ]

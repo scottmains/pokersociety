@@ -8,6 +8,8 @@ import { newsfeed } from './pages/Newsfeed/app/newsfeed';
 import { Provider } from 'react-redux';
 
 
+
+
 ReactDom.render(
 
 <React.StrictMode> 

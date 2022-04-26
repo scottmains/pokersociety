@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Auth from './components/Auth/Auth';
 import Register from './components/Register/Register';
 import Newsfeed from './pages/Newsfeed/Newsfeed';
 import Profile from './pages/Profile/Profile';
+import Calendar from './components/Calendar/Calendar';
 
 import './app.css'
 import {
@@ -20,6 +21,7 @@ import Unauthorized from './pages/Unauthorized';
 import PokerPractice from './pages/PokerPractice/PokerPractice';
 import Navbar from './components/Navbar/Navbar';
 import Chat from './pages/Chat/Chat';
+import ContextWrapper from './components/Calendar/ContextWrapper';
 
 const ROLES = {
   'User': 2001,
@@ -45,6 +47,13 @@ const App = () => {
         <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
         <Route path="newsfeed"  element={
           <Newsfeed />}/>
+
+        <Route path="calendar"  element={
+          <ContextWrapper>
+            <Navbar/>
+            <Calendar />
+          </ContextWrapper>
+          }/>
          
         <Route path="profile"  element={
          <Profile /> }/>
