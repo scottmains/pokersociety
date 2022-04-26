@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const User = require('../model/User');
-const Token = require("../model/token");
+const Token = require("../model/Token");
 const jwt = require('jsonwebtoken');
 const {registerValidation, loginValidation} = require('../validation');
 const bcrypt = require('bcryptjs');
@@ -148,7 +148,7 @@ router.get('/logout', async (req,res) => {
     res.sendStatus(204);
 });
 
-
+/*
 router.post("/forgotpassword", async (req, res) => {
     try {
         const schema = Joi.object({ email: Joi.string().email().required() });
@@ -202,5 +202,6 @@ router.post("/password-reset/:userId/:token", async (req, res) => {
         console.log(error);
     }
 });
+*/ 
 
 module.exports = router;

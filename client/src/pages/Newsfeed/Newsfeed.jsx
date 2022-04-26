@@ -19,7 +19,9 @@ const Newsfeed = () => {
 </div>
 </div>
 </div>
+<div className="-mt-20 sm:-mt-0"> 
     <PostsList />
+    </div>
     <Chatbot />
     </div>
  </>

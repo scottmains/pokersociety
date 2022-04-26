@@ -33,7 +33,7 @@ router.get('/getnewsfeed', async (req,res) => {
 router.post('/newsfeeddelete', (req,res)=>{
   const postid = req.body._id;
   console.log(postid)
-  const posts = Users.find();
+  const posts = Newsfeed.find();
   posts.deleteOne({"_id": postid}, function(err, obj) {
   if (err) throw err;
     console.log("1 document deleted");

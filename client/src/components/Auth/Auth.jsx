@@ -91,7 +91,7 @@ const Auth = () => {
           </div>
           <div className="flex items-center justify-between">
             <div className="text-sm">
-              <a href="#" className="font-medium text-rose-600 hover:text-rose-500"> Forgot your password? </a>
+            {/*  <a href="#" className="font-medium text-rose-600 hover:text-rose-500"> Forgot your password? </a> */}
             </div>
           </div>
           <button type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm

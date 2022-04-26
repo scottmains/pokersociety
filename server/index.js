@@ -6,6 +6,7 @@ const authRoute = require('./routes/auth');
 const newsfeedRoute = require('./routes/newsfeed');
 const chatbotRoute = require('./routes/chatbot');
 const adminRoute = require('./routes/admin');
+const profileRoute = require('./routes/profile');
 const cors = require('cors')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
@@ -44,6 +45,7 @@ app.use('/api/user', authRoute);
 app.use('/api/newsfeed', newsfeedRoute);
 app.use('/api/admin', adminRoute);
 app.use('/api/chatbot', chatbotRoute);
+app.use('/api/profile', profileRoute);
 
 app.listen(
     process.env.PORT,
