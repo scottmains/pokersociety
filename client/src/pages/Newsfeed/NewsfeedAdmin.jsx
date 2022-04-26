@@ -10,7 +10,7 @@ const Newsfeed = () => {
    <Navbar/>
    <AddPostForm />
     <PostsListAdmin />
-    <Chatbot />
+   
  </>
   )
 }

@@ -7,6 +7,7 @@ import Chatbot from '../../components/Chatbot/Chatbot';
 const Newsfeed = () => {
   return (
    <>
+   <div className="min-h-screen">
    <Navbar/>
 
    <div className="relative md:pt-16 pt-10 md:pb-32 flex content-center items-center justify-center ">
@@ -18,8 +19,11 @@ const Newsfeed = () => {
 </div>
 </div>
 </div>
+<div className="-mt-20 sm:-mt-0"> 
     <PostsList />
+    </div>
     <Chatbot />
+    </div>
  </>
   )
 }

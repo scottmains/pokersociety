@@ -19,7 +19,7 @@ import RequireAuth from  "./context/Auth/RequireAuth";
 import NewsfeedAdmin from './pages/Newsfeed/NewsfeedAdmin';
 import Unauthorized from './pages/Unauthorized';
 import PokerPractice from './pages/PokerPractice/PokerPractice';
-import Navbar from './components/Navbar/Navbar';
+import Admin from './pages/Admin/Admin';
 import Chat from './pages/Chat/Chat';
 import ContextWrapper from './components/Calendar/ContextWrapper';
 
@@ -65,6 +65,8 @@ const App = () => {
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
           <Route path="newsfeedadmin"  element={
           <NewsfeedAdmin />}/>
+          <Route path="admin"  element={
+          <Admin />}/>
           </Route>
           
       </Route>

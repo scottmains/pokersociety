@@ -8,12 +8,19 @@ import { useState, useEffect } from 'react';
 import useLogout from "../../components/Auth/useLogout";
 import useAuth from "../../context/Auth/useAuth";
 
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
+import 'firebase/analytics';
+
+// const firebase_auth = firebase.auth();
 
 const navigation = [
   { name: 'Home', href: '/newsfeed', current: true },
   { name: 'Calendar', href: '/calendar', current: false },
   { name: 'Play', href: '/pokerpractice', current: false },
   { name: 'Chat', href: '/chat', current: false },
+ 
 ]
 
 function classNames(...classes) {
@@ -43,8 +50,11 @@ useEffect(() => {
   }
 }, [])
 
+
+
 const signOut = async () => {
  await logout();
+//  firebase_auth.signOut();
  navigate('/');
 }
 
@@ -58,6 +68,7 @@ let adminPage = (
 
 if (isAdmin) { 
   adminPage = (
+    <>
   <Menu.Item>
   {({ active}) => (
     <a
@@ -68,6 +79,17 @@ if (isAdmin) {
     </a>
   )} 
 </Menu.Item>
+<Menu.Item>
+  {({ active}) => (
+    <a
+      href="admin"
+      className={classNames(active ? 'bg-green-100' : '', 'block px-4 py-2 text-sm text-gray-700 ')}
+    >
+      Admin Dashboard
+    </a>
+  )} 
+</Menu.Item>
+</>
 )
   }
 

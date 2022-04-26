@@ -1,5 +1,5 @@
 import { Widget, addResponseMessage } from 'react-chat-widget';
-import React, {useEffect } from 'react'
+import React, {useEffect, useState } from 'react'
 import Answers from './Answers';
 import Utterances from './Utterances';
 import Alternatives from './Alternatives';
@@ -7,11 +7,23 @@ import 'react-chat-widget/lib/styles.css';
 import botIcon from "../../botIcon.png"
 import "./../../app.css"
 import useAuth from "../../context/Auth/useAuth";
-
+import axios from "axios";
 
 const jokeURL = "https://api.chucknorris.io/jokes/random";
 
 function Chatbot() {
+
+const [winner, setWinner] = useState('');
+
+useEffect(() => {
+  async function fetchMyAPI() {
+    const response = await axios.get('http://localhost:5000/api/chatbot/findWinner');
+    setWinner(response.data)
+  }
+
+  fetchMyAPI()
+}, [])
+
 
  
 
@@ -70,7 +82,7 @@ function Chatbot() {
               if((((text.includes("who is"))||(text.includes("Who is")))&&((text.includes("best player"))||((text.includes("top player")))))){
         
                 
-               addResponseMessage(`You are!`);
+               addResponseMessage(winner[0].name);
                 return;
                 } 
 
