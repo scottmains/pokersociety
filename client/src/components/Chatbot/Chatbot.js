@@ -17,15 +17,12 @@ const [winner, setWinner] = useState('');
 
 useEffect(() => {
   async function fetchMyAPI() {
-    const response = await axios.get('http://localhost:5000/api/chatbot/findWinner');
+    const response = await axios.get('https://nupokersociety.herokuapp.com/api/chatbot/findWinner');
     setWinner(response.data)
   }
 
   fetchMyAPI()
 }, [])
-
-
- 
 
   useEffect(() => {
     addResponseMessage(`Hi I'm pokerBot. Can I help you? 

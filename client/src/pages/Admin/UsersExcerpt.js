@@ -11,7 +11,7 @@ const UsersExcerpt = ({ user }) => {
     const [lossContent, setLossContent] = useState(true);
 
     const editWins = async (e) => {
-        const response = await axios.post('http://localhost:5000/api/admin/updateWins',
+        const response = await axios.post('https://nupokersociety.herokuapp.com/api/admin/updateWins',
            { _id: user._id, winUpdate: winUpdate }
         ) .then((res)=> {
         window.location.reload(false);
@@ -19,9 +19,8 @@ const UsersExcerpt = ({ user }) => {
     }
 
     const editLosses = async (e) => {
-        const response = await axios.post('http://localhost:5000/api/admin/updateLosses',
+        const response = await axios.post('https://nupokersociety.herokuapp.com/api/admin/updateLosses',
            { _id: user._id, lossUpdate: lossUpdate }
-           
         );
         
     }
