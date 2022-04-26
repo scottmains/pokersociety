@@ -48,8 +48,8 @@ export default function EventModal() {
   return (
     <div className="h-screen w-full fixed left-0 top-0 flex justify-center items-center">
         <form className="bg-white rounded-lg shadow-2xl " >
-            <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
-                <span className="material-icons-outlined text-gray-400">
+            <header className="bg-green-600 px-4 py-2 flex justify-between items-center">
+                <span className="material-icons-outlined text-gray-700">
                     drag_handle
                 </span>
                 <div>
@@ -62,12 +62,12 @@ export default function EventModal() {
                             });
                             setShowEventModal(false);
                         }}
-                        className="material-icons-outlined text-gray-400 cursor-pointer">
+                        className="material-icons-outlined text-gray-700 cursor-pointer">
                             delete
                         </span>
                     )}
                     <button onClick={() => setShowEventModal(false)}>
-                        <span className="material-icons-outlined text-gray-400">
+                        <span className="material-icons-outlined text-gray-700">
                             close
                         </span>
                     </button>

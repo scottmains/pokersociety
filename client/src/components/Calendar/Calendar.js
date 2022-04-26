@@ -19,8 +19,7 @@ function Calendar() {
   return (
     <React.Fragment>
       {showEventModal && <EventModal />}
-      
-      <div className="h-screen flex flex-col">
+      <div className="sm:flex h-screen flex flex-col">
         <CalendarHeader />
         <div className="md:flex md:flex-1">
           <Sidebar />

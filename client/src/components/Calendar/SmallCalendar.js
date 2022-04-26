@@ -32,9 +32,9 @@ export default function SmallCalendar() {
         const currDay = day.format(format);
         const slcDay = selectedDay && selectedDay.format(format);
         if(nowDay === currDay) {
-            return 'bg-blue-500 rounded-full text-white';
+            return 'bg-green-600 rounded-full text-white';
         } else if (currDay === slcDay) {
-            return "bg-blue-100 rounded-full text-blue-600 font-bold"
+            return "bg-green-100 rounded-full text-green-600 font-bold"
         } else {
             return "";
         }
@@ -53,7 +53,7 @@ export default function SmallCalendar() {
         <header className="flex justify-between">
 
             {/*  */}
-            <p className="text-gray-500 font-bold">
+            <p className="text-gray-700 font-bold">
                 {dayjs(new Date(dayjs().year(), currentMonthIdx))
                 .format("MMMM YYYY")}
             </p>
@@ -61,12 +61,12 @@ export default function SmallCalendar() {
             {/*Creation of small calendar Nav buttons*/}
             <div>
                 <button onClick={handlePrevMonth}>
-                    <span className="material-icons-outlined cursor-pointer text-gray-600 mx-2">
+                    <span className="material-icons-outlined cursor-pointer text-gray-700 mx-2">
                         chevron_left
                     </span>
                 </button>
                 <button onClick={handleNextMonth}>
-                    <span className="material-icons-outlined cursor-pointer text-gray-600 mx-2">
+                    <span className="material-icons-outlined cursor-pointer text-gray-700 mx-2">
                         chevron_right
                     </span>
                 </button>
@@ -74,7 +74,7 @@ export default function SmallCalendar() {
             
         </header>
 
-        <div className="grid grid-cols-7 grid-rows-6">
+        <div className="grid grid-cols-7 grid-rows-6 font-bold">
             {currentMonth[0].map((day, i) => (
                 <span key={i} className="text-sm py-1 text-center">
                     {day.format('dd').charAt(0)}

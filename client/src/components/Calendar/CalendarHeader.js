@@ -20,13 +20,13 @@ export default function CalendarHeader() {
     }
 
   return (
-    <header className="px-4 py-2 flex items-center">
+    <header className="bg-gray-300 px-4 py-2 flex items-center">
         <img src={pokerLogo} alt="calendar" className="mr-2 w-12 h-12" />
-        <h1 className="mr-10 text-xl text-gray-500 font-bold">Event Calendar</h1>
+        <h1 className="mr-10 text-xl text-gray-700 font-bold">Event Calendar</h1>
         
         
         {/*Navigation buttons*/}
-        <button onClick={handleReset} className="border rounded py-2 px-4 mr-5">
+        <button onClick={handleReset} className="border bg-green-700 rounded py-2 px-4 mr-5">
             Today
         </button>
         <button onClick={handlePrevMonth}>
@@ -41,7 +41,7 @@ export default function CalendarHeader() {
         </button>
 
         {/* Formating for Month and Year */}
-        <h2 className="ml-4 text-xl text-gray-500 font-bold">
+        <h2 className="ml-4 text-xl text-gray-700 font-bold">
             {dayjs(new Date(dayjs().year(), monthIndex)).format("MMMM YYYY")}
         </h2>
     </header>
