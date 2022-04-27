@@ -31,5 +31,6 @@ Currently the project is linked to the api hosted on heroku. If the user wanted 
 3) Paste the link in the .env file next to "DB_CONNECT". You will have to replace "password" in the link to the password you have chosen.
 4) You should now be able to connect locally with localhost. We now need to change the client-side code so that it connects to the localhost api rather than heroku.
 5) go to client/src/api/axios.js and replace the BASE_URL with http://localhost:5000/.
+6) We have provided you with admin account above but if you wanted to make your own then add Admin: 5150 to your roles on the account you created in signup process. Being an admin is necessary to see the admin only pages.
 
 It should now run okay
