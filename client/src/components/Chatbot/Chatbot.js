@@ -9,12 +9,14 @@ import "./../../app.css"
 import useAuth from "../../context/Auth/useAuth";
 import axios from "axios";
 
+/* Random joke API URL */
 const jokeURL = "https://api.chucknorris.io/jokes/random";
 
 function Chatbot() {
 
 const [winner, setWinner] = useState('');
 
+/* immediately run function to fetch data from the back end */
 useEffect(() => {
   async function fetchMyAPI() {
     const response = await axios.get('https://nupokersociety.herokuapp.com/api/chatbot/findWinner');
@@ -24,17 +26,25 @@ useEffect(() => {
   fetchMyAPI()
 }, [])
 
+  /* Innitial greeting message from the bot */
+  
   useEffect(() => {
     addResponseMessage(`Hi I'm pokerBot. Can I help you? 
      - for command list type 'help'`);
   }, []);
 
+  /* Getting user details */
+
   const {userDetails} = useAuth();
         
+    /* main function handling users message and responses */
 
    const handleNewUserMessage = async (newMessage) => {
 
     let product;
+
+    /* Text sanitizing of white spaces and more */
+
       let text = newMessage.toLowerCase().replace(/[^\w\s\d]/gi, "");
       text = text
         .replace(/ a /g, " ")
@@ -46,6 +56,8 @@ useEffect(() => {
         .replace(/the /g, "")
         .replace(/r u/g, "are you");
 
+
+        /* Queries with a specific response */
 
         if((text === "help")||(text === "Help")){
         
@@ -121,7 +133,8 @@ useEffect(() => {
                   return;
                   } 
 	
-    
+           /* connecting to the joke API and removing quotes from the respnse */ 
+
         if(text.includes("joke")){
           const response = await fetch(jokeURL);
           const joke = await response.json();
@@ -132,7 +145,8 @@ useEffect(() => {
       }
 
 
-      
+        /* Queries requiring response from the userDetails object from the database */
+
       if(text.includes("wins i")||text.includes("my wins")||text.includes("many wins")||text.includes("wins do")){
         
         let obj = JSON.stringify(userDetails)
@@ -159,31 +173,38 @@ useEffect(() => {
             if(text.includes("hello pokerbot")){
         
               let obj = JSON.stringify(userDetails)
-         let user = JSON.parse(obj)
-          product = user.name
+              let user = JSON.parse(obj)
+                product = user.name
              addResponseMessage(`Hello ${product}, how can I help?`);
               return;
               }
               if(text.includes("my name")){
         
                 let obj = JSON.stringify(userDetails)
-         let user = JSON.parse(obj)
-          product = user.name
+               let user = JSON.parse(obj)
+               product = user.name
                addResponseMessage(`Your name is ${product}`);
                 return;
                 } 
     
+
+           /* if the users query not included in any of the if statements above
+               then compare the query with Utterances array 
+           */     
          if (compare(Utterances, Answers, text)) {
 
           product = compare(Utterances, Answers, text);
         } 
+        /* if query still not found response with random value from Alternative array */
         else {
-            console.log(Alternatives.length)
+           console.log(Alternatives.length)
           product = Alternatives[Math.floor(Math.random() * Alternatives.length)];
         }
         addResponseMessage(product);
      }
    
+
+/* search for random answer form Answers array corresponding to th Utterances */
 
 function compare(utterancesArray, answersArray, string) {
   let reply;
