@@ -1,3 +1,12 @@
+/*
+*
+*   Main for the Poker Practice Game.
+*   Please note that the following subsystem has been built 
+*   using the work done by Mikhail Maslyuk as a foundation.
+*
+*   Reference: https://github.com/Mikhail-MM
+*/
+
 // imports
 import React, { Component } from "react";
 
@@ -532,3 +541,7 @@ class PokerPractice extends Component {
 }
 
 export default PokerPractice;
+
+
+
+
