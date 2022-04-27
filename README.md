@@ -18,6 +18,6 @@ Student ID: ```w3000000```
 
 Password: ```@Admin123```
 
-####Database for group chat: 
+#### Database for group chat: 
 
 Firebase is used on a separate account under Zaid Jaria. For running it from scratch you might want to make new firebase account - enable sign in with email/password in the authentication section - then change the api key in the register.jsx file.
