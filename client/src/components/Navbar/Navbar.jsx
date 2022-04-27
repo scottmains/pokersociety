@@ -24,14 +24,6 @@ import 'firebase/analytics';
  */
 
 
- const navigation = [
-  { name: 'Home', href: '/newsfeed', current: true },
-  { name: 'Calendar', href: '/calendar', current: false },
-  { name: 'Play', href: '/pokerpractice', current: false },
-  { name: 'Chat', href: '/chat', current: false },
- 
-]
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -39,27 +31,19 @@ function classNames(...classes) {
 
 const Navbar = () => {
 
-  const {auth } = useAuth();
- 
+const {auth } = useAuth();
 
-  console.log(auth.roles)
-
-
-  const navigate = useNavigate();
+const navigate = useNavigate();
 const logout = useLogout();
 
 const [isAdmin, setAdmin] = useState(false)
 
-
-console.log(isAdmin)
-
+// Calls auth context and checks if the user is admin
 useEffect(() => {
   if (auth.roles.includes(5150)) {
     setAdmin(true);
   }
 }, [])
-
-
 
 const signOut = async () => {
  await logout();
@@ -75,27 +59,33 @@ let adminPage = (
   <></>
 )
 
+
+// If user is admin, display admin pages.
 if (isAdmin) { 
   adminPage = (
     <>
+       
   <Menu.Item>
   {({ active}) => (
+ <NavLink to="/newsfeedadmin"> 
     <a
-      href="newsfeedadmin"
       className={classNames(active ? 'bg-green-100' : '', 'block px-4 py-2 text-sm text-gray-700 ')}
     >
-      Add/Remove Post
+     Add/Remove Post
     </a>
+  </NavLink>
   )} 
 </Menu.Item>
 <Menu.Item>
   {({ active}) => (
+    <NavLink to="/admin"> 
     <a
-      href="admin"
+     
       className={classNames(active ? 'bg-green-100' : '', 'block px-4 py-2 text-sm text-gray-700 ')}
     >
       Admin Dashboard
     </a>
+    </NavLink>
   )} 
 </Menu.Item>
 </>
@@ -121,22 +111,38 @@ if (isAdmin) {
               </Disclosure.Button>
             </div>
             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-                 {/* INSERT LOGO FOR POKER SOCIETY */}
               <div className="hidden sm:block sm:ml-6">
                 <div className="flex space-x-4">
-                  {navigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className={classNames(
-                        item.current ? 'bg-green-900 text-white' : 'text-gray-300 hover:bg-green-700 hover:text-white',
-                        'px-3 py-2 rounded-md text-sm font-medium'
-                      )}
-                      aria-current={item.current ? 'page' : undefined}
-                    >
-                      {item.name}
-                    </a>
-                  ))}
+                
+                <NavLink
+                                    to="/newsfeed"
+                                    className="flex items-center gap-4 text-sm text-white font-light px-4 py-3 rounded-lg"
+                                    
+                                >
+                 Home
+                </NavLink>
+                <NavLink
+                                    to="/calendar"
+                                    className="flex items-center gap-4 text-sm text-white font-light px-4 py-3 rounded-lg"
+                                    
+                                >
+                 Calendar
+                </NavLink>
+                <NavLink
+                                    to="/pokerpractice"
+                                    className="flex items-center gap-4 text-sm text-white font-light px-4 py-3 rounded-lg"
+                               
+                                >
+                Play
+                </NavLink>
+                <NavLink
+                                    to="/chat"
+                                    className="flex items-center gap-4 text-sm text-white font-light px-4 py-3 rounded-lg"
+                                
+                                >
+                Chat
+                </NavLink>
+              
                 </div>
               </div>
             </div>
@@ -162,12 +168,13 @@ if (isAdmin) {
                   <Menu.Items className="z-20 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <Menu.Item>
                       {({ active }) => (
+                        <NavLink to="/profile"> 
                         <a
-                          href="/profile"
                           className={classNames(active ? 'bg-green-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                         >
                           Your Profile
                         </a>
+                        </NavLink>
                       )}
                     </Menu.Item>
                     {adminPage}
@@ -190,22 +197,36 @@ if (isAdmin) {
         </div>
 
         <Disclosure.Panel className="sm:hidden ">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            {navigation.map((item) => (
-              <Disclosure.Button
-                key={item.name}
-                as="a"
-                href={item.href}
-                className={classNames(
-                  item.current ? 'bg-green-900 text-white' : 'text-gray-300 hover:bg-green-700 hover:text-white',
-                  'block px-3 py-2 rounded-md text-base font-medium'
-                )}
-                aria-current={item.current ? 'page' : undefined}
-              >
-                {item.name}
-              </Disclosure.Button>
-            ))}
-          </div>
+          <div className="px-2 pt-2 pb-3 space-y-1 text-center">
+          <NavLink
+                                    to="/newsfeed"
+                                    className="flex items-center gap-4 text-sm text-white font-light px-4 py-3 rounded-lg"
+                                    activeClassName="bg-gradient-to-tr from-light-blue-500 to-light-blue-700 text-white shadow-md"
+                                >
+                 Home
+                </NavLink>
+                <NavLink
+                                    to="/calendar"
+                                    className="flex items-center gap-4 text-sm text-white font-light px-4 py-3 rounded-lg"
+                                    activeClassName="bg-gradient-to-tr from-light-blue-500 to-light-blue-700 text-white shadow-md"
+                                >
+                 Calendar
+                </NavLink>
+                <NavLink
+                                    to="/pokerpractice"
+                                    className="flex items-center gap-4 text-sm text-white font-light px-4 py-3 rounded-lg"
+                                    activeClassName="bg-gradient-to-tr from-light-blue-500 to-light-blue-700 text-white shadow-md"
+                                >
+                Play
+                </NavLink>
+                <NavLink
+                                    to="/chat"
+                                    className="flex items-center gap-4 text-sm text-white font-light px-4 py-3 rounded-lg"
+                                    activeClassName="bg-gradient-to-tr from-light-blue-500 to-light-blue-700 text-white shadow-md"
+                                >
+                Chat
+                </NavLink>
+              </div>
         </Disclosure.Panel>
       </>
     )}

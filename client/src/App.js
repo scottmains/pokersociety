@@ -31,8 +31,11 @@ const ROLES = {
 
 const App = () => {
 
+
+
+
     return (
-      
+      <> 
          <Routes>
            
         <Route path="/" element={<Auth />}/>
@@ -45,7 +48,7 @@ const App = () => {
         <Route path="newsfeed"  element={
           <>
           <Newsfeed /> 
-          <Chatbot/>
+        
           </>}/>
 
         <Route path="calendar"  element={
@@ -73,6 +76,8 @@ const App = () => {
       </Route>
       
          </Routes>
+       <Chatbot/>
+           </>
     )
     };
  

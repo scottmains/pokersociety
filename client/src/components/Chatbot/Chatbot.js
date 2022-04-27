@@ -8,7 +8,7 @@ import botIcon from "../../botIcon.png"
 import "./../../app.css"
 import useAuth from "../../context/Auth/useAuth";
 import axios from "axios";
-
+import { useLocation } from 'react-router-dom';
 /* Random joke API URL */
 const jokeURL = "https://api.chucknorris.io/jokes/random";
 
@@ -229,10 +229,37 @@ function compare(utterancesArray, answersArray, string) {
 }
 
 
+
+// this code makes sure that the bot doesn't rerender every
+// time the user goes from one page and back to the newsfeed page
+
+const location = useLocation();
+
+let path = location.pathname
+
+let chatBot;
+
+if (path ==="/newsfeed") {
+  chatBot = (
+    <div className="block"> 
+    <Widget
+    className="hidden"
+      handleNewUserMessage={handleNewUserMessage}
+      profileAvatar={botIcon}
+      title="PokerBOT"
+      subtitle="Ask me about the Poker Society"
+      showCloseButton={true}
+    />
+  </div>
+  )
+}
     return (
-      <div className="App">
-      
+
+      <>
+      {chatBot}
+      <div className="hidden"> 
         <Widget
+        className="hidden"
           handleNewUserMessage={handleNewUserMessage}
           profileAvatar={botIcon}
           title="PokerBOT"
@@ -240,6 +267,7 @@ function compare(utterancesArray, answersArray, string) {
           showCloseButton={true}
         />
       </div>
+      </>
     );
 }
 
