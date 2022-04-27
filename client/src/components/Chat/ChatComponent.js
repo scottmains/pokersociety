@@ -90,7 +90,7 @@ export default function ChatComponent() {
 function ChatRoom() {
   const dummy = useRef();
   const messagesRef = firestore.collection('messages');
-  const query = messagesRef.orderBy('createdAt','desc');
+  const query = messagesRef.orderBy('createdAt','desc').limit(25);
 
   const [messages] = useCollectionData(query, { idField: 'id' });
   console.log(messages)
