@@ -10,17 +10,10 @@ import 'firebase/analytics';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-// firebase.initializeApp({
-//   apiKey: "AIzaSyBNSnoIJTrU8AuIJ98muNmJaEjv3pP12kg",
-//   authDomain: "groupchat-6dfaa.firebaseapp.com",
-//   databaseURL: "https://groupchat-6dfaa-default-rtdb.europe-west1.firebasedatabase.app",
-//   projectId: "groupchat-6dfaa",
-//   storageBucket: "groupchat-6dfaa.appspot.com",
-//   messagingSenderId: "235621123712",
-//   appId: "1:235621123712:web:f9747ecb1efdc64bf08865",
-//   measurementId: "G-V233L1J3S0"
-// })
 
+// code referenced from a sample chatting feature app -- link : https://github.com/leopaul29/facebook-messenger-clone
+
+//connect the firebase authentication to the chat component
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 const analytics = firebase.analytics();
@@ -31,12 +24,12 @@ export default function ChatComponent() {
 
   const [user] = useAuthState(auth);
 
-  
+  //get all the logged in user details in an object format
   const {userDetails } = useAuth();
   const obj = JSON.stringify(userDetails)
   const local_user = JSON.parse(obj)
 
-  
+  //get the email id from the logged in user object to sign in on the firebase user account using that parameter as email as password
   if(!user)
   {
     auth.signInWithEmailAndPassword(local_user.email,local_user.email);
@@ -50,6 +43,7 @@ export default function ChatComponent() {
 
   // console.log(userDetails)
   // console.log(user)
+
 
   return (
     <div className="Chat">
@@ -68,29 +62,13 @@ export default function ChatComponent() {
 
 
 
-// function SignIn() {
-
-//   return (
-//     userDetails?.user ? <ChatRoom /> : <>
-//     <button className="sign-in" onClick={signInWithEmailAndPassword}>Enter into Chatroom</button>
-//     <p>Do not violate the community guidelines or you will be banned for life!</p>
-//   </>
-    
-//   )
-
-// }
-
-// function SignOut() {
-//   return auth.currentUser && (
-//     <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
-//   )
-// }
 
 
+//the chat section which displays all the messages from the firebase account database
 function ChatRoom() {
   const dummy = useRef();
   const messagesRef = firestore.collection('messages');
-  const query = messagesRef.orderBy('createdAt','desc').limit(25);
+  const query = messagesRef.orderBy('createdAt','desc').limit(25);//to render only last 25 messages at a time
 
   const [messages] = useCollectionData(query, { idField: 'id' });
   console.log(messages)
@@ -103,9 +81,9 @@ function ChatRoom() {
   const sendMessage = async (e) => {
     e.preventDefault();
 
-    const { uid, photoURL } = auth.currentUser;
+    const { uid, photoURL } = auth.currentUser; 
 
-    
+    //adding a new message as an object data entry in the firebase database
     
     await messagesRef.add({
       text: formValue,
@@ -150,7 +128,7 @@ function ChatMessage(props) {
 
   console.log(auth)
   
-  const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
+  const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received'; //message check for formatting accordingly
   
   return (<>
     <div className={`message ${messageClass}`}>
