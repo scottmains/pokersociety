@@ -1,14 +1,23 @@
+/*
+
+	Handling bet amounts
+
+*/
+
+// imports 
 import { 
 	dealFlop, 
 	dealTurn, 
 	dealRiver, 
 	showDown 
 } from '../components/PokerPractice/card/cards.js';
+
 import { 
 	determineNextActivePlayer 
 } from '../components/PokerPractice/player/players.js';
 
 const determineBlindIndices = (dealerIndex, numPlayers) => {
+
 	return({
 		bigBlindIndex: (dealerIndex + 2) % numPlayers,
 		smallBlindIndex: (dealerIndex + 1) % numPlayers,
@@ -16,67 +25,83 @@ const determineBlindIndices = (dealerIndex, numPlayers) => {
 }
 
 const anteUpBlinds = (players, blindIndices, minBet) => {
+
 	const { bigBlindIndex, smallBlindIndex } = blindIndices;
 	players[bigBlindIndex].bet = minBet;
 	players[bigBlindIndex].chips = players[bigBlindIndex].chips - minBet;
 	players[smallBlindIndex].bet = minBet / 2;
 	players[smallBlindIndex].chips = players[smallBlindIndex].chips - (minBet / 2);
-		return players
+
+	return players
 }
 
 const determineMinBet = (highBet, playerChipsStack, playerBet) => {
+
 	const playerTotalChips = playerChipsStack + playerBet
+
 	if (playerTotalChips < highBet) {
 		return playerTotalChips;
-	} else {
+	} 
+	else {
 		return highBet;
 	}
 }
+
 const handleBet = (state, bet, min, max) => {
+
 	if (bet < min) {
 		state.betInputValue = min;
 		return console.log("Invalid Bet")
 	}
+
 	if (bet > max) {
 		state.betInputValue = max;
 		return console.log("Invalid Bet")
 	}
 
 	if (bet > state.highBet) {
+
 		state.highBet = bet;
 		state.minBet = state.highBet;
+
 		for (let player of state.players) {
+
 			if (!player.folded || !player.chips === 0) {
 				player.betReconciled = false;
 			}
 		}
 	}
 
-		const activePlayer = state.players[state.activePlayerIndex];
-		const subtractableChips = bet - activePlayer.bet;
-		activePlayer.bet = bet;
+	const activePlayer = state.players[state.activePlayerIndex];
+	const subtractableChips = bet - activePlayer.bet;
+	activePlayer.bet = bet;
 
-		activePlayer.chips = activePlayer.chips - subtractableChips;
-		if (activePlayer.chips === 0) {
-			activePlayer.allIn = true;
-			state.numPlayersAllIn++
-		}
-		activePlayer.betReconciled = true;
+	activePlayer.chips = activePlayer.chips - subtractableChips;
+
+	if (activePlayer.chips === 0) {
+		activePlayer.allIn = true;
+		state.numPlayersAllIn++
+	}
+
+	activePlayer.betReconciled = true;
+
 	return determineNextActivePlayer(state)
 }
 
 const handleFold = (state) => {
-	const activePlayer = state.players[state.activePlayerIndex];
-		activePlayer.folded = true;
-		activePlayer.betReconciled = true;
-		state.numPlayersFolded++
-		state.numPlayersActive--
 
-		const nextState = determineNextActivePlayer(state)
-		return nextState
+	const activePlayer = state.players[state.activePlayerIndex];
+	activePlayer.folded = true;
+	activePlayer.betReconciled = true;
+	state.numPlayersFolded++
+	state.numPlayersActive--
+
+	const nextState = determineNextActivePlayer(state)
+	return nextState
 }
 
 const handlePhaseShift = (state) => {
+
 	switch(state.phase) {
 		case('betting1'): {
 			state.phase = 'flop';
@@ -99,10 +124,10 @@ const handlePhaseShift = (state) => {
 }
 
 const reconcilePot = (state) => {
+
 	for (let player of state.players) {
 
 		state.pot = state.pot + player.bet;
-
 		player.sidePotStack = player.bet;
 		player.betReconciled = false; 
 	}
@@ -117,30 +142,36 @@ const reconcilePot = (state) => {
 	state.minBet = 0; // Reset markers which control min/max bet validation
 	state.highBet = 0;
 	state.betInputValue = 0;
-		return state
+
+	return state
 }
 
 
 const calculateSidePots = (state, playerStacks) => {
+
 	// Filter out all players who either
 	// 		1) Upon first iteration of the function - did not bet this round
 	//		2) Upon subsequent iterations, already had a side pot built for them
 	const investedPlayers = playerStacks.filter(player => player.sidePotStack > 0)
+
 	if (investedPlayers.length === 0) {
 		return state
 	}
+
 	if (investedPlayers.length === 1) {
+
 		// This condition occurs when there is a single player who has bet an excess amount of chips. Refund and exit.
 		const playerToRefund = state.players[state.players.findIndex(player => player.name === investedPlayers[0].name)];
 		playerToRefund.chips = playerToRefund.chips + investedPlayers[0].sidePotStack;
 		state.pot -= investedPlayers[0].sidePotStack
 			return state
 	}
-		// Sort all players, Smallest stack first.
-		const ascBetPlayers = investedPlayers.sort((a,b) => a.sidePotStack - b.sidePotStack);
-		const smallStackValue = ascBetPlayers[0].sidePotStack;
+
+	// Sort all players, Smallest stack first.
+	const ascBetPlayers = investedPlayers.sort((a,b) => a.sidePotStack - b.sidePotStack);
+	const smallStackValue = ascBetPlayers[0].sidePotStack;
 		
-		const builtSidePot = ascBetPlayers.reduce((acc, cur) => {
+	const builtSidePot = ascBetPlayers.reduce((acc, cur) => {
 /***
 	If we have a group of players with this bet configuration
 	[100, 200, 300, 500, 1000]
@@ -154,22 +185,27 @@ const calculateSidePots = (state, playerStacks) => {
 				[100, 300, 800] -> [0, 200, 700] {potValue: 300}
 				[200, 700] -> [0, 500] {potValue: 400} --> refund 500
 ***/
-			if (!cur.folded) {
-				acc.contestants.push(cur.name);
-			}
-			acc.potValue = acc.potValue + smallStackValue;
-			cur.sidePotStack = cur.sidePotStack - smallStackValue;
-				return acc
-		}, {
+		if (!cur.folded) {
+			acc.contestants.push(cur.name);
+		}
+
+		acc.potValue = acc.potValue + smallStackValue;
+		cur.sidePotStack = cur.sidePotStack - smallStackValue;
+
+		return acc
+	}, {
 			contestants: [],
 			potValue: 0,
 		});
-			state.sidePots.push(builtSidePot);
-				return calculateSidePots(state, ascBetPlayers)
+
+	state.sidePots.push(builtSidePot);
+
+	return calculateSidePots(state, ascBetPlayers)
 
 }
 
 const condenseSidePots = (state) => {
+	
 	if (state.sidePots.length > 1) {
 		for (let i = 0; i < state.sidePots.length; i++) {
 			for (let n = i + 1; n < state.sidePots.length; n++ ) {
@@ -180,6 +216,7 @@ const condenseSidePots = (state) => {
 			}
 		}
 	}
+
 	return state	
 }
 
@@ -188,9 +225,11 @@ const arrayIdentical = (arr1, arr2) => {
 	if (arr1.length !== arr2.length) {
 		return false
 	}
-		return arr1.map(el => arr2.includes(el)).filter(bool => bool !== true).length !== 0 ? false : true;
-		// Can be simplified return arr1.every(el => arr2.includes(el));
+
+	return arr1.map(el => arr2.includes(el)).filter(bool => bool !== true).length !== 0 ? false : true;
+	// Can be simplified return arr1.every(el => arr2.includes(el));
 }
+
 export { 
 	determineBlindIndices, 
 	anteUpBlinds, 
