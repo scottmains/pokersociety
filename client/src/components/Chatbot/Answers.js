@@ -1,3 +1,5 @@
+/* Array of pre-defined answers */
+
 const Answers = [
     [
      "Fine... how are you?",
