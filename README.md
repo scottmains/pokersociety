@@ -21,3 +21,15 @@ Password: ```@Admin123```
 #### Database for group chat: 
 
 Firebase is used on a separate account under Zaid Jaria. For running it from scratch you might want to make new firebase account - enable sign in with email/password in the authentication section - then change the api key in the register.jsx file.
+
+#### Setting up Server and Database from scratch.
+
+Currently the project is linked to the api hosted on heroku. If the user wanted to host it all on localhost they would need to follow these steps:
+
+1) Create a MongoDB account.
+2) https://cloud.mongodb.com/ You should be able to see your database presumably called Cluster0. Click connect-> connect your application -> Node.js 4.0 or later and then copy the link it gives you.
+3) Paste the link in the .env file next to "DB_CONNECT". You will have to replace "password" in the link to the password you have chosen.
+4) You should now be able to connect locally with localhost. We now need to change the client-side code so that it connects to the localhost api rather than heroku.
+5) go to client/src/api/axios.js and replace the BASE_URL with http://localhost:5000/.
+
+It should now run okay
