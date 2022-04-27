@@ -1,3 +1,11 @@
+/*
+
+	General CSS file for the poker game page. 
+	Contains imports from all the other related
+	components' css files.
+
+*/
+
 @import url("../../components/PokerPractice/card/card.css");
 @import url("../../components/PokerPractice/player/player.css");
 

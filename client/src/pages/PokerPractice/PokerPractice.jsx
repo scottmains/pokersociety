@@ -1,12 +1,10 @@
-// IMPORTS
+// imports
 import React, { Component } from "react";
 
-
-// STYLING
+// styling
 import "./PokerPractice.css"; 
 
-
-// COMPONENTS
+// components
 import Spinner from '../../components/PokerPractice/Spinner'; // loading logo
 import Menu from "../../components/PokerPractice/menu/Menu"; // Menu
 import Win from "../../components/PokerPractice/Win"; // Win - End screen
@@ -16,36 +14,42 @@ import Player from "../../components/PokerPractice/player/Player"; // Player
 import PlayerShowdown from "../../components/PokerPractice/showdown/PlayerShowdown"; // Player - Showdown phase
 import Navbar from "../../components/Navbar/Navbar";
 
-// UTILITIES
+// utilities 
+
+// showdown -> end of the round screen
 import {
-  renderShowdownMessages,
-  renderNetPlayerEarnings
+  renderShowdownMessages, // end game messages (e.g., who wins how much)
+  renderNetPlayerEarnings // rendering net earings
 } from '../../components/PokerPractice/showdown/showdown'
 
+
 import { 
-  generateDeckOfCards, 
-  shuffle, 
-  dealPrivateCards,
+  generateDeckOfCards, // generating the deck of cards
+  shuffle, // shuffling
+  dealPrivateCards, // dealing private cards to each player
 } from '../../components/PokerPractice/card/cards.js';
 
-import { 
-  generateTable, 
-  beginNextRound,
-  checkWin
-} from '../../components/PokerPractice/player/players.js';
 
 import { 
-  determineBlindIndices, 
+  generateTable, // generating table
+  beginNextRound, // beginning next round
+  checkWin // checking win or loss
+} from '../../components/PokerPractice/player/players.js';
+
+
+import { 
+  determineBlindIndices,  // determine 
   anteUpBlinds, 
-  determineMinBet,
-  handleBet,
-  handleFold, 
+  determineMinBet, // determine 
+  handleBet, // determine 
+  handleFold,  // determine 
 } from '../../utils/bet.js';
 
 import {
   handleAI as handleAIUtil
-} from '../../utils/ai.js';
+} from '../../utils/ai.js'; // determine 
 
+// rendering (action menu slider + buttons)
 import {
   renderActionMenu,
   renderActionButtonText
@@ -59,29 +63,29 @@ class PokerPractice extends Component {
   // Setting initial state of the app (clean one, so we can reset it at the end of the game e.g., play again)
   clean_state = {
     loading: true, // loading 
-    menu: "none",
+    menu: "none", // workaround to show an initial menu (currently working on feedback provided)
     maxNBots: 4, // TODO: ADD OPTION FOR USER IN MENU TO SELECT THE NUMBER OF BOTS
-    lost: null,
+    lost: null, // whether the user lost or not
     winnerFound: null, // no winner at the start
     players: null, // players
     numPlayersActive: null, // how many players are playing
     numPlayersFolded: null, // how many players folded
-    numPlayersAllIn: null, // how many plaers All in'd
+    numPlayersAllIn: null, // how many plaers all in'd
     activePlayerIndex: null, // active player idx
     dealerIndex: null, // dealer idx
     blindIndex: null, // blind player idx
     deck: null, // round deck
     communityCards: [], // community cards
     pot: null, // pot amount
-    highBet: null, // 
-    betInputValue: null, // 
-    sidePots: [],
+    highBet: null, // high bet, calculated from minbet
+    betInputValue: null, // how much a player is betting
+    sidePots: [], // store side pots, in case there are any
     minBet: 20, // min bet
     phase: 'loading', // initial phase
-    playerHierarchy: [], 
+    playerHierarchy: [], // each player cards' ranking, sorted
     showDownMessages: [], // end of round messages
-    playActionMessages: [], // 
-    playerAnimationSwitchboard: { // 
+    playActionMessages: [], // action pop ups
+    playerAnimationSwitchboard: { // animating turns
       0: {isAnimating: false, content: null},
       1: {isAnimating: false, content: null},
       2: {isAnimating: false, content: null},
@@ -249,7 +253,7 @@ class PokerPractice extends Component {
     )
   }
 
-  // Creating the board
+  // creating the board
   renderBoard = () => {
     const { 
       players,
@@ -260,7 +264,7 @@ class PokerPractice extends Component {
       playerAnimationSwitchboard
     } = this.state;
     
-    // Reverse Players Array for the sake of taking turns counter-clockwise.
+    // reverse players array for the sake of taking turns counter-clockwise.
     const reversedPlayers = players.reduce((result, player, index) => {
       
       const isActive = (index === activePlayerIndex);
@@ -287,17 +291,23 @@ class PokerPractice extends Component {
   // Rendering community cards (during each stage of the game as well as the showdown)
   // if showdown -> no animation for the cards
   renderCommunityCards = (noAnimation) => {
+
     return this.state.communityCards.map((card, index) => {
+
       let cardData = {...card};
+
       if (noAnimation) {
         cardData.animationDelay = 0;
       }
+      
       return(
         <Card key={index} cardData={cardData}/>
       );
     });
+
   }
 
+  // handling bet input changes (slider)
   handleBetInputChange = (val, min, max) => {
     if (val === '') val = min
     if (val > max) val = max
@@ -306,52 +316,68 @@ class PokerPractice extends Component {
       });
   }
   
+  // animation 
   pushAnimationState = (index, content) => {
     const newAnimationSwitchboard = Object.assign(
       {}, 
       this.state.playerAnimationSwitchboard,
       {[index]: {isAnimating: true, content}}     
     )
+
     this.setState({playerAnimationSwitchboard: newAnimationSwitchboard});
   }
 
+  // removing animation 
   popAnimationState = (index) => {
+
     const persistContent = this.state.playerAnimationSwitchboard[index].content;
+
     const newAnimationSwitchboard = Object.assign(
       {}, 
       this.state.playerAnimationSwitchboard,
       {[index]: {isAnimating: false, content: persistContent}}     
     )
+
     this.setState({playerAnimationSwitchboard: newAnimationSwitchboard});
   }
 
+  // handling AI 
   handleAI = () => {
+
     const {playerAnimationSwitchboard, ...appState} = this.state;
     const newState = handleAIUtil(cloneDeep(appState), this.pushAnimationState)
 
-      this.setState({
-            ...newState,
-            betInputValue: newState.minBet
-      }, () => {
-        if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
-          setTimeout(() => {
-          
-            this.handleAI()
-          }, 1200)
-        }
-      })
+    this.setState({
+
+      ...newState,
+      betInputValue: newState.minBet
+    }, () => {
+      
+      if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
+        
+        setTimeout(() => {
+          this.handleAI()
+        }, 1200)
+      }
+    })
   }
 
+  // rendering rank tie 
   renderRankTie = (rankSnapshot) => {
+
     return rankSnapshot.map(player => {
       return this.renderRankWinner(player);
     })
   }
 
+  // rendering rank winer 
   renderRankWinner = (player) => {
+
     const { name, bestHand, handRank } = player;
     const playerStateData = this.state.players.find(statePlayer => statePlayer.name === name);
+    
     return (
+
       <div className="player-showdown--entity" key={name}>
         <PlayerShowdown
           name={name}
@@ -366,7 +392,8 @@ class PokerPractice extends Component {
           <div className='player-showdown--besthand--cards' style={{alignItems: 'center'}}>
             {
               bestHand.map((card, index) => {
-                // Reset Animation Delay
+
+                // reset Animation Delay
                 const cardData = {...card, animationDelay: 0}
                 return <Card key={index} cardData={cardData}/>
               })
@@ -378,12 +405,16 @@ class PokerPractice extends Component {
             {handRank}
           </div>
         </div>
+        {/* rendering player net earnings*/}
         {renderNetPlayerEarnings(playerStateData.roundEndChips, playerStateData.roundStartChips)}
       </div>
+
     )
   }
 
+  // rendering best hand, checking for ties as well
   renderBestHands = () => {
+
     const { playerHierarchy } = this.state;
 
     return playerHierarchy.map(rankSnapshot => {
@@ -392,14 +423,18 @@ class PokerPractice extends Component {
     })
   }
 
+  // handling next round
   handleNextRound = () => {
+    
     this.setState({clearCards: true})
     const newState = beginNextRound(cloneDeep(this.state))
+
     // Check win condition
     if(checkWin(newState.players)) {
       this.setState({ winnerFound: true })
       return;
     }
+    
     this.setState(newState, () => {
       if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
         setTimeout(() => this.handleAI(), 1200)
@@ -407,6 +442,7 @@ class PokerPractice extends Component {
     })
   }
 
+  // rendering action buttons 
   renderActionButtons = () => {
 
     const { highBet, players, activePlayerIndex, phase, betInputValue } = this.state
@@ -424,37 +460,52 @@ class PokerPractice extends Component {
         </button>
       </React.Fragment>
 
-      )
+    )
   }
 
+  // handling fold
   handleFold = () => {
+
     const {playerAnimationSwitchboard, ...appState} = this.state
     const newState = handleFold(cloneDeep(appState));
-      this.setState(newState, () => {
-        if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
-          setTimeout(() => {
-          
-            this.handleAI()
-          }, 1200)
-        }
-      })
+
+    this.setState(newState, () => {
+      
+      if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
+        
+        setTimeout(() => {
+          this.handleAI()
+        }, 1200)
+      }
+    })
   }
 
+  // if the active player is the AI, we call its util 
   handleBetInputSubmit = (bet, min, max) => {
+
     const {playerAnimationSwitchboard, ...appState} = this.state;
     const { activePlayerIndex } = appState;
+
     this.pushAnimationState(activePlayerIndex, `${renderActionButtonText(this.state.highBet, this.state.betInputValue, this.state.players[this.state.activePlayerIndex])} ${(bet > this.state.players[this.state.activePlayerIndex].bet) ? (bet) : ""}`);;
     const newState = handleBet(cloneDeep(appState), parseInt(bet, 10), parseInt(min, 10), parseInt(max, 10));
-      this.setState(newState, () => {
-        if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
-          setTimeout(() => {
-          
-            this.handleAI()
-          }, 1200)
-        }
-      });
+
+    this.setState(newState, () => {
+      
+      if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
+        
+        setTimeout(() => {
+          this.handleAI()
+        }, 1200)
+      }
+    });
   }
 
+  // Rendering the end of the round screen
+  // contains:
+  //    - showdown messages (who wins, and how much) 
+  //    - community cards
+  //    - best hands, in strength order
+  //    - next round button 
   renderShowdown = () => {
     return(
       <>
