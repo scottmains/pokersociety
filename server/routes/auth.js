@@ -1,11 +1,9 @@
 const router = require('express').Router();
 const User = require('../model/User');
-const Token = require("../model/Token");
 const jwt = require('jsonwebtoken');
 const {registerValidation, loginValidation} = require('../validation');
 const bcrypt = require('bcryptjs');
 const verify = require('../middleware/verifyToken.js');
-const sendEmail = require('../middleware/sendEmail');
 const Joi = require('@hapi/joi');
 const crypto = require("crypto");
 

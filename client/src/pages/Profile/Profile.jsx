@@ -134,7 +134,6 @@ const Profile = () => {
             
         </div>
     </div>
-    <Chatbot/>
     </div>}
  </>
   );

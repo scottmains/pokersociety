@@ -13,7 +13,6 @@ import {
     Route,
   } from "react-router-dom";
 
-import useAuth from "./context/Auth/useAuth";
 import PersistLogin from './components/Auth/persistLogin';
 import RequireAuth from  "./context/Auth/RequireAuth";
 import NewsfeedAdmin from './pages/Newsfeed/NewsfeedAdmin';
@@ -22,6 +21,7 @@ import PokerPractice from './pages/PokerPractice/PokerPractice';
 import Admin from './pages/Admin/Admin';
 import Chat from './pages/Chat/Chat';
 import ContextWrapper from './components/Calendar/ContextWrapper';
+import Chatbot from './components/Chatbot/Chatbot';
 
 const ROLES = {
   'User': 2001,
@@ -41,8 +41,12 @@ const App = () => {
         
         <Route element={<PersistLogin/>}> 
         <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+         
         <Route path="newsfeed"  element={
-          <Newsfeed />}/>
+          <>
+          <Newsfeed /> 
+          <Chatbot/>
+          </>}/>
 
         <Route path="calendar"  element={
           <ContextWrapper>
