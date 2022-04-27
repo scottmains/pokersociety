@@ -13,21 +13,22 @@ import HiddenCard from '../card/HiddenCard';
 import { CSSTransition } from 'react-transition-group';
 
 // button/dealer chip
-// https://www.flaticon.com/free-icon/dealer-badge_107572
+// Reference: https://www.flaticon.com/free-icon/dealer-badge_107572
 import dealerChip from "../../../assets/chip.svg";
 
 // Player init
 const Player = (props) => {
-
+  
   const {
-    arrayIndex,
-    playerAnimationSwitchboard,
+    arrayIndex, // index in the array of players
+    playerAnimationSwitchboard, // animations management
     endTransition,
     hasDealerChip,
-    isActive,
-    phase,
-    clearCards,
-    player: {
+    isActive, // if active
+    phase, // curent phase of the game
+    clearCards, 
+    
+    player: { // settings
       robot,
       folded,
       cards,
@@ -39,19 +40,26 @@ const Player = (props) => {
 
   // rendering player's cards
   const renderPlayerCards = () => {
+    
     let applyFoldedClassname;
 
     if (folded || clearCards) {
       applyFoldedClassname = true
     }
 
+    // if player is a robot, hidden card instead of card component
     if (robot) {
+      
       return cards.map((card, index)=> {
+
         if (phase !== 'showdown') {
+
           return(
             <HiddenCard key={index} cardData={card} applyFoldedClassname={applyFoldedClassname}/>
           );
-        } else {
+        } 
+        else {
+          
           // Reset Animation Delay
           const cardData = {...card, animationDelay: 0}
           return(
@@ -60,7 +68,8 @@ const Player = (props) => {
         }
       });
     }
-    else {
+    else { // else return card component, visile card 
+
       return cards.map((card, index) => {
         return(
           <Card key={index} cardData={card} applyFoldedClassname={applyFoldedClassname}/>
@@ -69,15 +78,19 @@ const Player = (props) => {
     }
   }
 
+  // animations
   const ifAnimating = (playerBoxIndex) => { 
+
     if (playerAnimationSwitchboard[playerBoxIndex].isAnimating) {
       return true;
-    } else {
+    } 
+    else {
       return false;
     }
   }
 
   return (
+    
     <div className={`p${arrayIndex}`}>
 
       { /* Player action box*/}

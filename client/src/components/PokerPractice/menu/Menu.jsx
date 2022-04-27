@@ -1,5 +1,10 @@
-import React from 'react';
+/*
 
+  Menu component, TODO -> complete bot amount, as well as min bet choice for the user
+
+*/
+
+import React from 'react';
 
 class Menu extends React.Component {
 

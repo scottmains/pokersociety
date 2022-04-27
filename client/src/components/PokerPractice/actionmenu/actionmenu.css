@@ -1,4 +1,10 @@
-/* Action menu */
+/* 
+
+	Action menu CSS
+
+*/
+
+
 .game-action-bar {	/* Bottom bar with controls - container */
 	position: absolute;
 	overflow: hidden;

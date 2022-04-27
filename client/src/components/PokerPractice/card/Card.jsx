@@ -19,11 +19,11 @@ const getUnicodeSuit = (suit) => {
 	}
 }
 
-// Passing props to component (arguments)
+// Passing props to component
 const Card = (props) => {
 
   // assigning props to const card value
-  const { 
+  const {
     cardData: {
       suit, // suit 
       cardFace, // rank

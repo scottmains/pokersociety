@@ -1,6 +1,8 @@
 /*
+
   Handle component used to build the slider for the action menu (betting)
-  https://sghall.github.io/react-compound-slider/#/
+  Reference: https://sghall.github.io/react-compound-slider/#/
+  
 */
 
 import React from 'react';

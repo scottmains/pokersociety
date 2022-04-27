@@ -1,3 +1,9 @@
+/*
+
+  Rendering spinning logo
+
+*/
+
 import React from 'react';
 
 import spinnerlogo from '../../assets/spinner.svg'

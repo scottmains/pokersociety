@@ -1,3 +1,9 @@
+/*
+
+    Rendering end game screen - player loses
+
+*/
+
 import React from 'react';
 
 class Lost extends React.Component {

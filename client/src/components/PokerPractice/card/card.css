@@ -1,4 +1,8 @@
-/* Card styling */
+/* 
+
+	Most Card styling CSS
+
+*/
 
 .playing-card { /* General styling + dealing animation */
 	display: flex;

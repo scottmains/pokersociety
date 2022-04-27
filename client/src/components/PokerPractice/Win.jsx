@@ -1,3 +1,9 @@
+/*
+
+    Rendering end game screen - player wins
+
+*/
+
 import React from 'react';
 
 class Win extends React.Component {
