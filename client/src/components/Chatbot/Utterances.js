@@ -1,3 +1,5 @@
+/* users pre-defined queries */
+
 const Utterances = [
  
     ["how are you", "how is life", "how are things"],
