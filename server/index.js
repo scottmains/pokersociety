@@ -10,8 +10,7 @@ const profileRoute = require('./routes/profile');
 const cors = require('cors')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
-const credentials = require('./middleware/credentials');
-const corsOptions = require('./config/corsOptions');
+
 
 dotenv.config();
 
@@ -20,8 +19,6 @@ dotenv.config();
   mongoose.connect(process.env.DB_CONNECT,  () => 
     console.log('connected to db')
     );
-
- 
 
 //Middleware
 
@@ -40,6 +37,7 @@ app.use(cookieParser());
 
 const proxy = require('http-proxy-middleware')
 
+// Sets the routes for the front end to call.
 
 app.use('/api/user', authRoute);
 app.use('/api/newsfeed', newsfeedRoute);

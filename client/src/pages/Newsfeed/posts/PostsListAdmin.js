@@ -3,6 +3,21 @@ import { selectAllPosts, getPostsStatus, getPostsError, fetchPosts } from "./pos
 import { useEffect } from "react";
 import PostsExcerptAdmin from "./PostsExcerptAdmin";
 
+/**
+ * 
+ * fetches all the posts called
+ * from post slice and maps it 
+ * to a child component.
+ * 
+ * It then displays the data.
+ * 
+ * Only displayed on admin page as it
+ * utilises an admin child component.
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 const PostsListAdmin = () => {
     const dispatch = useDispatch();
 

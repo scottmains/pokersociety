@@ -2,6 +2,16 @@ const { application } = require('express');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
+/**
+ * 
+ * Verify token function which is wrapped
+ * on routes that require jwt 
+ * authentication.
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 module.exports = function verify (req,res,next){
   
       const authHeader = req.headers.authorization

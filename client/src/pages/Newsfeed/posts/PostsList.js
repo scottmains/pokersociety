@@ -1,9 +1,19 @@
 import { useSelector, useDispatch } from "react-redux";
 import { selectAllPosts, getPostsStatus, getPostsError, fetchPosts } from "./postsSlice";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect } from "react";
 import PostsExcerpt from "./PostsExcerpt";
-import ReactPaginate from 'react-paginate';
 
+/**
+ * 
+ * fetches all the posts called
+ * from post slice and maps it 
+ * to a child component.
+ * 
+ * It then displays the data.
+ * 
+ * @author Scott Mains
+ * 
+ */
 
 const PostsList = (itemsPerPage) => {
     const dispatch = useDispatch();
@@ -12,15 +22,11 @@ const PostsList = (itemsPerPage) => {
     const postStatus = useSelector(getPostsStatus);
     const error = useSelector(getPostsError);
 
-
-
     useEffect(() => {
         if (postStatus === 'idle') {
             dispatch(fetchPosts())
         }
     }, [postStatus, dispatch])
-
-
 
     let content;
     if (postStatus === 'loading') {
@@ -31,9 +37,6 @@ const PostsList = (itemsPerPage) => {
         content = <p>{error}</p>;
     }
 
-
-     
-     
     return (
         <section>
             {content}

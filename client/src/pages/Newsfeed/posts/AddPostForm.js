@@ -3,6 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { addNewPost } from "./postsSlice";
 import { selectAllUsers } from "../users/usersSlice";
 
+
+/**
+ * 
+ * Form Component that is used to create
+ * the data displayed on the newsfeed page
+ * 
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 const AddPostForm = () => {
     const dispatch = useDispatch()
 

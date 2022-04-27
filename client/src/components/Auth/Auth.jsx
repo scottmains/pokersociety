@@ -1,14 +1,27 @@
-import { useRef, useState, useEffect, useContext } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useRef, useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 import { LockClosedIcon } from '@heroicons/react/solid'
 import { NavLink} from "react-router-dom";
 import pokerlogo  from '../../assets/pokerlogo.svg'
 import axios from '../../api/axios';
-import jwt_decode from "jwt-decode";
 import useAuth from '../../context/Auth/useAuth'
-import Newsfeed from '../../pages/Newsfeed/Newsfeed'
+
 const LOGIN_URL = '/api/user/login';
 
+/**
+ * All logic in regards to login into the 
+ * poker society application.
+ * 
+ * Has all the html and tailwind css for the
+ * login form with a submit button that calls
+ * the submit function.
+ * 
+ * Submit function calls backend api for login
+ * credentials and sets them to auth context.
+ * 
+ * @author Scott Mains
+ * 
+ */
 
 const Auth = () => {
 
@@ -20,7 +33,7 @@ const Auth = () => {
     const [studentid, setStudentId] = useState('');
     const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
+ 
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
@@ -40,9 +53,9 @@ const Auth = () => {
         e.preventDefault();
      
         try {
-       
+          const lowerStr = studentid.toLowerCase();
             const response = await axios.post(LOGIN_URL,
-                JSON.stringify({ studentid, password }),
+                JSON.stringify({ studentid: lowerStr, password }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true

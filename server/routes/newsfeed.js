@@ -3,6 +3,16 @@ const verify = require('../middleware/verifyToken');
 const Newsfeed = require('../model/Newsfeed');
 
 
+/**
+ * 
+ * All routes in regards to newsfeed page.
+ * 
+ * These will be called by the front end.
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 router.post('/postnewsfeed', async (req,res) => {
 
   const now = JSON.stringify(new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' }))
@@ -19,7 +29,7 @@ router.post('/postnewsfeed', async (req,res) => {
   newPost.save((error, post) => {
       if (error) {
           console.log(error);
-          // Throw error or return error result
+        
       }
 
 });

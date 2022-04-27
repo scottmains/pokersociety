@@ -1,6 +1,16 @@
 import axios from "../../api/axios";
 import useAuth from "../../context/Auth/useAuth";
 
+
+/**
+ * Calls the logout API route to remove
+ * the http cookie so that the user
+ * is no longer logged into the application
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 const useLogout = () => {
     const {setAuth} = useAuth();
 

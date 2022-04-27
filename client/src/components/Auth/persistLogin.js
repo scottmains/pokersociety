@@ -3,10 +3,23 @@ import {useState, useEffect} from "react";
 import useRefreshToken from "./useRefreshToken";
 import useAuth from "../../context/Auth/useAuth";
 
+
+/**
+ * Persist login function.
+ * 
+ * Verifies the refresh token using
+ * the auth context and verifyRefreshToken
+ * function then sets whether the user 
+ * should be logged in or not.
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
     const refresh = useRefreshToken();
-    const {auth, persist} = useAuth();
+    const {auth} = useAuth();
  
     useEffect(() => {
         let isMounted = true;

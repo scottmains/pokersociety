@@ -30,7 +30,21 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX =   /^[\w\d].+@[\w\d]+\.ac\.uk$/
 const STUDENTID_REGEX = /[wW][0-9]+.{6,15}$/
 
-
+/**
+ * All logic in regards to registering into the 
+ * poker society application.
+ * 
+ * Has all the html and tailwind css for the
+ * register form with a submit button that calls
+ * the submit function.
+ * 
+ * Submit function calls backend api with the
+ * credentials the user inputs and sends a 
+ * response depending on if its valid.
+ * 
+ * @author Scott Mains
+ * 
+ */
 
 const Register = () => {
     const userRef = useRef();

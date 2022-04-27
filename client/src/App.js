@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React from 'react';
 import Auth from './components/Auth/Auth';
 import Register from './components/Register/Register';
 import Newsfeed from './pages/Newsfeed/Newsfeed';
@@ -11,7 +11,6 @@ import {
     BrowserRouter as Router,
     Routes,
     Route,
-    Navigate
   } from "react-router-dom";
 
 import useAuth from "./context/Auth/useAuth";
@@ -31,10 +30,6 @@ const ROLES = {
 }
 
 const App = () => {
-
-
-  const  {auth} = useAuth();
-
 
     return (
       

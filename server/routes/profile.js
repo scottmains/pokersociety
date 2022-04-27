@@ -2,6 +2,16 @@ const router = require('express').Router();
 const verify = require('../middleware/verifyToken');
 const Users = require('../model/User');
 
+/**
+ * 
+ * All routes in regards to profile page.
+ * 
+ * These will be called by the front end.
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 
 router.post('/userdelete', (req,res)=>{
     const email = req.body.email;

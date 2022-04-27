@@ -2,6 +2,16 @@ const router = require('express').Router();
 const verify = require('../middleware/verifyToken');
 const Users = require('../model/User');
 
+/**
+ * 
+ * All routes in regards to admin functionality.
+ * 
+ * These will be called in the front end.
+ * 
+ * @author Scott Mains
+ * 
+ */
+
   router.get('/getAllUsers', async (req,res) => {
     const userlist = await Users.find().sort({_id:-1})
     res.json(userlist);

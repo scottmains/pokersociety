@@ -1,6 +1,19 @@
-
 import axios from "axios";
 import { useState} from 'react';
+
+
+/**
+ * 
+ * Child component of admin apge
+ * 
+ * This calls the back end API to change
+ * the different elements called in the 
+ * parent component
+ * 
+ * 
+ * @author Scott Mains
+ * 
+ */
 
 const UsersExcerpt = ({ user }) => {
 
@@ -22,9 +35,7 @@ const UsersExcerpt = ({ user }) => {
         const response = await axios.post('https://nupokersociety.herokuapp.com/api/admin/updateLosses',
            { _id: user._id, lossUpdate: lossUpdate }
         );
-        
     }
-
 
 const showWinContent = () => {
     setWinContent(!winContent)

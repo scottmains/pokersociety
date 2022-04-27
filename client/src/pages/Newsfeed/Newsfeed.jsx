@@ -1,8 +1,19 @@
 import PostsList from "./posts/PostsList";
-import AddPostForm from "./posts/AddPostForm";
 import Navbar from "../../components/Navbar/Navbar"
 import React from 'react'
 import Chatbot from '../../components/Chatbot/Chatbot';
+
+/**
+ * 
+ * Contains all the components and html/css 
+ * displayed on the Newsfeed page.
+ * 
+ * Overall parent component.
+ * 
+ * 
+ * @author Scott Mains
+ * 
+ */
 
 const Newsfeed = () => {
   return (

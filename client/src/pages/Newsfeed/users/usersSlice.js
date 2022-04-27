@@ -1,5 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+/**
+ * 
+ * Shows the different options for 
+ * the user dropdown
+ * 
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 const initialState = [
     { id: '0', name: 'Scott Mains' },
     { id: '1', name: 'Head of Society' },

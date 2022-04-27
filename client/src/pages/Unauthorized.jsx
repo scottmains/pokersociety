@@ -1,5 +1,16 @@
 import { useNavigate } from "react-router-dom"
 
+
+/**
+ * 
+ * User gets redirected to this page
+ * if they try access a page they do not have
+ * access too.
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 const Unauthorized = () => {
     const navigate = useNavigate();
 

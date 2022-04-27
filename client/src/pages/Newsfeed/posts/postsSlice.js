@@ -1,6 +1,18 @@
 import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
-import { sub } from 'date-fns';
+
 import axios from "axios";
+
+/**
+ * 
+ * Calls all the data used in the other components.
+ * 
+ * Directly sends data to the mongodb and
+ * fetches it.
+ * 
+ * 
+ * @author Scott Mains
+ * 
+ */
 
 const POST_URL = 'https://nupokersociety.herokuapp.com/api/newsfeed/postnewsfeed';
 const GET_URL = 'https://nupokersociety.herokuapp.com/api/newsfeed/getnewsfeed';
@@ -68,7 +80,7 @@ const postsSlice = createSlice({
             .addCase(fetchPosts.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 // Adding date and reactions
-                let min = 1;
+           
                 const loadedPosts = action.payload.map(post => {
                     post.reactions = {
                         thumbsUp: 0,

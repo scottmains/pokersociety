@@ -1,16 +1,24 @@
 import React from 'react'
-import './profile.css'
 import Navbar from "../../components/Navbar/Navbar"
-import { useState, useContext } from 'react';
 import useAuth from "../../context/Auth/useAuth";
 import Avatar from 'react-avatar';
 import Chatbot from '../../components/Chatbot/Chatbot';
 import axios from '../../api/axios';
 
+/**
+ * 
+ * Contains all the logic/display data for profile page.
+ * 
+ * Calls the auth context to display
+ * all the different user data.
+ * 
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 const Profile = () => {
 
-
-   
     const {userDetails } = useAuth();
     const obj = JSON.stringify(userDetails)
     const user = JSON.parse(obj)

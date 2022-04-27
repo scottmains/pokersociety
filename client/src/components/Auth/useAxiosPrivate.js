@@ -3,6 +3,22 @@ import { useEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
 import useAuth from "../../context/useAuth"
 
+/**
+ * 
+ * All logic to do with axios interceptors.
+ * 
+ * Interceptors change the headers of the requests
+ * sent to server so we don't need to add them
+ * ourselves in axios requests.
+ * 
+ * In this instance we are adding the authorization
+ * header and access token by intercepting requests/
+ * responses before they are handled. 
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 const useAxiosPrivate = () => {
     const refresh = useRefreshToken();
     const { auth } = useAuth();

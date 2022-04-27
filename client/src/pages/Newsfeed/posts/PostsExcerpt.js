@@ -1,6 +1,14 @@
 import ReactionButtons from "./ReactionButtons";
-import axios from "axios";
 
+/**
+ * 
+ * Child component of Post list
+ * which takes the data called
+ * and displays it.
+ * 
+ * @author Scott Mains
+ * 
+ */
 const PostsExcerpt = ({ post }) => {
 
 

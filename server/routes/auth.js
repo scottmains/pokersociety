@@ -9,6 +9,17 @@ const sendEmail = require('../middleware/sendEmail');
 const Joi = require('@hapi/joi');
 const crypto = require("crypto");
 
+/**
+ * 
+ * All routes in regards to authentication
+ * of the user.
+ * 
+ * These will be called in the front end.
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 // ALL CODE RELATING TO REGISTER API END POINT
 router.post('/register', async (req,res) => {
 

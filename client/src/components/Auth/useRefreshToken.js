@@ -2,6 +2,21 @@ import axios from '../../api/axios'
 import useAuth from "../../context/Auth/useAuth";
 
 
+/**
+ *
+ * Refresh token function that calls
+ * the refresh api. This checks whether
+ * the accessToken initially set is valid
+ * and renews it for them so they can
+ * continue browsing.
+ * 
+ * (Refresh tokens are attached to users
+ * in mongodb.)
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 const useRefreshToken = () => {
     const { setAuth, setUserDetails} = useAuth();
 

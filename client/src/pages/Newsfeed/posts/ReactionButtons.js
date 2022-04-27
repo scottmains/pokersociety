@@ -7,6 +7,17 @@ const reactionEmoji = {
  
 }
 
+/**
+ * 
+ * Adds reaction functionality
+ * to all the posts fetched
+ * from the database.
+ * 
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 const ReactionButtons = ({ post }) => {
     const dispatch = useDispatch()
 

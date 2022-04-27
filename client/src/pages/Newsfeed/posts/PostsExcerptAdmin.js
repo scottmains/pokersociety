@@ -1,6 +1,20 @@
 import ReactionButtons from "./ReactionButtons";
 import axios from "axios";
 
+
+/**
+ * 
+ * Child component of AdminPostlist
+ * which takes the data called
+ * and displays it.
+ * 
+ * Also added functionality to delete
+ * the post if they have admin privileges
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 const PostsExcerptAdmin = ({ post }) => {
 
     const deletePost = async (id) => {
@@ -16,8 +30,6 @@ const PostsExcerptAdmin = ({ post }) => {
   
        
        }
-
-
 
     return (
         <article className="mx-auto p-6 sm:w-1/3 rounded-lg border text-white border-green-200 shadow-md bg-green-800 mt-10">

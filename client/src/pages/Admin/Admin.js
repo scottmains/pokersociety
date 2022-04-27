@@ -5,7 +5,20 @@ import axios from "axios";
 import { useEffect} from "react";
 import UsersExcerpt from "./UsersExcerpt";
 
-
+/**
+ * 
+ * Admin Dashboard Page.
+ * 
+ * This calls the getAllUsers api link which
+ * grabs the users name, wins and losses.
+ * 
+ * It passes this information to its child component
+ * UserExcerpts.
+ * 
+ * 
+ * @author Scott Mains
+ * 
+ */
 const Admin = () => {
 
   const [allUsers, setAllUsers] = useState([])
@@ -20,7 +33,7 @@ const Admin = () => {
 useEffect(() => {
   const fetchData = async() => await getAllUsers();
   fetchData();
-  console.log(allUsers)
+ 
 }, [])
 
 let content; 

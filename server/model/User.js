@@ -1,5 +1,17 @@
 const mongoose = require('mongoose');
 
+/**
+ * 
+ * Userschema.
+ * 
+ * Specifies the data that should
+ * be entered into the mongodb
+ * for Users
+ * 
+ * @author Scott Mains
+ * 
+ */
+
 const userSchema =  new mongoose.Schema({
     name: {
         type: String,

@@ -1,3 +1,15 @@
+
+/**
+ * 
+ * 
+ * Verifies the users roles 
+ * that is found in the mongodb.
+ * 
+ * @author Scott Mains
+ * 
+ */
+
+
 const verifyRoles = (...allowedRoles) => {
     return (req, res, next) => {
         if (!req?.roles) return res.sendStatus(401);
