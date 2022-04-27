@@ -108,7 +108,7 @@ img {
 }
 
 /* TODO: COMPLETE MOBILE VIEW */
-@media (min-width: 1086px) {
+@media (min-width: 1026px) {
 	.poker-table--container {
 		left: 50%;
 		top: 40%;
