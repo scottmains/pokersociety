@@ -1,7 +1,7 @@
 
 import Navbar from "../../components/Navbar/Navbar";
 import React, { useState } from 'react';
-import axios from "axios";
+import axios from '../../api/axios'
 import { useEffect} from "react";
 import UsersExcerpt from "./UsersExcerpt";
 
@@ -24,7 +24,7 @@ const Admin = () => {
   const [allUsers, setAllUsers] = useState([])
 
   const getAllUsers =  () => {
-    axios.get('https://nupokersociety.herokuapp.com/api/admin/getAllUsers')
+    axios.get('/api/admin/getAllUsers')
     .then(resp => {
     setAllUsers(resp.data)
     });

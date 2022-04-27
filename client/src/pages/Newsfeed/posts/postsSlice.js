@@ -1,6 +1,5 @@
 import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
-
-import axios from "axios";
+import axios from '../../../api/axios'
 
 /**
  * 
@@ -14,8 +13,8 @@ import axios from "axios";
  * 
  */
 
-const POST_URL = 'https://nupokersociety.herokuapp.com/api/newsfeed/postnewsfeed';
-const GET_URL = 'https://nupokersociety.herokuapp.com/api/newsfeed/getnewsfeed';
+const POST_URL = '/api/newsfeed/postnewsfeed';
+const GET_URL = '/api/newsfeed/getnewsfeed';
 
 const initialState = {
     posts: [],

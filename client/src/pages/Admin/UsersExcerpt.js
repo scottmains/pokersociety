@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from '../../api/axios';
 import { useState} from 'react';
 
 
@@ -24,7 +24,7 @@ const UsersExcerpt = ({ user }) => {
     const [lossContent, setLossContent] = useState(true);
 
     const editWins = async (e) => {
-        const response = await axios.post('https://nupokersociety.herokuapp.com/api/admin/updateWins',
+        const response = await axios.post('/api/admin/updateWins',
            { _id: user._id, winUpdate: winUpdate }
         ) .then((res)=> {
         window.location.reload(false);
@@ -32,7 +32,7 @@ const UsersExcerpt = ({ user }) => {
     }
 
     const editLosses = async (e) => {
-        const response = await axios.post('https://nupokersociety.herokuapp.com/api/admin/updateLosses',
+        const response = await axios.post('/api/admin/updateLosses',
            { _id: user._id, lossUpdate: lossUpdate }
         );
     }

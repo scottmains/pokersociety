@@ -16,6 +16,7 @@ function Chatbot () {
 
 const [winner, setWinner] = useState('');
 
+
 /* immediately run function to fetch data from the back end */
 useEffect(() => {
   async function fetchMyAPI() {
@@ -28,7 +29,9 @@ useEffect(() => {
 
   /* Innitial greeting message from the bot */
   
+  
   useEffect(() => {
+    
     addResponseMessage(`Hi I'm pokerBot. Can I help you? 
      - for command list type 'help'`);
   }, []);

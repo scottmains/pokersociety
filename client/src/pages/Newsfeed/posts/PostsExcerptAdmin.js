@@ -1,5 +1,5 @@
 import ReactionButtons from "./ReactionButtons";
-import axios from "axios";
+import axios from '../../../api/axios'
 
 
 /**
@@ -19,7 +19,7 @@ const PostsExcerptAdmin = ({ post }) => {
 
     const deletePost = async (id) => {
     
-        axios.post('https://nupokersociety.herokuapp.com/api/newsfeed/newsfeeddelete', {"_id": post._id})
+        axios.post('/api/newsfeed/newsfeeddelete', {"_id": post._id})
        .then((res) => {
            console.log('response',res);
            res.success('success delete')
