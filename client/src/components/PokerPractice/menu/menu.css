@@ -1,7 +1,5 @@
 /*
-
 	Initial menu CSS
-
 */
 
 .poker-menu-container {
@@ -36,6 +34,28 @@
 	cursor: pointer;
 }
 
-.number-bots--radiobuttons {
-	display: none;
+.number-bots-radiobuttons,
+.min-bet-radiobuttons {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.min-bet-radiobuttons:nth-child(2) {
+	margin-bottom: 1em;
+}
+
+.bot-radiobutton,
+.bet-radiobutton {
+	padding: 0 1em;
+}
+
+.bot-radiobutton label,
+.bet-radiobutton label {
+	display: flex;
+	flex-direction: column;
+}
+
+.poker-menu-container p {
+	padding-bottom: 1em;
 }
