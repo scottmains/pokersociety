@@ -74,6 +74,8 @@ class PokerPractice extends Component {
     loading: true, // loading 
     menu: "none", // workaround to show an initial menu (currently working on feedback provided)
     maxNBots: 4, // TODO: ADD OPTION FOR USER IN MENU TO SELECT THE NUMBER OF BOTS
+    selectedNBot: '4',
+    selectedBet: '20',
     lost: null, // whether the user lost or not
     winnerFound: null, // no winner at the start
     players: null, // players
@@ -118,9 +120,6 @@ class PokerPractice extends Component {
     const imageLoaderRequest = new XMLHttpRequest();
 
     imageLoaderRequest.addEventListener("load", e => {
-        console.log(`${e.type}`);
-        console.log(e);
-        console.log("Image Loaded!");
         this.setState({
           loading: false,
           menu: "startmenu"
@@ -128,26 +127,6 @@ class PokerPractice extends Component {
     });
 
     imageLoaderRequest.addEventListener("error", e => {
-        console.log(`${e.type}`);
-        console.log(e);
-    });
-
-    imageLoaderRequest.addEventListener("loadstart", e => {
-        console.log(`${e.type}`);
-        console.log(e);
-    });
-
-    imageLoaderRequest.addEventListener("loadend", e => {
-        console.log(`${e.type}`);
-        console.log(e);
-    });
-
-    imageLoaderRequest.addEventListener("abort", e => {
-        console.log(`${e.type}`);
-        console.log(e);
-    });
-
-    imageLoaderRequest.addEventListener("progress", e => {
         console.log(`${e.type}`);
         console.log(e);
     });
@@ -187,7 +166,7 @@ class PokerPractice extends Component {
             (this.state.loading) ? <Spinner/> : 
             (this.state.winnerFound) ? <Win updateState={this.restartHandler}/> :
             (this.state.lost) ? <Lost updateState={this.restartHandler}/> :
-            (this.state.menu === "startmenu") ? <Menu updateState={this.menuHandler}/> :
+            (this.state.menu === "startmenu") ? <Menu updateBet={this.betHandler} updateNBots={this.botHandler} selectedBet={this.state.selectedBet} selectedNBot={this.state.selectedNBot} updateState={this.menuHandler}/> :
             this.renderGame()
           }
         </div>
@@ -199,8 +178,20 @@ class PokerPractice extends Component {
   menuHandler = (menuData) => {
     // TODO ADD MENU OPTIONS (N BOTS, MIN BET) - 
     this.state.nBots = parseInt(menuData)
-    this.state.menu = "aa"
+    this.state.menu = "show"
     this.runGameLoop()
+  }
+  
+  botHandler = (option) => {
+    this.state.selectedNBot = option
+
+    //console.log(this.state.selectedNBot)
+  }
+  
+  betHandler = (option) => {
+    this.state.selectedBet = option
+
+    //console.log(this.state.selectedBet)
   }
 
   restartHandler = () => {
@@ -233,12 +224,12 @@ class PokerPractice extends Component {
       <div className='poker-app--background'>
         {/* Displaying the table */}
         <div className="poker-table--container">
-          { (this.state.menu === 'aa') && this.renderBoard() }
+          { (this.state.menu === 'show') && this.renderBoard() }
           <div className='community-card-container' >
-            { (this.state.menu === 'aa') && this.renderCommunityCards() }
+            { (this.state.menu === 'show') && this.renderCommunityCards() }
           </div>
           <div className='pot-container'>
-            <h4> { (this.state.menu === 'aa') && `Pot amount: ${this.state.pot}`} </h4>
+            <h4> { (this.state.menu === 'show') && `Pot amount: ${this.state.pot}`} </h4>
           </div>
         </div>
         { (this.state.phase === 'showdown') && this.renderShowdown() } 
@@ -249,12 +240,12 @@ class PokerPractice extends Component {
           {/* if state isn't loading, draw action bar */}
           {/* further internal checks to draw it only when it's the user's turn to bet */}
           <div className='slider-boi'> 
-            { (!this.state.loading) && (this.state.menu === 'aa')
+            { (!this.state.loading) && (this.state.menu === 'show')
             && renderActionMenu(highBet, players, activePlayerIndex, phase, this.handleBetInputChange)}
           </div>
           
           <div className='action-buttons'>
-            { (this.state.menu === 'aa') && this.renderActionButtons() }
+            { (this.state.menu === 'show') && this.renderActionButtons() }
           </div>
 
         </div>
@@ -541,7 +532,3 @@ class PokerPractice extends Component {
 }
 
 export default PokerPractice;
-
-
-
-
