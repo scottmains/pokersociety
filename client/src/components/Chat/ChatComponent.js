@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import './chat.css';
 import { TailSpin } from "react-loader-spinner";
 import useAuth from "../../context/Auth/useAuth";
@@ -32,6 +32,7 @@ export default function ChatComponent() {
   const local_user = JSON.parse(obj)
 
   //get the email id from the logged in user object to sign in on the firebase user account using that parameter as email as password
+  //shows a loading screen while the user gets signed in
   if(!user)
   {
     auth.signInWithEmailAndPassword(local_user.email,local_user.email);
@@ -43,20 +44,10 @@ export default function ChatComponent() {
   }
 
 
-
-  
-  // const {userDetails } = useAuth();
-  // const obj = JSON.stringify(userDetails)
-  // const user = JSON.parse(obj)
-
-
-  // console.log(userDetails)
-  // console.log(user)
-
   if (loading) {
     return (
       <div className='loadingScreen'>
-        <p>Initialising User...</p>
+        <TailSpin color="#00BFFF" height={80} width={80}/>
       </div>
     );
   }
@@ -72,7 +63,6 @@ export default function ChatComponent() {
     <div className="Chat">
       <header>
         <h1>⚛️🔥💬 WELCOME TO CHAT ROOM</h1>
-        {/* <SignOut /> */}
       </header>
       {<ChatRoom />}
     </div>
@@ -80,7 +70,6 @@ export default function ChatComponent() {
   }
 
   return <></>
-  //return <button className='enterChatRoom' onClick={login}>Enter ChatRoom</button>;
 }
 
 
@@ -94,7 +83,7 @@ function ChatRoom() {
   const query = messagesRef.orderBy('createdAt','desc').limit(25);//to render only last 25 messages at a time
 
   const [messages] = useCollectionData(query, { idField: 'id' });
-  console.log(messages)
+  
   const [formValue, setFormValue] = useState('');
 
   const {userDetails } = useAuth();
@@ -103,10 +92,9 @@ function ChatRoom() {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    console.log(auth.currentUser);
+  
     const { uid, photoURL } = auth.currentUser; 
 
-    //adding a new message as an object data entry in the firebase database
     
     await messagesRef.add({
       text: formValue,
@@ -117,9 +105,19 @@ function ChatRoom() {
     })
 
     setFormValue('');
-    dummy.current.scrollIntoView({ behavior: 'smooth' });
+    
   }
 
+  //to scroll to bottom by default and everytime the user sends a message
+  const scrollToBottom = () => {
+    dummy.current?.scrollIntoView({ behavior: "smooth" })
+  }
+  
+  useEffect(() => {
+    scrollToBottom()
+  });
+
+  //returning the textbox and the send button in form format
   return (
   <div className='chatWindow'>
     <div className='scrolldiv'>
@@ -142,15 +140,9 @@ function ChatRoom() {
 
 
 function ChatMessage(props) {
-  const { text, uid, photoURL, name } = props.message;
-
-  const {userDetails } = useAuth();
-  const obj = JSON.stringify(userDetails)
-  const user = JSON.parse(obj)
-  // console.log(userDetails)
-
-  // console.log(auth)
   
+  const { text, uid, photoURL, name } = props.message; //extracting the message details
+
   const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received'; //message check for formatting accordingly
   
   return (<>
