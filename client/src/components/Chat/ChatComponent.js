@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import './chat.css';
+import { TailSpin } from "react-loader-spinner";
 import useAuth from "../../context/Auth/useAuth";
 
 import firebase from 'firebase/app';
@@ -22,9 +23,10 @@ const analytics = firebase.analytics();
 
 export default function ChatComponent() {
 
-  const [user] = useAuthState(auth);
+  //firebase user
+  const [user, loading, error] = useAuthState(auth);
 
-  //get all the logged in user details in an object format
+  //get all the logged in user details in an object format (from mongoDB)
   const {userDetails } = useAuth();
   const obj = JSON.stringify(userDetails)
   const local_user = JSON.parse(obj)
@@ -33,9 +35,16 @@ export default function ChatComponent() {
   if(!user)
   {
     auth.signInWithEmailAndPassword(local_user.email,local_user.email);
+    return (
+      <div className='loadingScreen'>
+        <TailSpin color="#00BFFF" height={80} width={80}/>
+      </div>
+    )
   }
-  
 
+
+
+  
   // const {userDetails } = useAuth();
   // const obj = JSON.stringify(userDetails)
   // const user = JSON.parse(obj)
@@ -44,20 +53,34 @@ export default function ChatComponent() {
   // console.log(userDetails)
   // console.log(user)
 
-
-  return (
+  if (loading) {
+    return (
+      <div className='loadingScreen'>
+        <p>Initialising User...</p>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className='loadingScreen'>
+        <p>Error: {error}</p>
+      </div>
+    );
+  }
+  if (user) {
+    return (
     <div className="Chat">
       <header>
         <h1>⚛️🔥💬 WELCOME TO CHAT ROOM</h1>
         {/* <SignOut /> */}
       </header>
-
-      
-        {<ChatRoom />}
-      
-
+      {<ChatRoom />}
     </div>
-  );
+    );
+  }
+
+  return <></>
+  //return <button className='enterChatRoom' onClick={login}>Enter ChatRoom</button>;
 }
 
 
@@ -80,7 +103,7 @@ function ChatRoom() {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-
+    console.log(auth.currentUser);
     const { uid, photoURL } = auth.currentUser; 
 
     //adding a new message as an object data entry in the firebase database
@@ -126,7 +149,7 @@ function ChatMessage(props) {
   const user = JSON.parse(obj)
   // console.log(userDetails)
 
-  console.log(auth)
+  // console.log(auth)
   
   const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received'; //message check for formatting accordingly
   

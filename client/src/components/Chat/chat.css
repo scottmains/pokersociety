@@ -24,27 +24,45 @@
     padding: 10px;
     box-sizing: border-box;
   }
+
+  .loadingScreen{
+    height: 100vh; /* Magic here */   
+    display: flex;   
+    justify-content: center;   
+    align-items: center;
+  }
+
+  /* .enterChatRoom{
+    color: #282c34;
+    background: yellowgreen;
+    max-width: 400px;
+    margin: 0 auto;
+  } */
+
+  .Chat h1{
+    color: aliceblue;
+  }
   
-  .Chat section {
+  /* .Chat section {
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+    justify-content: center;
     min-height: 90vh;
     margin: 0;
     background-color: rgb(40, 37, 53);
    
-  }
+  } */
   
-  .Chat main {
+  /* .Chat main {
     padding: 0px;
     height: 80vh;
     margin: 10vh 0 10vh;
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
-  }
+  } */
   
-  main::-webkit-scrollbar {
+  /* main::-webkit-scrollbar {
     width: 0.25rem;
   }
   
@@ -54,6 +72,13 @@
   
   main::-webkit-scrollbar-thumb {
     background: #6649b8;
+  } */
+
+  .chatWindow {
+    min-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(40, 37, 53);
   }
 
   .scrolldiv {
@@ -61,16 +86,8 @@
     width: 100vw;
     overflow-y: auto;
     height: 85vh;
-  }
-
-  .Chat h1{
-    color: aliceblue;
-  }
-  .chatWindow {
-    min-width: 100vw;
     display: flex;
-    flex-direction: column;
-    background-color: rgb(40, 37, 53);
+    flex-direction: column-reverse;
   }
 
   .sendMessage{
@@ -82,6 +99,16 @@
     font-size: 1rem;
   }
   
+  .Chat input {
+    line-height: 1.5;
+    width: 80%;
+    font-size: 1rem;
+    background: rgb(226, 226, 226);
+    color: rgb(0, 0, 0);
+    outline: none;
+    border: none;
+    padding: 10px 10px;
+  }
 
   .Chat form button {
     width: 20%;
@@ -93,19 +120,7 @@
     width: 20px;
     height: 20px;
   } */
-  
-  
-  .Chat input {
-    line-height: 1.5;
-    width: 100%;
-    font-size: 1rem;
-    background: rgb(226, 226, 226);
-    color: rgb(0, 0, 0);
-    outline: none;
-    border: none;
-    padding: 10px 10px;
-  }
-  
+
   .Chat button {
     background-color: #1e831e; /* Green */
     border: none;
@@ -117,27 +132,12 @@
     cursor: pointer;
     font-size: 1.25rem;
   }
-  
+
   button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
   
-  
-  .sign-in {
-    color: #282c34;
-    background: white;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  
-  
-  
-  
-  .Chat ul, li {
-    text-align: left;
-    list-style: none;
-  }
   
   .Chat p {
     max-width: 500px;
@@ -189,11 +189,11 @@
     color: black;
   }
   
-  .Chat img {
+  /* .Chat img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin: 2px 5px;
-  }
+  } */
   
   
