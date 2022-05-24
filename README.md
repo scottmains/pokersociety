@@ -1,8 +1,3 @@
-# TeamProject
-Team Project
-
-https://github.com/streetjohn/TeamProject - Our github
-https://gonative.io/share/ymxedd?fbclid=IwAR3klLm8_AjAF50KirZaFYQKGxh1TheaWqX0pfoY1e2a59pF6Y231V7Kxa8 - Link to download APK for android phones
 
 ### Setup:
 
