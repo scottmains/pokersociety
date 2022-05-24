@@ -13,7 +13,7 @@ const PostsExcerpt = ({ post }) => {
 
 
     const date = JSON.stringify(post.date);
-    console.log(date)
+ 
 
 
     return (

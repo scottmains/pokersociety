@@ -8,7 +8,6 @@ import Navbar from './components/Navbar/Navbar';
 
 import './app.css'
 import {
-    BrowserRouter as Router,
     Routes,
     Route,
   } from "react-router-dom";

@@ -1,6 +1,6 @@
 import ReactionButtons from "./ReactionButtons";
 import axios from '../../../api/axios'
-
+import { useState} from 'react';
 
 /**
  * 
@@ -17,18 +17,20 @@ import axios from '../../../api/axios'
 
 const PostsExcerptAdmin = ({ post }) => {
 
+    const [success, setSuccess] =useState("");
+
     const deletePost = async (id) => {
     
         axios.post('/api/newsfeed/newsfeeddelete', {"_id": post._id})
        .then((res) => {
            console.log('response',res);
            res.success('success delete')
+           setSuccess("deleted successfully")
        })
        .catch((error) => {
            console.log('error block called',error);
        })
   
-       
        }
 
     return (
@@ -44,6 +46,7 @@ const PostsExcerptAdmin = ({ post }) => {
             <div className="text-right">
             <button className="text-right text-red-500" onClick={deletePost}> Delete </button>
             </div>
+            {success}
         </article>
     )
 }

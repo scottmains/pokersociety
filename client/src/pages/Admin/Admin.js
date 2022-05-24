@@ -36,6 +36,8 @@ useEffect(() => {
  
 }, [])
 
+
+
 let content; 
 
 content = allUsers.map(user => <UsersExcerpt key={user._id} user={user} />)
@@ -56,7 +58,11 @@ content = allUsers.map(user => <UsersExcerpt key={user._id} user={user} />)
     </div>
 
     <h3 className="text-black text-xl pb-5 "> Welcome to the admin dashboard. Here you can set the wins and losses of those within the society. </h3>
+
+    <h3 className="text-black text-xl pb-5 "> Make sure to refresh to see any changes made. </h3>
    {content}
+
+   
     </div>
    </>
   )

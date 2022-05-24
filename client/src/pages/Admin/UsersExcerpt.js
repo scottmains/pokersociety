@@ -23,19 +23,27 @@ const UsersExcerpt = ({ user }) => {
     const [winContent, setWinContent] = useState(true);
     const [lossContent, setLossContent] = useState(true);
 
-    const editWins = async (e) => {
-        const response = await axios.post('/api/admin/updateWins',
+    const [success, setSuccess] =useState("");
+
+    const editWins = () => {
+        const res =  axios.post('/api/admin/updateWins',
            { _id: user._id, winUpdate: winUpdate }
         ) .then((res)=> {
+        setSuccess("Wins have been updated");
         window.location.reload(false);
         });
     }
 
     const editLosses = async (e) => {
-        const response = await axios.post('/api/admin/updateLosses',
-           { _id: user._id, lossUpdate: lossUpdate }
-        );
-    }
+        const res =  axios.post('/api/admin/updateLosses',
+        { _id: user._id, lossUpdate: lossUpdate }
+     ) .then((res)=> {
+     setSuccess("Losses have been updated");
+     window.location.reload(false);
+     });
+ }
+
+    console.log(success)
 
 const showWinContent = () => {
     setWinContent(!winContent)
@@ -57,7 +65,12 @@ const showWinContent = () => {
             placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500
              focus:z-10 sm:text-sm" 
             type="text" id="wins" onChange={(e)=> setWinUpdate(e.target.value)} value={winUpdate} required />
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onClick={editWins}>Submit</button>
+             <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    type="button"
+                    onClick={editWins}
+                
+                >Submit</button>
             </div>
             </div>
             <p className="font-mono text-lg pt-3 ">Losses: {user.losses} <button className="text-red-500" onClick={showLossContent}>Edit</button></p>
@@ -68,7 +81,7 @@ const showWinContent = () => {
             placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500
              focus:z-10 sm:text-sm" 
             type="text" id="losses" onChange={(e)=> setLossUpdate(e.target.value)} value={lossUpdate} required />
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full " onClick={editLosses}>Submit</button>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onClick={editLosses}>Submit</button>
             </div>
             </div>
         </article>

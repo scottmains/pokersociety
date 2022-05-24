@@ -21,6 +21,7 @@ const AddPostForm = () => {
     const [content, setContent] = useState('')
     const [userId, setUserId] = useState('')
     const [addRequestStatus, setAddRequestStatus] = useState('idle')
+    const [success, setSuccess] =useState("");
 
     const users = useSelector(selectAllUsers)
 
@@ -40,6 +41,7 @@ const AddPostForm = () => {
                 setTitle('')
                 setContent('')
                 setUserId('')
+                setSuccess('Post added successfully. Refresh to check.')
             } catch (err) {
                 console.error('Failed to save the post', err)
             } finally {
@@ -49,6 +51,7 @@ const AddPostForm = () => {
 
     }
 
+    console.log(success)
     const usersOptions = users.map(user => (
         <option key={user.id} value={user.id}>
             {user.name}
@@ -91,6 +94,7 @@ const AddPostForm = () => {
                     disabled={!canSave}
                 >Save Post</button>
             </form>
+         <h3 className="pt-4">  {success} </h3> 
         </section>
     )
 }
